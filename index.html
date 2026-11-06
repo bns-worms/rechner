@@ -44,6 +44,13 @@
   .brand { flex:0 1 auto; background:#fff; border-radius:14px; padding:.55rem .8rem;
            box-shadow:0 4px 14px rgba(0,0,0,.22); }
   .brand img { display:block; width:170px; max-width:100%; height:auto; }
+  /* Button „Zurück zu BNS-Webseite“ (Ralf, 06.11.2026) – Gestaltung wie .knopf-oben der Rechner */
+  .knopf-zurueck { display:inline-block; margin:0 0 1.1rem; font-size:.74rem; font-weight:700;
+                   letter-spacing:.06em; text-transform:uppercase; padding:.42rem .8rem;
+                   border:1.5px solid rgba(255,255,255,.55); background:rgba(255,255,255,.10);
+                   color:#fff; border-radius:8px; text-decoration:none; white-space:nowrap; }
+  .knopf-zurueck:hover { background:rgba(255,255,255,.22); border-color:rgba(255,255,255,.9); }
+  .knopf-zurueck:focus-visible { outline:2px solid #fff; outline-offset:2px; }
   /* „Stand: Monat Jahr“ unter dem Logo (Ralf, 06.11.2026); wird bei jedem Bau neu gesetzt */
   .rechts { flex:0 1 auto; display:flex; flex-direction:column; align-items:center; }
   .stand { margin:.55rem 0 0; color:var(--mint); font-size:.9rem; }
@@ -61,7 +68,9 @@
 </head>
 <body>
 <header>
-  <div class="innen headrow">
+  <div class="innen">
+  <a class="knopf-zurueck" href="https://bns.worms.de" title="Zur Webseite des BürgerNetzwerkSolar Worms">← Zurück zu BNS-Webseite</a>
+  <div class="headrow">
     <div class="headtxt">
       <p class="marke">BNS</p>
       <h1>Rechner des BürgerNetzwerkSolar Worms</h1>
@@ -73,6 +82,7 @@
         alt="BürgerNetzwerkSolar Worms" width="170"></a></div>
       <p class="stand">Stand: November 2026</p>
     </div>
+  </div>
   </div>
 </header>
 <main>
