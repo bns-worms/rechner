@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rechner · BürgerNetzwerkSolar Worms</title>
+<meta name="description" content="Fünf kostenlose Rechner des BürgerNetzwerkSolar Worms zu Photovoltaik, Wärmepumpe, Förderung und Stromtarif.">
+<style>
+  :root {
+    --pine-deep:#0B332C; --pine:#114B41; --pine-soft:#337367; --mint:#EAF3EE;
+    --amber:#E9A13B; --paper:#F6F8F6; --card:#FFFFFF; --ink:#182722;
+    --muted:#4E635C; --line:#D7E3DC; --focus:#1B4FA8;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    --serif:Georgia,'Times New Roman',serif;
+    color-scheme: light;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans);
+         font-size:1.0625rem; line-height:1.55; }
+  header { background:linear-gradient(135deg,var(--pine-deep),var(--pine) 60%,var(--pine-soft));
+           color:#fff; padding:2.2rem 1rem 2.4rem; }
+  .innen { max-width:1080px; margin:0 auto; }
+  .marke { color:var(--amber); font-weight:700; letter-spacing:.45em; font-size:.95rem; margin:0 0 .6rem; }
+  h1 { font-family:var(--serif); font-weight:700; font-size:clamp(1.7rem,4vw,2.4rem);
+       line-height:1.2; margin:0 0 .8rem; }
+  header p.einleitung { color:var(--mint); max-width:44rem; margin:0; }
+  main { padding:2rem 1rem 1rem; }
+  h2 { font-family:var(--serif); font-size:1.45rem; margin:0 0 1.1rem; color:var(--pine-deep); }
+  ul.rechner { list-style:none; margin:0; padding:0; display:grid; gap:1.1rem;
+               grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr)); }
+  a.karte { display:flex; flex-direction:column; height:100%; background:var(--card);
+            border:1px solid var(--line); border-radius:14px; padding:.9rem .9rem 1.1rem;
+            color:var(--ink); text-decoration:none;
+            transition:transform .15s ease, box-shadow .15s ease; }
+  a.karte:hover { transform:translateY(-2px); box-shadow:0 6px 16px rgba(11,51,44,.18); }
+  a.karte:focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+  a.karte img { display:block; width:100%; height:auto; aspect-ratio:2/1; border-radius:10px; }
+  .name { font-family:var(--serif); font-weight:700; font-size:1.15rem; color:var(--pine-deep);
+          margin:.85rem 0 .3rem; hyphens:auto; overflow-wrap:break-word; }
+  .frage { color:var(--muted); font-size:.98rem; }
+  .hinweis { margin:1.8rem 0 0; color:var(--muted); max-width:46rem; }
+  footer { border-top:1px solid var(--line); margin-top:2.2rem; padding:1.4rem 1rem 2rem;
+           color:var(--muted); font-size:.92rem; }
+  footer p { margin:.3rem 0; max-width:46rem; }
+  footer a { color:var(--pine); }
+</style>
+</head>
+<body>
+<header>
+  <div class="innen">
+    <p class="marke">BNS</p>
+    <h1>Rechner des BürgerNetzwerkSolar Worms</h1>
+    <p class="einleitung">Fünf kostenlose Rechner zu Photovoltaik, Wärmepumpe, Förderung und Stromtarif.
+    Sie laufen direkt im Browser. Ihre Eingaben werden nicht übertragen.</p>
+  </div>
+</header>
+<main>
+  <div class="innen">
+    <h2>Die fünf Rechner</h2>
+    <ul class="rechner">
+      <li>
+        <a class="karte" href="foerderrechner.html">
+          <img src="bns-rechner-foerderrechner.png" width="227" height="113" alt="">
+          <span class="name">KfW-Förderrechner</span>
+          <span class="frage">Meine Heizung läuft noch — soll ich sie ersetzen? Zuschuss, Kredit und Zeitpunkt für Wärmepumpe und Photovoltaik.</span>
+        </a>
+      </li>
+      <li>
+        <a class="karte" href="waermepumpe.html">
+          <img src="bns-rechner-waermepumpe.png" width="227" height="113" alt="">
+          <span class="name">Wirtschaftlichkeitsrechner Wärmepumpe</span>
+          <span class="frage">Ich muss die Heizung tauschen — Wärmepumpe oder neue Gas- beziehungsweise Ölheizung, was ist günstiger?</span>
+        </a>
+      </li>
+      <li>
+        <a class="karte" href="pv-preisrechner.html">
+          <img src="bns-rechner-pv-preisrechner.png" width="227" height="113" alt="">
+          <span class="name">PV-Preisrechner</span>
+          <span class="frage">Ist ein Angebot für eine Solaranlage preislich in Ordnung?</span>
+        </a>
+      </li>
+      <li>
+        <a class="karte" href="tarifvergleich.html">
+          <img src="bns-rechner-tarif-vergleichsrechner.png" width="227" height="113" alt="">
+          <span class="name">Stromtarif-Vergleichsrechner</span>
+          <span class="frage">Lohnt sich ein dynamischer Stromtarif mit stündlich wechselndem Preis, und wo liegt meine Grenze?</span>
+        </a>
+      </li>
+      <li>
+        <a class="karte" href="pv-auswahlhilfe.html">
+          <img src="bns-rechner-pv-auswahlhilfe.png" width="227" height="113" alt="">
+          <span class="name">PV-Auswahlhilfe</span>
+          <span class="frage">Welche Anlagengröße passt zu meinem Verbrauch? Autarkie, Eigenverbrauch und Preis je Anlagengröße.</span>
+        </a>
+      </li>
+    </ul>
+    <p class="hinweis">Ertrag, Einspeisevergütung, Eigenverbrauch und Rendite einer Solaranlage rechnen die
+    BNS-Berater mit Ihnen durch.</p>
+  </div>
+</main>
+<footer>
+  <div class="innen">
+    <p>Das BürgerNetzwerkSolar Worms arbeitet neutral und herstellerunabhängig, gibt keine Kaufempfehlungen und ergreift nicht Partei für Anbieter oder Produkte.</p>
+    <p>BürgerNetzwerkSolar Worms · <a href="https://bns.worms.de">bns.worms.de</a> · Stand 6. November 2026</p>
+  </div>
+</footer>
+</body>
+</html>

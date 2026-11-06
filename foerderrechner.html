@@ -1,0 +1,2885 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Förderrechner Wärmepumpe und Photovoltaik – KfW 458, 358 und 270</title>
+<meta name="description" content="Barrierefreier Rechner: BEG-Zuschuss nach KfW 458, Ergänzungskredit KfW 358 und PV-Kredit KfW 270 für Wärmepumpe, Photovoltaik und Batteriespeicher – mit Zinsvorteil und Zeitpunktvergleich.">
+<style>
+/* =====================================================================
+   Gemeinsames Stylesheet für Rechner und Studie
+   Farbwelt und Grundraster übernommen vom Förderrechner Wärmepumpe 2026
+   ===================================================================== */
+:root{
+  --pine:#114B41;
+  --pine-deep:#0B332C;
+  --pine-soft:#337367;
+  --mint:#EAF3EE;
+  --paper:#F6F8F6;
+  --card:#FFFFFF;
+  --ink:#182722;
+  --muted:#4E635C;
+  --line:#D7E3DC;
+  --amber:#E9A13B;
+  --amber-deep:#8F5D12;
+  --sky:#2E6FD8;
+  --sky-soft:#E7EFFB;
+  --plum:#7A4A86;
+  --plum-soft:#F1E9F4;
+  --red:#B4402D;
+  --focus:#1B4FA8;
+  --radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%;scroll-behavior:smooth;overflow-x:hidden}
+body{
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.6;
+  font-size:1.06rem;
+}
+.wrap{max-width:960px;margin:0 auto;padding:0 1.1rem 4rem}
+
+/* ---------- Barrierefreiheit ---------- */
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:100;max-width:100%;
+  background:#fff;color:var(--pine-deep);padding:.9rem 1.3rem;
+  border-radius:0 0 12px 0;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.3);
+}
+.skip:focus{left:0}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+.visually-hidden{
+  position:absolute!important;width:1px;height:1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
+}
+
+/* ---------- Kopf ---------- */
+header.site{
+  background:linear-gradient(160deg,var(--pine-deep) 0%,var(--pine) 70%);
+  color:#F2F7F4;
+  padding:2.2rem 0 2.6rem;
+}
+header.site .wrap{padding-bottom:0}
+.badge{
+  display:inline-block;
+  background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.34);
+  border-radius:999px;
+  padding:.35rem .95rem;
+  font-size:.88rem;
+  letter-spacing:.02em;
+  margin-bottom:1rem;
+}
+h1{
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:600;
+  font-size:clamp(1.55rem,4.6vw,2.85rem);
+  line-height:1.14;
+  letter-spacing:-.01em;
+  margin-bottom:.7rem;
+  overflow-wrap:break-word;
+  hyphens:auto;
+}
+header.site p.lede{
+  max-width:48rem;
+  font-size:clamp(1.02rem,2.6vw,1.16rem);
+  color:#DCEAE3;
+}
+.headrow{display:flex;gap:1.2rem;align-items:flex-start;justify-content:space-between}
+.headtxt{min-width:0;flex:1 1 auto}
+.brand{flex:0 1 auto;background:#fff;border-radius:14px;padding:.55rem .8rem;box-shadow:0 4px 14px rgba(0,0,0,.22)}
+.brand img{display:block;width:180px;max-width:100%;height:auto}
+.crosslink{
+  display:inline-flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin-top:1.3rem;max-width:100%;
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.34);
+  color:#F2F7F4;text-decoration:underline;text-underline-offset:3px;
+  padding:.6rem 1rem;border-radius:10px;font-weight:600;font-size:.98rem;
+}
+.crosslink:hover{background:rgba(255,255,255,.24)}
+@media (max-width:860px){
+  .brand img{width:140px}
+}
+@media (max-width:760px){
+  .headrow{flex-direction:column-reverse;align-items:flex-start}
+  .headtxt{width:100%}
+  .brand{align-self:flex-end}
+  .brand img{width:135px}
+}
+
+/* ---------- Zonen ---------- */
+section.zone{margin-top:2.6rem}
+.eyebrow{
+  display:flex;align-items:center;gap:.65rem;
+  font-weight:700;font-size:.86rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--pine);
+  margin-bottom:1rem;
+}
+.eyebrow .step{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:1.9rem;height:1.9rem;border-radius:50%;flex:none;
+  background:var(--pine);color:#fff;font-size:1rem;letter-spacing:0;
+}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
+h2{font-size:1px;width:1px;height:1px;overflow:hidden;position:absolute;clip:rect(0 0 0 0)}
+h3{
+  font-family:Georgia,"Times New Roman",serif;font-weight:700;
+  font-size:1.35rem;color:var(--pine-deep);margin:2rem 0 .7rem;line-height:1.25;
+}
+h4{font-size:1.06rem;color:var(--pine-deep);margin:1.4rem 0 .5rem}
+h1,h3,h4,legend,label,.hint,.leghint,.fact b,.fact span,.kpi b,.kpi span,.card .cap,.card .big,.card .exp,.note,li,.field .main{
+  overflow-wrap:break-word;hyphens:auto;
+}
+p{margin-bottom:.85rem;overflow-wrap:break-word;hyphens:auto}
+p:last-child{margin-bottom:0}
+a{color:var(--focus)}
+
+/* ---------- Faktenkacheln ---------- */
+.factgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1.2rem}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:1rem 1.05rem;min-width:0}
+.fact b{
+  display:block;font-family:Georgia,"Times New Roman",serif;font-weight:700;
+  font-size:1.45rem;color:var(--pine);line-height:1.15;margin-bottom:.2rem;
+}
+.fact span{font-size:.93rem;color:var(--muted);line-height:1.45;display:block}
+.intro{max-width:54rem;margin-bottom:1.3rem}
+
+/* ---------- Aufklappbare Infos ---------- */
+details.info{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  margin-bottom:.7rem;overflow:hidden;
+}
+details.info summary{
+  list-style:none;cursor:pointer;
+  display:flex;align-items:center;gap:.8rem;
+  padding:1.05rem 1.2rem;
+  font-weight:600;font-size:1.05rem;color:var(--pine-deep);
+  min-height:56px;
+}
+details.info summary::-webkit-details-marker{display:none}
+details.info summary::marker{content:""}
+details.info summary .ttl{flex:1;min-width:0;overflow-wrap:break-word;hyphens:auto}
+details.info summary .chev{
+  margin-left:auto;flex:none;width:1.5rem;height:1.5rem;border-radius:50%;
+  background:var(--mint);color:var(--pine);
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:1rem;transition:transform .25s ease;
+}
+details.info[open] summary .chev{transform:rotate(180deg)}
+details.info .body{padding:0 1.2rem 1.3rem;color:var(--ink)}
+
+/* ---------- Tabellen ---------- */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin:.6rem 0}
+table{border-collapse:collapse;width:100%;min-width:460px;font-size:.92rem;line-height:1.4;background:#fff}
+caption{
+  text-align:left;padding:.7rem .8rem;font-weight:700;color:var(--pine-deep);
+  background:var(--mint);border-bottom:1px solid var(--line);font-size:.95rem;
+}
+th,td{padding:.46rem .65rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{background:var(--mint);color:var(--pine-deep);font-weight:700;white-space:nowrap}
+tbody th{background:#FAFCFB;font-weight:600;white-space:nowrap}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:none}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.hl td,tr.hl th{background:#FCF4E6}
+tr.sum td,tr.sum th{background:var(--mint);font-weight:700;border-top:2px solid var(--pine)}
+.gone{color:var(--muted);text-decoration:line-through}
+.pos{color:var(--pine);font-weight:700}
+.neg{color:var(--red);font-weight:700}
+
+/* ---------- Eingabefelder ---------- */
+.panel{
+  background:var(--card);border:1px solid var(--line);border-radius:20px;
+  padding:1.4rem 1.3rem 1.6rem;margin-bottom:1rem;
+}
+fieldset{border:none;padding:0;margin:0}
+fieldset+fieldset{margin-top:1.8rem;padding-top:1.5rem;border-top:1px solid var(--line)}
+legend{
+  font-family:Georgia,"Times New Roman",serif;font-weight:700;
+  font-size:1.2rem;color:var(--pine-deep);margin-bottom:.3rem;padding:0;
+}
+.leghint{font-size:.95rem;color:var(--muted);margin-bottom:1.1rem;max-width:44rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem 1.5rem}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem 1.5rem}
+.field.wide{grid-column:1/-1}
+.field,.unitwrap{min-width:0}
+input,select,textarea{min-width:0;max-width:100%}
+.field label.main,.field .main{
+  display:block;font-weight:700;font-size:1.03rem;margin-bottom:.15rem;color:var(--pine-deep);
+}
+.field .hint{font-size:.9rem;color:var(--muted);margin-bottom:.5rem;line-height:1.45}
+.unitwrap{position:relative}
+.unitwrap input{
+  width:100%;font:inherit;font-size:1.2rem;font-weight:600;
+  padding:.8rem 5.4rem .8rem 1rem;
+  border:2px solid var(--line);border-radius:12px;background:#FBFDFC;color:var(--ink);
+  min-height:56px;font-variant-numeric:tabular-nums;
+}
+.unitwrap input:focus{outline:3px solid var(--focus);outline-offset:1px;border-color:var(--focus)}
+.unitwrap .unit{
+  position:absolute;right:1rem;top:50%;transform:translateY(-50%);
+  font-weight:700;color:var(--muted);font-size:1.02rem;pointer-events:none;
+}
+select{
+  width:100%;font:inherit;font-size:1.05rem;font-weight:600;
+  padding:.8rem 2.8rem .8rem 1rem;min-height:56px;
+  border:2px solid var(--line);border-radius:12px;background-color:#FBFDFC;color:var(--ink);
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='10'%3E%3Cpath d='M1 1l7 7 7-7' stroke='%23114B41' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 1rem center;
+}
+select:focus{outline:3px solid var(--focus);outline-offset:1px}
+
+/* Radio-Gruppen als Segment-Schalter */
+.seg{display:flex;border:2px solid var(--line);border-radius:12px;overflow:hidden;background:#FBFDFC}
+.seg .opt{flex:1;position:relative;display:flex}
+.seg .opt+.opt{border-left:2px solid var(--line)}
+.seg input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
+.seg label{
+  flex:1;display:flex;align-items:center;justify-content:center;text-align:center;
+  font-size:1.02rem;font-weight:600;padding:.75rem .5rem;min-height:56px;
+  color:var(--muted);cursor:pointer;
+}
+.seg input:checked+label{background:var(--pine);color:#fff}
+.seg input:focus-visible+label{outline:3px solid var(--focus);outline-offset:-3px}
+
+/* Frage-Buttons mit Erläuterung */
+.labelrow{display:flex;align-items:center;gap:.45rem;margin-bottom:.15rem}
+.labelrow .main{margin-bottom:0;flex:1}
+.qmark{
+  display:inline-flex;align-items:center;justify-content:center;flex:none;
+  width:2rem;height:2rem;border-radius:50%;
+  background:var(--mint);color:var(--pine);font:inherit;font-size:1rem;font-weight:700;
+  cursor:pointer;border:1px solid var(--line);padding:0;line-height:1;
+}
+.qmark[aria-expanded="true"]{background:var(--pine);color:#fff;border-color:var(--pine)}
+.tipbox{
+  display:none;margin:.5rem 0 .6rem;
+  background:var(--pine-deep);color:#EAF3EE;
+  border-radius:10px;padding:.8rem 1rem;font-size:.96rem;line-height:1.55;
+}
+.tipbox.open,.tipbox.schwebt{display:block}
+.tipbox b{color:#fff}
+
+/* ---------- Ergebnis ---------- */
+.result{
+  background:linear-gradient(165deg,#FFFFFF 0%,var(--mint) 130%);
+  border:1.5px solid var(--pine-soft);border-radius:22px;
+  padding:1.6rem 1.3rem 1.8rem;
+}
+.toplabel{font-weight:700;color:var(--pine-deep);font-size:1.05rem}
+.bignum{
+  font-family:Georgia,"Times New Roman",serif;font-weight:700;
+  font-size:clamp(2.4rem,8vw,3.6rem);line-height:1.05;
+  color:var(--pine);margin:.15rem 0 .1rem;font-variant-numeric:tabular-nums;
+}
+.bignum small{font-size:45%;font-weight:600;color:var(--pine-soft)}
+.subline{color:var(--muted);font-size:.98rem}
+
+.ratehead{
+  display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.2rem .8rem;
+  margin-top:1.4rem;margin-bottom:.45rem;font-weight:700;color:var(--pine-deep);
+}
+.ratehead .pct{font-family:Georgia,"Times New Roman",serif;font-size:1.45rem;color:var(--pine)}
+.stack{position:relative;height:2.4rem;border-radius:10px;overflow:hidden;background:#E4ECE7;display:flex}
+.stack .segb{
+  height:100%;display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;
+  transition:width .45s ease;
+}
+.segb.base{background:var(--pine)}
+.segb.inc{background:var(--pine-soft)}
+.segb.wsb{background:var(--plum)}
+.segb.speed{background:var(--amber);color:#3A2703}
+.segb.cut{background:repeating-linear-gradient(45deg,#C9D5CE 0 6px,#B7C6BE 6px 12px);color:#41524C}
+.caplineWrap{position:relative;height:1.5rem;margin-top:.25rem;font-size:.85rem;color:var(--muted)}
+.capline{position:absolute;top:-2.65rem;width:2px;height:2.4rem;background:var(--ink)}
+.caplabel{position:absolute;transform:translateX(-50%);white-space:nowrap;font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:.9rem;font-size:.9rem;color:var(--muted);margin-top:.5rem}
+.legend i{display:inline-block;width:.85rem;height:.85rem;border-radius:3px;margin-right:.35rem;vertical-align:-.08em;border:1px solid rgba(0,0,0,.12)}
+
+.breakdown{margin-top:1.5rem;border-top:1px dashed var(--line);padding-top:1rem}
+.breakdown h3{margin-top:0}
+.result h3{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:1.08rem;margin:1.4rem 0 .5rem}
+.row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.15rem 1rem;padding:.4rem 0;font-size:1.03rem}
+.row .k{color:var(--muted);flex:1 1 auto;min-width:0;overflow-wrap:break-word;hyphens:auto}
+.row .v{font-weight:700;font-variant-numeric:tabular-nums;text-align:right;flex:0 1 auto;min-width:0;overflow-wrap:break-word}
+.row.total{border-top:2px solid var(--pine);margin-top:.4rem;padding-top:.65rem;font-size:1.12rem}
+.row.total .k{color:var(--pine-deep);font-weight:700}
+.row.total .v{color:var(--amber-deep)}
+.row.sub .k{padding-left:1.1rem;font-size:.95rem}
+.row.sub .v{font-weight:600;font-size:.97rem}
+
+.splitbar{margin-top:1rem;height:1.3rem;border-radius:8px;overflow:hidden;display:flex;background:#E4ECE7}
+.splitbar div{transition:width .45s ease}
+.splitbar .z{background:var(--pine)}
+.splitbar .k358{background:var(--pine-soft)}
+.splitbar .k270{background:var(--sky)}
+.splitbar .krest{background:var(--red)}
+.splitbar .em{background:var(--amber)}
+
+/* Vorteils-Karten */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem;margin-top:1.4rem}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.15rem;min-width:0}
+.card.accent{border-color:var(--pine-soft);background:linear-gradient(160deg,#fff,var(--mint) 160%)}
+.card .cap{font-size:.9rem;font-weight:700;color:var(--pine);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.35rem}
+.card .big{
+  font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:1.9rem;
+  color:var(--pine-deep);line-height:1.1;font-variant-numeric:tabular-nums;margin-bottom:.3rem;
+}
+.card .big.minus{color:var(--red)}
+.card .exp{font-size:.93rem;color:var(--muted);line-height:1.5}
+
+.notes{margin-top:1.3rem;display:grid;gap:.55rem}
+.note{
+  background:#FFF;border-left:4px solid var(--amber);
+  border-radius:0 10px 10px 0;padding:.7rem .95rem;font-size:.97rem;line-height:1.55;
+}
+.note.good{border-left-color:var(--pine-soft)}
+.note.stop{border-left-color:var(--red)}
+.note .tag{font-weight:700;color:var(--pine-deep)}
+
+.disclaimer{margin-top:1.6rem;font-size:.86rem;color:var(--muted);line-height:1.6}
+footer{margin-top:3rem;padding-top:1.2rem;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+footer p{margin-bottom:.5rem}
+
+/* Kennzahlleiste */
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin:1rem 0}
+.kpi>div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:.75rem .85rem;min-width:0}
+.kpi b{display:block;font-size:1.2rem;color:var(--pine);font-variant-numeric:tabular-nums;font-family:Georgia,serif}
+.kpi span{font-size:.85rem;color:var(--muted);line-height:1.4;display:block}
+
+/* Inhaltsverzeichnis der Studie */
+nav.toc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem 1.3rem;margin-top:1.5rem}
+nav.toc b{display:block;color:var(--pine-deep);margin-bottom:.5rem}
+nav.toc ol{margin:0;padding-left:1.3rem}
+nav.toc li{margin-bottom:.3rem}
+
+blockquote{
+  border-left:4px solid var(--pine-soft);background:var(--mint);
+  padding:.9rem 1.1rem;border-radius:0 12px 12px 0;margin:1rem 0;
+}
+ul.tick{list-style:none;padding:0;margin:.6rem 0}
+ul.tick li{padding-left:1.7rem;position:relative;margin-bottom:.5rem}
+ul.tick li::before{content:"▸";position:absolute;left:.35rem;color:var(--pine-soft);font-weight:700}
+ol.num{padding-left:1.4rem;margin:.6rem 0}
+ol.num li{margin-bottom:.5rem}
+
+/* ---------- Responsiv ---------- */
+@media (max-width:820px){
+  .factgrid,.kpi{grid-template-columns:repeat(2,1fr)}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .row{font-size:1rem}
+}
+@media (max-width:430px){
+  .factgrid,.kpi{grid-template-columns:1fr}
+  .fact b{font-size:1.2rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;scroll-behavior:auto!important}
+}
+/* =====================================================================
+   Druckbild (Ralf, 17.09.2026): „die EIngaben auf eine (oder Doppelseite)
+   und das Ergebnis auf 1 (oder Doppelseite) und das Kompendium/Erklärungen
+   auf weitere separate Seiten drucken".
+
+   Deshalb: Jeder Teil beginnt auf einer neuen Seite. Die Erläuterungskästen
+   der Felder werden NICHT gedruckt — sie stehen ausführlich im Kompendium,
+   und mitgedruckt füllten sie allein mehrere Seiten. Eingeklappte
+   Feineinstellungen bleiben weg (gedruckt wird der Bildschirmzustand); die
+   Kompendium-Abschnitte werden dagegen aufgeklappt gedruckt.
+   ===================================================================== */
+@media print{
+  body{background:#fff;font-size:11pt}
+  /* Nur der Rechner druckt kleiner; die Studie behaelt ihre Leseschrift */
+  body.modus-wppv{font-size:9.5pt}
+  header.site{background:#fff;color:#000;padding:.5rem 0}
+  header.site h1{font-size:15pt}
+  header.site p.lede,.badge{display:none}
+  .brand img{width:110px}
+  .crosslink,.skip,.knopfzeile,.knopfzeile-oben,.qmark{display:none!important}
+  .tipbox{display:none!important}
+  #zone-input input,#zone-input select{min-height:0;padding:.1rem .3rem;font-size:9pt}
+  /* Im Druck stehen die Felder in einem festen Raster statt nebeneinander zu
+     fliessen: Am Bildschirm ist jedes Feld nur so breit wie noetig, auf dem
+     Papier bliebe rechts sonst viel Luft und die Eingaben brauchten drei
+     Seiten statt einer. */
+  #zone-input .reihe{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem .6rem}
+  #zone-input .reihe>*{max-width:none;width:auto;margin:0}
+  /* Breite Felder behalten zwei Rasterspalten, sonst schneidet die
+     geschlossene Auswahlliste ihren Text ab (gemessen 18.09.2026). */
+  #zone-input .feld-l,#zone-input .feld-ml,#zone-input .feld-xl,
+  #zone-input .feld-voll{grid-column:span 2}
+  #zone-input .leghint{font-size:7.5pt;margin-bottom:.2rem}
+  #zone-input fieldset{margin:0 0 .45rem 0;padding:.4rem .6rem;break-inside:avoid}
+  #form legend{font-size:11pt}
+  #zone-input label{font-size:8.5pt}
+  #zone-input .hint{font-size:7.5pt;margin-top:.05rem}
+  details.info{break-inside:avoid}
+  /* Eingeklapptes bleibt weg. Chromium klappt beim Drucken JEDEN
+     Aufklapp-Block auf und setzt sich dabei ueber CSS hinweg (gemessen
+     18.09.2026) — deshalb markiert das Skript vor dem Drucken, was
+     zugeklappt ist, und klappt das Kompendium auf. */
+  details.zugeklappt{display:none!important}
+  #zone-kompendium details.info>.body{display:block!important}
+  /* Das Eingabeformular und der Ergebnisblock sind selbst „panel" bzw.
+     „result": Hielte man sie zusammen, ruecken sie als Ganzes auf die
+     naechste Seite und brauchen je eine Seite mehr. Zusammengehalten werden
+     deshalb nur die kleinen Bausteine. */
+  .panel:not(#form),.card,.note{break-inside:avoid}
+  fieldset{break-inside:auto}
+  /* Ergebnis kompakt, damit es auf eine Doppelseite passt */
+  #zone-result .result{padding:.5rem .7rem}
+  #zone-result .bignum{font-size:19pt;margin:.1rem 0}
+  #zone-result .toplabel,#zone-result .subline{margin:.1rem 0}
+  #zone-result .breakdown,#zone-result .cards{margin:.4rem 0;gap:.5rem}
+  /* Die drei Vorteilskarten stehen auf dem Papier nebeneinander statt
+     untereinander — das spart rund eine halbe Seite. */
+  #zone-result .cards{grid-template-columns:repeat(3,1fr)}
+  #zone-result .row{padding:.1rem 0}
+  #zone-result .card{padding:.45rem .6rem}
+  #zone-result .notes .note{padding:.25rem .45rem;margin:.2rem 0;font-size:8pt}
+  #zone-result .subline{font-size:8.5pt}
+  #zone-result h3{margin:.3rem 0 .2rem}
+  /* Eingaben · Ergebnis · Wann investieren · Kompendium: je eigene Seiten */
+  #zone-input,#zone-result,#zone-zeit{break-after:page}
+  #zone-kompendium{break-before:page}
+}
+@media (forced-colors:active){
+  .segb,.splitbar div{forced-color-adjust:none}
+  .seg input:checked+label{background:Highlight;color:HighlightText}
+}
+
+
+/* =====================================================================
+   Kompaktes Eingaberaster
+   Felder stehen nebeneinander und sind nur so breit wie nötig.
+   feld-s = kurze Zahl, feld-m = Betrag, feld-l = Auswahlliste
+   ===================================================================== */
+.reihe{display:flex;flex-wrap:wrap;gap:.9rem 1.1rem;align-items:flex-start}
+/* Kein Feld wächst über seine Sollbreite hinaus (flex-grow 0); die
+   Sollbreiten sind an der jeweils längsten Eintragung gemessen. Zu lange
+   Beschriftungen brechen in eine zweite Zeile um, statt das Feld zu
+   verbreitern. */
+.feld{min-width:0;flex:0 1 auto;width:100%}
+.feld-s{max-width:10.5rem}   /* kurze Zahl, Ja/Nein-Schalter        */
+.feld-m{max-width:12rem}     /* Betrag, kurze Auswahl               */
+.feld-ml{max-width:17rem}    /* Auswahl: Antragszeitpunkt u. Ä.     */
+.feld-l{max-width:21rem}     /* Auswahl: Heizungsart, Fertigung     */
+.feld-xl{max-width:24.5rem}  /* Auswahl: KfW-Laufzeitvarianten      */
+/* Kinder/Selbst bleiben als Paar nebeneinander, auch beim Umbruch */
+.feld-paar{display:flex;flex-wrap:wrap;gap:.9rem 1.1rem;flex:0 1 auto;min-width:0;width:100%;max-width:22.1rem}
+.feld>label,.feld .feldlegend{
+  display:flex;align-items:flex-start;gap:.35rem;flex-wrap:wrap;
+  font-weight:700;font-size:.97rem;color:var(--pine-deep);
+  margin-bottom:.3rem;padding:0;line-height:1.3;
+  min-height:2.6em;                 /* zwei Zeilen – so fluchten die Felder */
+  /* Lange Wörter wie „Betrachtungsdauer“ müssen im schmalen Feld
+     umbrechen dürfen, sonst hängen sie über den Kasten hinaus.
+     „anywhere“ statt „break-word“, weil der Text hier ein anonymes
+     Flex-Element ist: nur „anywhere“ senkt dessen Mindestbreite. */
+  overflow-wrap:anywhere;hyphens:auto;
+}
+.feld>label,.feld .feldlegend{align-items:flex-end}
+.feld .hint{min-height:2.4em}
+.feld .hint{font-size:.83rem;color:var(--muted);margin:.3rem 0 0;line-height:1.35}
+.feld .unitwrap input,.feld select{
+  font-size:1.05rem;min-height:48px;padding-top:.55rem;padding-bottom:.55rem;
+}
+.feld select{padding-right:2.4rem;background-position:right .75rem center}
+.feld .qmark{width:1.5rem;height:1.5rem;font-size:.85rem}
+.feld .seg label{min-height:48px;font-size:.98rem;padding:.5rem .4rem}
+.feld select:disabled{background-color:#EEF2EF;color:var(--muted);cursor:not-allowed;opacity:1}
+
+/* Erläuterungskasten direkt unter seinem Feld: Er liegt über dem Inhalt
+   darunter und verschiebt nichts. Die waagerechte Lage setzt das Skript so,
+   dass der Kasten nicht über den Bildschirmrand ragt. */
+.feld{position:relative}
+.feld>.tipbox{
+  position:absolute;top:100%;left:0;z-index:40;
+  width:26rem;max-width:calc(100vw - 16px);margin:.35rem 0 0;
+  box-shadow:0 6px 18px rgba(0,0,0,.22);
+}
+/* Aufklappblöcke dürfen Kästen nicht abschneiden */
+details.fein{overflow:visible}
+
+/* Zwischenüberschriften der Eingabegruppen */
+#form legend{font-size:1.3rem;margin-bottom:.75rem}
+#form fieldset+fieldset{margin-top:1.4rem;padding-top:1.2rem}
+/* Ja/Nein-Felder sind selbst fieldsets: weder Gruppenabstand noch
+   Gruppenschrift – ihre Legende sieht aus wie jede Feldbeschriftung. */
+#form fieldset.feld{margin:0;padding:0;border:none}
+#form .feld .feldlegend{font-family:inherit;font-size:.97rem;margin-bottom:.3rem}
+.knopfzeile{margin:1rem 0 0}
+.knopf{
+  font:inherit;font-size:.95rem;font-weight:700;padding:.6rem 1.1rem;min-height:48px;
+  border:2px solid var(--pine);background:#fff;color:var(--pine);
+  border-radius:10px;cursor:pointer;
+}
+.knopf:hover{background:var(--mint)}
+details.fein{margin-top:1.1rem;background:#FBFDFC}
+details.fein summary{
+  min-height:48px;padding:.75rem 1rem;
+  font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:1.3rem;color:var(--pine-deep);
+}
+details.fein .body{padding:0 1rem 1.1rem}
+
+/* Kompendium: nachgeschaltet, optisch ruhiger */
+#zone-kompendium{border-top:2px solid var(--line);padding-top:1.6rem}
+
+/* Variante „nur Wärmepumpe“ blendet die Solarteile aus */
+body.modus-wp .nur-pv{display:none!important}
+/* Laufzeit-Schalter: Wer 0 kWp einträgt, will den reinen Wärmepumpenfall;
+   wer 0 kW einträgt, den reinen Photovoltaikfall. Die Klassen werden in
+   update() gesetzt, damit gegenstandslose Blöcke gar nicht erst erscheinen.
+   Das Eingabeformular ist ausgenommen – sonst verschwände das Feld, mit
+   dem man den Fall wieder verlassen will, und der Nutzer säße fest. */
+body.ohne-pv .nur-pv:not(#form .nur-pv){display:none!important}
+body.ohne-wp .nur-wp:not(#form .nur-wp){display:none!important}
+.nur-wp-info{display:none}
+body.ohne-wp .nur-wp-info{display:block}
+
+@media (max-width:560px){
+  .feld-s,.feld-m,.feld-ml,.feld-l,.feld-xl,.feld-paar{flex-basis:100%;max-width:none}
+}
+/* Eine geschlossene Auswahlliste kann nicht umbrechen: Ist ihr Text breiter
+   als das Feld, schneidet der Browser ihn still ab. Auf schmalen Bildschirmen
+   deshalb kleinere Schrift und knapperer Innenabstand – gemessen an den
+   längsten Einträgen (Heizungsart, Laufzeitvarianten). */
+@media (max-width:480px){
+  .feld select{font-size:.92rem;padding-left:.75rem;padding-right:1.9rem;background-position:right .6rem center}
+}
+@media (max-width:380px){
+  .feld select{font-size:.82rem}
+}
+
+/* --- Rücksetz-Knopf in der rechten unteren Ecke des Kopfbanners ---------
+   Er gehört sichtbar nach ganz oben: Wer den Rechner für den nächsten
+   Ratsuchenden leeren will, sucht ihn dort — nicht am Ende der
+   Eingabefelder und erst recht nicht in einem eingeklappten Abschnitt.
+   Der Banner ist dunkelgrün, der Knopf deshalb hell auf durchscheinendem
+   Grund. Auf schmalen Geräten läuft er in den Textfluss zurück, damit er
+   das Logo nicht überdeckt. */
+header.site .wrap{position:relative}
+/* Zwei Knoepfe nebeneinander: Drucken und Zuruecksetzen. */
+.knopfzeile-oben{position:absolute;right:0;bottom:0;display:flex;gap:.5rem;
+  flex-wrap:wrap;justify-content:flex-end}
+.knopf-oben{font:inherit;font-size:.74rem;
+  font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:.42rem .8rem;min-height:0;border:1.5px solid rgba(255,255,255,.55);
+  background:rgba(255,255,255,.10);color:#fff;border-radius:8px;
+  cursor:pointer;white-space:nowrap}
+.knopf-oben:hover{background:rgba(255,255,255,.22);
+  border-color:rgba(255,255,255,.9)}
+.knopf-oben:focus-visible{outline:2px solid #fff;outline-offset:2px}
+@media (max-width:640px){
+  .knopfzeile-oben{position:static;margin-top:.9rem;justify-content:flex-start}
+}
+
+</style>
+</head>
+<body class="modus-wppv">
+<a class="skip" href="#zone-input">Direkt zu den Eingabefeldern springen</a>
+<noscript><div style="background:#B4402D;color:#fff;padding:1rem 1.2rem;font-weight:600;font-size:1.05rem;text-align:center">Dieser Rechner benötigt JavaScript. Bitte öffnen Sie die Datei direkt in einem Browser (Safari, Chrome, Firefox o.&nbsp;ä.) – in einer reinen Datei-Vorschau reagieren die Eingaben nicht und es werden nur Beispielwerte angezeigt.</div></noscript>
+
+<header class="site">
+  <div class="wrap">
+    <div class="headrow">
+      <div class="headtxt">
+        <span class="badge">GModG-Stand 10.07.2026 · EEG-Regierungsentwurf 29.07.2026</span>
+        <h1>Förderrechner Wärmepumpe und Photovoltaik</h1>
+        <p class="lede">Was bringt die Förderung, wenn Wärmepumpe, Photovoltaik und Speicher gemeinsam geplant werden? Der Rechner verbindet den Heizungszuschuss (KfW&nbsp;458) mit dem Ergänzungskredit&nbsp;358 und dem PV-Kredit&nbsp;270 – und rechnet mit 0&nbsp;kWp genauso für den reinen Heizungstausch.</p>
+        <a class="crosslink" href="#zone-kompendium">Zum Kompendium: Erläuterungen, Tabellen und Quellen &nbsp;↓</a>
+      </div>
+      <div class="brand"><a href="https://bns.worms.de" target="_blank" rel="noopener" title="Webseite des Bürgernetzwerks öffnen"><img src="data:image/jpeg;base64,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" alt="Logo BürgerNetzwerkSolar Worms" width="180" height="123"></a></div>
+    </div>
+    <div class="knopfzeile-oben">
+      <button type="button" class="knopf-oben" id="druckenOben" title="Druckdialog öffnen – gedruckt werden Eingaben, Ergebnis und Erläuterungen auf getrennten Seiten">Ergebnisse ausdrucken</button>
+      <button type="button" class="knopf-oben" id="resetOben" title="Alle Eingaben auf die Voreinstellung zurücksetzen">Werte zurücksetzen</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ================= EINGABEN ================= -->
+<section class="zone" id="zone-input" aria-labelledby="h-input">
+  <div class="eyebrow"><span class="step">1</span> <span id="h-input">Ihre Angaben</span></div>
+  <h2>Ihre Angaben</h2>
+  <p class="intro" id="intro-eingaben">Die Voreinstellungen beschreiben ein typisches Einfamilienhaus mit 10&nbsp;kWp und 10&nbsp;kWh Speicher. Ohne Solaranlage: PV-Leistung auf 0 setzen. Ändern Sie nur, was Sie genauer wissen – gerechnet wird sofort.</p>
+
+  <form class="panel" id="form" novalidate>
+
+    <fieldset>
+      <legend>Wärmepumpe</legend>
+      <div class="reihe">
+        <div class="feld feld-s">
+          <label for="wpKw">Heizleistung <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-wp" data-tip="tip-wp"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zur Heizleistung</span></button></label>
+          <div class="unitwrap"><input type="number" id="wpKw" inputmode="decimal" min="0" max="20" step="0.5"><span class="unit" aria-hidden="true">kW</span></div>
+          <p class="hint">3–20, laut Heizlastberechnung.<br><b>0 = keine Wärmepumpe</b> (reiner Photovoltaik-Fall)</p>
+        </div>
+        <div class="feld feld-m">
+          <label for="kostenWP">Kosten laut Angebot <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-kosten" data-tip="tip-kosten"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zu den förderfähigen Kosten</span></button></label>
+          <div class="unitwrap"><input type="number" id="kostenWP" inputmode="numeric" min="0" max="150000" step="500"><span class="unit" aria-hidden="true">€</span></div>
+          <p class="hint" id="hint-wp">Richtwert</p>
+        </div>
+        <div class="feld feld-l">
+          <label for="heizung">Alte Heizung, noch funktionstüchtig <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-fossil" data-tip="tip-fossil"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zum Klimabonus</span></button></label>
+          <select id="heizung">
+            <option value="oel">Öl, Kohle, Gasetage, Nachtspeicher</option>
+            <option value="gas20">Gas oder Biomasse, ab 20 Jahre</option>
+            <option value="gasneu">Gas oder Biomasse, jünger</option>
+            <option value="keine">defekt oder nicht fossil</option>
+          </select>
+          <p class="hint">Entscheidet über den Klimabonus</p>
+        </div>
+        <div class="feld feld-l">
+          <label for="herkunft">Wertschöpfungsbonus <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-herkunft" data-tip="tip-herkunft"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zum Wertschöpfungsbonus</span></button></label>
+          <select id="herkunft" disabled aria-describedby="hint-herkunft">
+            <option value="eu">noch nicht geregelt</option>
+          </select>
+          <p class="hint" id="hint-herkunft">Gesetzliche Regelung steht aus</p>
+        </div>
+      </div>
+      <div class="tipbox" id="tip-kosten">Gesamtkosten laut Angebot <b>einschliesslich Einbau und Umfeldmassnahmen</b> – etwa Pufferspeicher, grössere Heizkörper, Fussbodenheizung, Elektroarbeiten, Demontage und Entsorgung der Altanlage. Gefördert wird davon höchstens der Förderdeckel des gewählten Halbjahres; alles darüber ist vollständig Eigenanteil. Solange Sie kein Angebot haben, steht hier der Richtwert aus der Heizleistung – er beschreibt das Marktmittel. Der BNS-Wirtschaftlichkeitsrechner Wärmepumpe rechnet wahlweise auch mit der Preistabelle des Netzwerks (vier Hersteller, gehobene Mittelklasse); die liegt rund 7&nbsp;% höher.</div>
+      <div class="tipbox" id="tip-wp">Als Faustwert: 5&nbsp;kW für ein kleines oder gut saniertes Haus, 8&nbsp;kW für ein typisches Einfamilienhaus, 10&nbsp;kW für ein großes oder nur teilsaniertes Gebäude. Eine zu groß gewählte Wärmepumpe taktet häufiger und verbraucht mehr Strom – die Heizlastberechnung nach DIN&nbsp;EN&nbsp;12831 ist nicht durch eine Faustformel zu ersetzen. <b>Für den reinen Photovoltaik-Fall hier 0&nbsp;kW eintragen</b> – dann entfällt die Heizungsförderung, und es bleibt der PV-Kredit KfW&nbsp;270.</div>
+      <div class="tipbox" id="tip-fossil">Den Klimageschwindigkeitsbonus gibt es nur, wenn eine <b>funktionstüchtige</b> Heizung ersetzt wird: eine Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizung ohne Altersgrenze, eine Gas-Zentral- oder Biomasseheizung, wenn sie mindestens 20&nbsp;Jahre alt ist. <b>Ist die alte Heizung defekt, entfällt der Bonus</b> – auch bei einer über 20&nbsp;Jahre alten Anlage. Wählen Sie dann „defekt oder nicht fossil“.</div>
+      <div class="tipbox" id="tip-herkunft">Nach den Eckpunkten der Bundesregierung vom 08.07.2026 soll die Grundförderung für Wärmepumpen ab 2027 von 30&nbsp;% auf 15&nbsp;% sinken; Geräte mit mindestens 15&nbsp;% Wertschöpfung in der EU sollen 15&nbsp;% Wertschöpfungsbonus erhalten und damit wieder auf 30&nbsp;% kommen. <b>Die gesetzliche Regelung steht aus.</b> Der Rechner rechnet deshalb für alle Antragszeitpunkte mit 30&nbsp;% Grundförderung. Kommt die Regelung wie angekündigt, erhielten Geräte ohne EU-Wertschöpfung ab 2027 nur 15&nbsp;%.</div>
+    </fieldset>
+
+    <fieldset class="nur-pv">
+      <legend>Photovoltaik und Speicher</legend>
+      <div class="reihe">
+        <div class="feld feld-s">
+          <label for="pvKwp">PV-Leistung <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-pv" data-tip="tip-pv"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zur PV-Größe</span></button></label>
+          <div class="unitwrap"><input type="number" id="pvKwp" inputmode="decimal" min="0" max="15" step="0.5"><span class="unit" aria-hidden="true">kWp</span></div>
+          <p class="hint">5–15.<br><b>0 = keine Anlage</b> (reiner Wärmepumpen-Fall)</p>
+        </div>
+        <div class="feld feld-m">
+          <label for="kostenPV">Kosten PV-Anlage <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-kpv" data-tip="tip-kpv"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zum Umfang</span></button></label>
+          <div class="unitwrap"><input type="number" id="kostenPV" inputmode="numeric" min="0" max="100000" step="100"><span class="unit" aria-hidden="true">€</span></div>
+          <p class="hint" id="hint-pv">Richtwert</p>
+        </div>
+        <div class="feld feld-s">
+          <label for="spKwh">Speicher <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-sp" data-tip="tip-sp"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zum Speicher</span></button></label>
+          <div class="unitwrap"><input type="number" id="spKwh" inputmode="decimal" min="0" max="15" step="0.5"><span class="unit" aria-hidden="true">kWh</span></div>
+          <p class="hint">5–15; 0 = kein Speicher</p>
+        </div>
+        <div class="feld feld-m">
+          <label for="kostenSP">Kosten Speicher <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-ksp" data-tip="tip-ksp"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zum Umfang</span></button></label>
+          <div class="unitwrap"><input type="number" id="kostenSP" inputmode="numeric" min="0" max="60000" step="100"><span class="unit" aria-hidden="true">€</span></div>
+          <p class="hint" id="hint-sp">Richtwert</p>
+        </div>
+      </div>
+      <div class="tipbox" id="tip-pv">Für eine Wärmepumpe im Einfamilienhaus sind 8–12&nbsp;kWp üblich. Wichtig für den Zeitpunkt: Ab Inbetriebnahme 2029 gibt es die Übergangszahlung nur noch für Anlagen <b>unter 7&nbsp;kW</b>. <b>Für den reinen Wärmepumpen-Fall hier 0&nbsp;kWp eintragen</b> – dann rechnet der Rechner allein die Heizungsförderung.</div>
+      <div class="tipbox" id="tip-kpv">Der Richtwert beziffert die <b>betriebsfertige Anlage</b>: Module, Unterkonstruktion, Gleichstromverkabelung, Wechselrichter und deren Montage sowie die vier Elektro-Nebenleistungen – Wechselstromleitung bis zum Zähler, Inbetriebnahme und Einmessung, Anmeldung bei Netzbetreiber und Marktstammdatenregister sowie Kleinmaterial, nach dem BNS-PV-Preisrechner zusammen rund 1.250&nbsp;€. <b>Nicht enthalten</b> sind die Kernbohrung (rund 180 bis 850&nbsp;€ je nach Abdichtungsart), Wallbox, Erneuerung des Zählerschranks und Bauarbeiten. <b>Tragen Sie Ihre Angebotssumme ein, sobald Sie eine haben.</b> Ob ein Angebot preislich in Ordnung ist, prüft der BNS-PV-Preisrechner gegen die Spanne Minimal bis Hochwertig.</div>
+      <div class="tipbox" id="tip-ksp">Der Richtwert gilt für einen Speicher, der <b>gemeinsam mit der neuen Anlage</b> gleichstromseitig an den Hybrid-Wechselrichter kommt – dann fallen nur Batteriemodule, Hybrid-Aufpreis und Montageanteil an. Eine spätere Nachrüstung braucht einen eigenen Batterie-Wechselrichter und kostet bei 10&nbsp;kWh rund 2.000&nbsp;€ mehr. Die Qualitätsstaffelung von den Mengenmarken bis zu Premium-Geräten zeigt der BNS-PV-Preisrechner.</div>
+      <div class="tipbox" id="tip-sp">Faustregel: rund 1&nbsp;kWh je 1.000&nbsp;kWh Jahresverbrauch (bei einem Einfamilienhaus meist 5 bis 8&nbsp;kWh); mehr bringt zunehmend weniger. Der Richtwert gilt für den Einbau gemeinsam mit einer neuen PV-Anlage; eine <b>Nachrüstung</b> in eine bestehende Anlage ist deutlich teurer.</div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Haushalt und Zeitpunkt</legend>
+      <div class="reihe">
+        <div class="feld feld-m">
+          <label for="zve">Einkommen (zvE) <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-zve" data-tip="tip-zve"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zum Einkommen</span></button></label>
+          <div class="unitwrap"><input type="number" id="zve" inputmode="numeric" min="0" max="500000" step="1000"><span class="unit" aria-hidden="true">€</span></div>
+          <p class="hint">laut Steuerbescheid</p>
+        </div>
+        <div class="feld feld-ml">
+          <label for="periode">Antrag bei der KfW <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-zeit" data-tip="tip-zeit"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zum Antragszeitpunkt</span></button></label>
+          <select id="periode"></select>
+          <p class="hint">Immer <b>vor</b> der Auftragserteilung</p>
+        </div>
+        <div class="feld-paar">
+          <fieldset class="feld feld-s">
+            <legend class="feldlegend">Kinder unter 18? <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-kinder" data-tip="tip-kinder"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zum Kinderzuschlag</span></button></legend>
+            <div class="seg">
+              <span class="opt"><input type="radio" name="kinder" id="kinder-ja" value="ja"><label for="kinder-ja">Ja</label></span>
+              <span class="opt"><input type="radio" name="kinder" id="kinder-nein" value="nein" checked><label for="kinder-nein">Nein</label></span>
+            </div>
+            <p class="hint">−10.000 € Einkommen</p>
+          </fieldset>
+          <fieldset class="feld feld-s">
+            <legend class="feldlegend">Selbst bewohnt? <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-selbst" data-tip="tip-selbst"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zur Selbstnutzung</span></button></legend>
+            <div class="seg">
+              <span class="opt"><input type="radio" name="selbst" id="selbst-ja" value="ja" checked><label for="selbst-ja">Ja</label></span>
+              <span class="opt"><input type="radio" name="selbst" id="selbst-nein" value="nein"><label for="selbst-nein">Nein</label></span>
+            </div>
+            <p class="hint">Nur dann gibt es Boni</p>
+          </fieldset>
+        </div>
+      </div>
+      <div class="tipbox" id="tip-kinder">Mindestens ein minderjähriges Kind (unter 18) mit Hauptwohnsitz in der Wohnung, <b>für das eine Kindergeldberechtigung vorliegt</b>, senkt das angesetzte Einkommen <b>einmalig um 10.000&nbsp;€</b> &ndash; unabhängig von der Zahl der Kinder. Volljährige Kinder zählen nicht, auch wenn für sie Kindergeld fließt (etwa in Ausbildung bis 25). Das kann eine höhere Bonusstufe bedeuten und wird hier automatisch berücksichtigt.</div>
+      <div class="tipbox" id="tip-selbst">Einkommensbonus, Klimageschwindigkeitsbonus und der 80-%-Deckel gelten nur für Eigentümer mit <b>Hauptwohnsitz im Objekt</b>. Bei Vermietung bleibt die Grundförderung; auch der zinsverbilligte Ergänzungskredit&nbsp;358 setzt Selbstnutzung voraus.</div>
+      <div class="tipbox" id="tip-zve">Zu versteuerndes Einkommen laut Steuerbescheid – deutlich niedriger als das Brutto, alle Haushaltsmitglieder zusammen. Für den <b>Zuschuss</b> zählt das vorletzte Jahr vor dem Antrag (Antrag 2026 &rarr; Einkommen 2024), für die <b>Zinsverbilligung</b> im Kredit&nbsp;358 der Durchschnitt des zweiten und dritten Jahres vor Antragstellung.</div>
+      <div class="tipbox" id="tip-zeit">Der Förderdeckel sinkt halbjährlich um 750&nbsp;€, der Klimabonus ab Februar&nbsp;2027 um 4&nbsp;Prozentpunkte. Der gewählte Zeitpunkt bestimmt zugleich das EEG-Regime der Photovoltaik.</div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Finanzierung</legend>
+      <div class="reihe">
+        <div class="feld feld-m">
+          <label for="eigenmittel">Eigenmittel <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-em" data-tip="tip-em"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zu Eigenmitteln</span></button></label>
+          <div class="unitwrap"><input type="number" id="eigenmittel" inputmode="numeric" min="0" max="500000" step="500"><span class="unit" aria-hidden="true">€</span></div>
+          <p class="hint">0 = alles finanziert</p>
+        </div>
+        <div class="feld feld-s">
+          <label for="anlagezins">Ihre Anlagerendite <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-anlage" data-tip="tip-anlage"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zur Anlagerendite</span></button></label>
+          <div class="unitwrap"><input type="number" id="anlagezins" inputmode="decimal" min="0" max="20" step="0.1"><span class="unit" aria-hidden="true">%</span></div>
+          <p class="hint">nach Steuern</p>
+        </div>
+        <div class="feld feld-s">
+          <label for="inflation">Inflation <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-inf" data-tip="tip-inf"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zur Inflationsrate</span></button></label>
+          <div class="unitwrap"><input type="number" id="inflation" inputmode="decimal" min="0" max="15" step="0.1"><span class="unit" aria-hidden="true">%</span></div>
+          <p class="hint">Voreinstellung: EZB-Ziel</p>
+        </div>
+      </div>
+      <p class="knopfzeile"><button type="button" id="em-optimum" class="knopf">Optimalen Eigenmittel-Betrag übernehmen</button></p>
+
+      <p class="leghint"><b>Laufzeit, tilgungsfreie Jahre und Zins sind bei der KfW fest gekoppelt.</b> Sie wählen die Variante &ndash; der Zins ergibt sich daraus. Stand der hier verwendeten Konditionen: <b><span id="kfw-stand">–</span></b>.</p>
+      <p class="leghint"><b>Achtung: Die KfW ändert ihre Zinssätze sehr häufig</b> &ndash; nach ihrem eigenen Konditionenanzeiger mehr als fünfzigmal im Jahr, zuletzt im Abstand von wenigen Tagen. Die Sätze in diesem Rechner sind deshalb eine <b>Momentaufnahme</b> und können bereits überholt sein. Für Ihren Kredit gilt allein der Satz, den die KfW <b>am Tag der Zusage</b> festsetzt; er hängt zusätzlich von Bonität und Sicherheiten ab, die Ihre Bank einstuft. <b>Sehen Sie vor jeder Entscheidung die aktuellen Konditionen nach</b> &ndash; im <a href="https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger" target="_blank" rel="noopener" title="KfW-Konditionenanzeiger öffnen">KfW-Konditionenanzeiger</a> oder bei Ihrer Bank.</p>
+      <div class="reihe">
+        <div class="feld feld-xl">
+          <label for="variante358">Heizungskredit KfW&nbsp;358/359 <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-v358" data-tip="tip-v358"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zu den Laufzeitvarianten des Ergänzungskredits</span></button></label>
+          <select id="variante358"></select>
+          <p class="hint" id="kond-358">–</p>
+        </div>
+        <div class="feld feld-xl nur-pv">
+          <label for="variante270">PV-Kredit KfW&nbsp;270 <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-v270" data-tip="tip-v270"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zu den Laufzeitvarianten des PV-Kredits</span></button></label>
+          <select id="variante270"></select>
+          <p class="hint" id="kond-270">–</p>
+        </div>
+      </div>
+      <div class="tipbox" id="tip-v358">Die tilgungsfreien Anlaufjahre sind <b>nicht frei wählbar</b>, sondern gehören zur Variante: 5&nbsp;Jahre Laufzeit haben 1 Anlaufjahr, 10&nbsp;Jahre haben 2, 25&nbsp;Jahre haben 3, 35&nbsp;Jahre haben 5. In den Anlaufjahren zahlen Sie nur Zinsen &ndash; die Anfangsrate sinkt spürbar, die gesamte Zinssumme steigt. <b>Die kurze Variante ist die billigste:</b> 5&nbsp;Jahre kosten derzeit 0,01&nbsp;% &ndash; praktisch zinsfrei &ndash;, 35&nbsp;Jahre 2,27&nbsp;%. Wer die Rate stemmen kann, spart mit der kurzen Laufzeit am meisten. Die endfällige Variante zahlt die ganze Summe erst am Schluss auf einmal zurück; dafür braucht es eine gesicherte Rücklage.</div>
+      <div class="tipbox nur-pv" id="tip-v270">Der 270er hat ein <b>anderes Konditionsblatt</b> als der Heizungskredit &ndash; andere Laufzeiten, andere Anlaufjahre, andere Zinsen. Hinterlegt ist die Sonderkondition &bdquo;PV-Aufdach&ldquo; in der besten Preisklasse&nbsp;A. Die KfW staffelt diesen Kredit nach Bonität und Besicherung in neun Klassen von A bis I; die Einstufung nimmt Ihre Hausbank vor. Mit Klasse&nbsp;B liegt der Zins rund 0,4&nbsp;Prozentpunkte höher, mit Klasse&nbsp;C rund 0,7. Fragen Sie Ihre Bank nach der Einstufung, bevor Sie mit dem Ergebnis rechnen.</div>
+      <div class="tipbox" id="tip-anlage">Was Ihr Geld bringen würde, wenn es nicht im Projekt steckt &ndash; nach Steuern und Kosten. Das ist die entscheidende Vergleichsgrösse. Tagesgeld liegt oft bei 1&ndash;2&nbsp;%, ein breit gestreutes Wertpapierdepot langfristig eher bei 4&ndash;6&nbsp;%, bringt aber Schwankungsrisiko mit. Voreingestellt sind vorsichtige 2,5&nbsp;%. Wer hier einen hohen Wert wählt, sollte ehrlich sein: Die Rendite ist unsicher, die Zinsersparnis ist es nicht.</div>
+      <div class="tipbox" id="tip-em">Eigenmittel sind <b>kein kostenloses Geld</b>: Was im Projekt steckt, kann nicht angelegt werden. Jeder Euro lohnt sich genau dann, wenn der Zins der damit vermiedenen Schuld <b>über</b> Ihrer Anlagerendite liegt. Der Knopf setzt genau den Betrag ein, der sich rechnet.</div>
+      <div class="tipbox" id="tip-inf">Mit diesem Satz werden künftige Raten auf heutige Kaufkraft abgezinst. Je höher die Inflation, desto wertvoller ein zinsverbilligter Kredit: Liegt der Kreditzins darunter, ist Finanzieren real günstiger als Barzahlen.</div>
+
+      <details class="info fein">
+        <summary><span class="ttl">Vergleichszins und weitere Annahmen</span><span class="chev" aria-hidden="true">▾</span></summary>
+        <div class="body">
+          <div class="reihe">
+            <div class="feld feld-s">
+              <label for="zinsKonsum">Zins Bankkredit <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-kk" data-tip="tip-kk"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zum Vergleichszins</span></button></label>
+              <div class="unitwrap"><input type="number" id="zinsKonsum" inputmode="decimal" min="0" max="25" step="0.01"><span class="unit" aria-hidden="true">%</span></div>
+              <p class="hint">Vergleichsmaßstab</p>
+            </div>
+            <div class="feld feld-ml">
+              <label for="eigenmittelVerwendung">Eigenmittel zuerst für <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-emv" data-tip="tip-emv"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zur Reihenfolge</span></button></label>
+              <select id="eigenmittelVerwendung">
+                <option value="optimal">automatisch (empfohlen)</option>
+                <option value="pv">zuerst Photovoltaik</option>
+                <option value="wp">zuerst Wärmepumpe</option>
+                <option value="anteilig">gleichmäßig verteilen</option>
+              </select>
+              <p class="hint">Reihenfolge ist Geld wert</p>
+            </div>
+            <div class="feld feld-s">
+              <label for="realePreisentwicklung">Reale Preise <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-preis" data-tip="tip-preis"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zur realen Preisentwicklung</span></button></label>
+              <div class="unitwrap"><input type="number" id="realePreisentwicklung" inputmode="decimal" min="-15" max="15" step="0.5"><span class="unit" aria-hidden="true">%</span></div>
+              <p class="hint">0 = folgt der Inflation</p>
+            </div>
+          </div>
+          <div class="tipbox" id="tip-kk">Der Vergleichsmassstab: Was würde dasselbe Vorhaben kosten, wenn Sie es <b>ohne Förderkredite</b> über einen gewöhnlichen Modernisierungs- oder Ratenkredit finanzieren? Voreingestellt sind 7,0&nbsp;% effektiv &ndash; ein realistischer Mittelwert; Ratenkredite liegen oft darüber, grundpfandrechtlich besicherte Modernisierungskredite darunter. Dies ist kein Förderzins und deshalb änderbar: Tragen Sie ein, was Ihre Bank Ihnen tatsächlich anbietet.</div>
+          <div class="tipbox" id="tip-emv">Die Reihenfolge ist bares Geld wert. Wer die Eigenmittel in die <b>Wärmepumpe</b> steckt, verdrängt damit den billigsten Kredit im ganzen Paket &ndash; den zinsverbilligten 358er. Wer sie in <b>Photovoltaik und Speicher</b> steckt, verdrängt den teureren 270er. Bei gleichem Betrag ist der Unterschied oft vierstellig. &bdquo;Automatisch&ldquo; wählt immer den teuersten Baustein zuerst.</div>
+          <div class="tipbox" id="tip-preis">Der Rechner arbeitet in konstanten Preisen des 2.&nbsp;Halbjahres 2026. Bei 0&nbsp;% unterstellt er also nicht gleichbleibende Preisschilder, sondern gleichbleibende <b>reale</b> Preise &ndash; die Anlagentechnik wird nominal genauso teurer wie alles andere. Wer einen darüber hinausgehenden realen Rückgang erwartet, wählt einen negativen Wert. Bei Photovoltaik und Speichern waren &minus;3 bis &minus;5&nbsp;%&nbsp;p.&nbsp;a. real über Jahre der Normalfall, bei Wärmepumpen deutlich weniger. Der Wert wirkt nur auf spätere Antragszeitpunkte: Ihre eingetragenen Kosten gelten als heutiger Preisstand.</div>
+          <p class="knopfzeile"><button type="button" id="reset" class="knopf">Alle Werte zurücksetzen</button></p>
+        </div>
+      </details>
+    </fieldset>
+
+  </form>
+</section>
+<!-- ================= ZONE 3 : ERGEBNIS ================= -->
+<section class="zone" id="zone-result" aria-labelledby="h-result">
+  <div class="eyebrow"><span class="step">2</span> <span id="h-result">Ihr Ergebnis</span></div>
+  <h2>Ihr Ergebnis</h2>
+
+  <div class="result" aria-live="polite" aria-atomic="false">
+    <p class="toplabel nur-wp">Ihr voraussichtlicher Zuschuss (KfW 458)</p>
+    <p class="bignum nur-wp" id="out-zuschuss">–</p>
+    <p class="subline nur-wp" id="out-sub">–</p>
+
+    <div class="nur-wp-info">
+      <p class="toplabel">Ohne Wärmepumpe kein Zuschuss</p>
+      <p class="subline">Die Heizungsförderung (KfW&nbsp;458) setzt eine
+      Heizungsmaßnahme voraus. Photovoltaik und Speicher werden nicht
+      bezuschusst – für sie steht der zinsgünstige Kredit KfW&nbsp;270 offen,
+      den diese Rechnung unten ausweist.</p>
+    </div>
+
+    <div class="ratehead nur-wp"><span>Ihr Fördersatz</span><span class="pct" id="out-satz">–</span></div>
+    <div class="stack nur-wp" id="stackbar" role="img" aria-labelledby="stack-desc"></div>
+    <div class="caplineWrap nur-wp" id="capwrap" aria-hidden="true"></div>
+    <p id="stack-desc" class="visually-hidden">–</p>
+    <div class="legend nur-wp" aria-hidden="true">
+      <span><i style="background:var(--pine)"></i>Grundförderung</span>
+      <span><i style="background:var(--pine-soft)"></i>Einkommensbonus</span>
+      <span><i style="background:var(--amber)"></i>Klimabonus</span>
+      <span><i style="background:repeating-linear-gradient(45deg,#C9D5CE 0 4px,#B7C6BE 4px 8px)"></i>über Deckel – entfällt</span>
+    </div>
+
+    <div class="breakdown">
+      <h3>Was das Projekt kostet</h3>
+      <div class="row nur-wp" id="zeile-kwp"><span class="k">Wärmepumpe</span><span class="v" id="r-kwp">–</span></div>
+      <div class="row nur-pv" id="zeile-kpv"><span class="k">Photovoltaik</span><span class="v" id="r-kpv">–</span></div>
+      <div class="row nur-pv" id="zeile-ksp"><span class="k">Batteriespeicher</span><span class="v" id="r-ksp">–</span></div>
+      <div class="row total"><span class="k">Gesamtinvestition</span><span class="v" id="r-kges">–</span></div>
+      <div class="row sub" id="zeile-preis" style="display:none"><span class="k">davon reale Preisentwicklung bis zum Antragszeitpunkt</span><span class="v" id="r-preis">–</span></div>
+      <div class="row sub nur-wp"><span class="k">davon förderfähig (Deckel Wärmepumpe)</span><span class="v" id="r-cap">–</span></div>
+      <div class="row sub nur-wp"><span class="k" id="k-grund">Grundförderung</span><span class="v" id="r-grund">–</span></div>
+      <div class="row sub nur-wp"><span class="k">Einkommensbonus</span><span class="v" id="r-inc">–</span></div>
+      <div class="row sub nur-wp"><span class="k">Klimageschwindigkeitsbonus</span><span class="v" id="r-klima">–</span></div>
+      <div class="row sub nur-wp"><span class="k">Fördersatz nach Deckelung</span><span class="v" id="r-satz">–</span></div>
+      <div class="row nur-wp"><span class="k">Zuschuss KfW&nbsp;458</span><span class="v" id="r-zuschuss">–</span></div>
+      <div class="row total"><span class="k">Verbleibender Eigenanteil</span><span class="v" id="r-eigen">–</span></div>
+    </div>
+
+    <div class="breakdown">
+      <h3>Wie der Eigenanteil finanziert wird</h3>
+      <div class="row"><span class="k" id="k-358">Ergänzungskredit KfW&nbsp;358</span><span class="v" id="r-358">–</span></div>
+      <div class="row nur-pv"><span class="k">PV-Kredit KfW&nbsp;270</span><span class="v" id="r-270">–</span></div>
+      <div class="row"><span class="k">Konsumentenkredit (Rest)</span><span class="v" id="r-rest">–</span></div>
+      <div class="row"><span class="k">Eigenmittel</span><span class="v" id="r-em">–</span></div>
+      <div class="row sub" id="zeile-em358"><span class="k">davon gegen den Ergänzungskredit</span><span class="v" id="r-em358">–</span></div>
+      <div class="row sub nur-pv" id="zeile-em270"><span class="k">davon gegen den PV-Kredit 270</span><span class="v" id="r-em270">–</span></div>
+      <div class="row sub" id="zeile-emrest"><span class="k">davon gegen den Konsumentenkredit</span><span class="v" id="r-emrest">–</span></div>
+      <div class="row total"><span class="k">Kreditsumme gesamt</span><span class="v" id="r-kredit">–</span></div>
+      <div class="splitbar" id="splitbar" role="img" aria-labelledby="split-desc"></div>
+      <p id="split-desc" class="visually-hidden">–</p>
+      <div class="legend" id="splitlegend" aria-hidden="true"></div>
+
+      <div class="row" style="margin-top:1rem"><span class="k">Monatsrate in der Tilgungsphase</span><span class="v" id="r-rate">–</span></div>
+      <div class="row sub"><span class="k">Rate in den tilgungsfreien Anlaufjahren</span><span class="v" id="r-ratefrei">–</span></div>
+      <div class="row sub"><span class="k">Mischzinssatz des Pakets</span><span class="v" id="r-misch">–</span></div>
+      <div class="row"><span class="k">Zinsen über die gesamte Laufzeit</span><span class="v" id="r-zinsen">–</span></div>
+    </div>
+
+    <h3 style="margin-top:1.8rem">Was Ihnen die Förderfinanzierung wert ist</h3>
+    <div class="cards">
+      <div class="card accent">
+        <p class="cap">Vorteil gegenüber Barzahlung</p>
+        <p class="big" id="c-bar">–</p>
+        <p class="exp" id="c-bar-exp">–</p>
+      </div>
+      <div class="card accent">
+        <p class="cap">Vorteil gegenüber Konsumentenkredit</p>
+        <p class="big" id="c-konsum">–</p>
+        <p class="exp" id="c-konsum-exp">–</p>
+      </div>
+      <div class="card accent">
+        <p class="cap">Ihre Eigenmittel: einsetzen oder anlegen?</p>
+        <p class="big" id="c-em">–</p>
+        <p class="exp" id="c-em-exp">–</p>
+      </div>
+    </div>
+
+    <div class="notes" id="notes"></div>
+  </div>
+</section>
+
+<!-- ================= ZONE 4 : ZEITPUNKTVERGLEICH ================= -->
+<section class="zone" id="zone-zeit" aria-labelledby="h-zeit">
+  <div class="eyebrow"><span class="step">3</span> <span id="h-zeit">Wann investieren?</span></div>
+  <h2>Wann investieren?</h2>
+  <p class="intro">Dieselbe Anlage, dieselben Einkommensverhältnisse – nur der Antragszeitpunkt ändert sich. Die Tabelle rechnet Ihre aktuellen Eingaben für alle Halbjahre durch. Die letzte Spalte zeigt, um wie viel Ihr Eigenanteil gegenüber dem günstigsten Zeitpunkt steigt. Gerechnet wird in konstanten Preisen – wie sich ein realer Preisrückgang auswirkt, steuern Sie über das Feld „reale Preisentwicklung“.</p>
+  <div class="tablewrap">
+    <table>
+      <caption id="zeit-caption">Zeitpunktvergleich</caption>
+      <thead>
+        <tr>
+          <th scope="col">Antragszeitraum</th>
+          <th class="num nur-wp" scope="col">Förder&shy;satz</th>
+          <th class="num nur-wp" scope="col">Zuschuss</th>
+          <th class="num" scope="col">Eigen&shy;anteil</th>
+          <th class="num" scope="col">Monats&shy;rate</th>
+          <th class="num" scope="col">Mehr Eigen&shy;anteil durch Warten</th>
+        </tr>
+      </thead>
+      <tbody id="tbl-zeit"></tbody>
+    </table>
+  </div>
+  <div class="notes" id="zeit-notes"></div>
+</section>
+
+<!-- ================= KOMPENDIUM (nachgeschaltet) ================= -->
+<section class="zone" id="zone-kompendium" aria-labelledby="h-info">
+  <div class="eyebrow"><span class="step">4</span> <span id="h-info">Kompendium – zum Nachschlagen</span></div>
+  <h2>Kompendium</h2>
+
+  <p class="intro">Wer Wärmepumpe und Photovoltaik gemeinsam plant, hat es mit <strong>drei getrennten Fördertöpfen</strong> zu tun. Sie greifen ineinander, folgen aber unterschiedlichen Regeln – und sie werden ab 2027 Halbjahr für Halbjahr schlechter. Tippen Sie auf ein Thema, um es aufzuklappen.</p>
+
+  <div class="factgrid">
+    <div class="fact"><b>30&nbsp;%</b><span>Grundförderung für die Wärmepumpe – unabhängig vom Einkommen</span></div>
+    <div class="fact"><b>bis 80&nbsp;%</b><span>maximaler Zuschuss für Selbstnutzer mit Einkommen bis 30.000&nbsp;€</span></div>
+    <div class="fact"><b>28.000&nbsp;€</b><span>Förderdeckel im 2. Halbjahr 2026 – danach je Halbjahr −750&nbsp;€</span></div>
+    <div class="fact"><b>90.000&nbsp;€</b><span>Einkommensgrenze für den zinsverbilligten Ergänzungskredit&nbsp;358</span></div>
+  </div>
+
+  <details class="info">
+    <summary><span class="ttl">Die drei Bausteine: Zuschuss 458, Ergänzungskredit 358, PV-Kredit 270</span><span class="chev" aria-hidden="true">▾</span></summary>
+    <div class="body">
+      <p>Das ist der wichtigste Punkt für die gemeinsame Planung von Wärmepumpe und Photovoltaik – und die häufigste Fehlannahme:</p>
+      <div class="tablewrap">
+        <table>
+          <caption>Welcher Topf zahlt was?</caption>
+          <thead><tr><th scope="col">Programm</th><th scope="col">Art</th><th scope="col">Wofür</th><th scope="col">Grenze</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">KfW&nbsp;458</th><td>Zuschuss (geschenkt)</td><td>Wärmepumpe inkl. Einbau und Umfeldmaßnahmen</td><td>28.000&nbsp;€ förderfähige Kosten, sinkend</td></tr>
+            <tr><th scope="row">KfW&nbsp;358</th><td>zinsverbilligter Kredit</td><td>der <b>Eigenanteil an der Wärmepumpe</b> – setzt eine Zuschusszusage voraus</td><td>120.000&nbsp;€ je Wohneinheit; Zinsverbilligung nur bis 90.000&nbsp;€ Einkommen</td></tr>
+            <tr><th scope="row">KfW&nbsp;270</th><td>Förderkredit</td><td>Photovoltaik und Batteriespeicher</td><td>bis 100&nbsp;% der Investitionskosten</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><b>Photovoltaik und Batteriespeicher sind im Ergänzungskredit&nbsp;358 nicht förderfähig.</b> Der 358er finanziert ausschließlich die Kosten der bezuschussten Heizungsmaßnahme. Für den Solarteil steht der KfW-Kredit&nbsp;270 offen – er ist zinsgünstiger als ein Konsumentenkredit, aber deutlich teurer als der zinsverbilligte 358er. Dieser Rechner teilt Ihren Eigenanteil deshalb automatisch korrekt auf beide Programme auf.</p>
+      <p>Eine Photovoltaikanlage bringt also <em>keinen zusätzlichen Zuschuss</em>.</p>
+      <p><b>Steht die Anlage auf einem Betriebsgebäude?</b> Dieser Rechner bildet den Privatfall ab – ein Wohngebäude, das Ihnen gehört. Für ein Betriebsgebäude (die KfW nennt es <em>Nichtwohngebäude</em>) gelten bei der <b>Heizung</b> andere Programme: An die Stelle des Zuschusses&nbsp;458 tritt <b>KfW&nbsp;522</b> mit fest 30&nbsp;% – ohne Einkommensbonus, ohne Klimageschwindigkeitsbonus –, und an die Stelle des Ergänzungskredits&nbsp;358 tritt <b>KfW&nbsp;523</b> zu gewöhnlichen Marktzinsen statt zu 0,01&nbsp;%. Beides zusammen macht den Betriebsfall spürbar teurer, nicht günstiger.</p>
+      <p><b>Für die Photovoltaik ändert sich dagegen nichts.</b> Der KfW-Kredit&nbsp;270 fördert nach seinem Merkblatt „Unternehmen jeder Größe“ und nennt landwirtschaftliche Betriebe ausdrücklich – ein Winzer oder Handwerksbetrieb bekommt dieselbe Sonderkondition „PV-Aufdach“ und dieselben Preisklassen wie eine Privatperson. Eine Staffelung nach Betriebsgröße gibt es dort nicht. Auch steuerlich ändert sich im Bereich dieses Rechners nichts: Der Nullsteuersatz auf Photovoltaik gilt bis 30&nbsp;kWp unabhängig davon, auf welchem Gebäude die Anlage sitzt.</p>
+    </div>
+  </details>
+
+  <details class="info">
+    <summary><span class="ttl">Was ist förderfähig – und warum die Photovoltaik nicht?</span><span class="chev" aria-hidden="true">▾</span></summary>
+    <div class="body">
+      <p>Die Heizungsförderung ist eine <b>Wärme</b>förderung. Gefördert wird der Erzeuger, der die Wohnung warm macht, samt allem, was zu seinem Betrieb nötig ist. Strom­erzeugung gehört nicht dazu – sie hat mit dem EEG ein eigenes Fördersystem, und eine Doppelförderung derselben Kosten ist ausgeschlossen.</p>
+      <div class="tablewrap">
+        <table>
+          <caption>Förderfähig nach KfW 458 – und was nicht</caption>
+          <thead><tr><th scope="col">Anlage / Kostenposition</th><th scope="col">Förderfähig?</th><th scope="col">Begründung</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Wärmepumpe</th><td class="pos">ja</td><td>Wärmeerzeuger auf Basis erneuerbarer Energien</td></tr>
+            <tr><th scope="row">Biomasseheizung</th><td class="pos">ja</td><td>mit Pufferspeicher und Einhaltung der Emissionsgrenzwerte</td></tr>
+            <tr><th scope="row">Solarthermie</th><td class="pos">ja</td><td>erzeugt Wärme – inklusive Speicher, Anbindung und Steigleitungen</td></tr>
+            <tr><th scope="row">Brennstoffzelle, wasserstofffähige Heizung, Wärmenetzanschluss</th><td class="pos">ja</td><td>im Katalog der förderfähigen Wärmeerzeuger</td></tr>
+            <tr><th scope="row">Umfeldmaßnahmen</th><td class="pos">ja</td><td>was für den Betrieb der neuen Heizung nötig ist: Pufferspeicher, Heizkörpertausch, Flächenheizung, hydraulischer Abgleich, Demontage und Entsorgung der Altanlage</td></tr>
+            <tr class="hl"><th scope="row">PVT-Kollektoren (Hybrid aus Photovoltaik und Solarthermie)</th><td class="pos">ja</td><td><b>Die Ausnahme:</b> förderfähig als Wärmeerzeuger beziehungsweise als Wärmequelle oder Umfeldmaßnahme für eine Wärmepumpe – weil hier tatsächlich Wärme aus dem Modul kommt</td></tr>
+            <tr><th scope="row">Photovoltaik (Standardmodule)</th><td class="neg">nein</td><td>erzeugt Strom, keine Wärme; wird über das EEG gefördert. Auch keine Umfeldmaßnahme, weil die Wärmepumpe ohne sie genauso läuft</td></tr>
+            <tr><th scope="row">Batteriespeicher</th><td class="neg">nein</td><td>Stromspeicher, nicht Bestandteil der Wärmeerzeugung</td></tr>
+            <tr><th scope="row">Stromdirektheizung, Infrarot- und Nachtspeicherheizung</th><td class="neg">nein</td><td>nicht im Katalog der förderfähigen Wärmeerzeuger – sie sind vielmehr die Anlagen, deren Ersatz den Klimabonus auslöst</td></tr>
+            <tr><th scope="row">Heizstab</th><td>teils</td><td>der <b>in die Wärmepumpe integrierte</b> Heizstab ist Teil der geförderten Anlage. Ein <b>externer</b> Heizstab im Pufferspeicher gilt als eigenständige Stromdirektheizung und ist nicht förderfähig</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><b>Warum reine Elektroheizungen draußen bleiben.</b> Das GModG hat zwar die 65-Prozent-Pflicht des alten Heizungsgesetzes gestrichen. Für die <em>Förderung</em> gilt aber weiterhin: Die versorgten Wohneinheiten müssen nach der Maßnahme zu mindestens 65&nbsp;% mit erneuerbarer Energie beheizt werden. Eine Stromdirektheizung erfüllt das nicht – Netzstrom ist rechnerisch nicht zu 65&nbsp;% erneuerbar, und eine eigene Photovoltaikanlage ändert daran nichts, weil sie den Jahresbedarf einer Elektroheizung nicht annähernd deckt: Diese braucht die Wärme im Winter, wenn die Anlage am wenigsten liefert. Rechtlich <em>zulässig</em> ist eine Stromdirektheizung nach dem GModG ohnehin nur in Gebäuden, die die Anforderungen an den Wärmeschutz um mindestens 30&nbsp;% (Neubau: 45&nbsp;%) unterschreiten.</p>
+      <p><b>Was das für die Planung bedeutet.</b> Eine Photovoltaikanlage macht ein Vorhaben nicht förderfähiger – aber auch nicht weniger. Sie steht schlicht neben der Heizungsförderung. Wer den Solarteil wirklich in die Heizungsförderung ziehen will, hat genau einen Weg: <b>PVT-Kollektoren</b>, die zugleich als Wärmequelle der Wärmepumpe dienen. Das ist technisch anspruchsvoll und lohnt eine eigene Prüfung durch den Energieeffizienz-Experten – dieser Rechner bildet es nicht ab.</p>
+    </div>
+  </details>
+
+  <details class="info">
+    <summary><span class="ttl">Die Förderbausteine der Heizungsförderung im Detail</span><span class="chev" aria-hidden="true">▾</span></summary>
+    <div class="body">
+      <div class="tablewrap">
+        <table>
+          <caption>Zuschussbausteine nach KfW 458 (Stand ab 21.07.2026)</caption>
+          <thead><tr><th scope="col">Baustein</th><th class="num" scope="col">Satz</th><th scope="col">Voraussetzung</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Grundförderung</th><td class="num">30&nbsp;%</td><td>Jede förderfähige Heizung; für Wärmepumpen ab 2027 nach den Eckpunkten vom 08.07.2026 nur noch 15&nbsp;% – gesetzliche Regelung steht aus (siehe Wertschöpfungsbonus)</td></tr>
+            <tr><th scope="row">Einkommensbonus Stufe&nbsp;1</th><td class="num">+40&nbsp;%</td><td>Selbstnutzer, zvE bis 30.000&nbsp;€</td></tr>
+            <tr><th scope="row">Einkommensbonus Stufe&nbsp;2</th><td class="num">+30&nbsp;%</td><td>Selbstnutzer, zvE 30.001–40.000&nbsp;€</td></tr>
+            <tr><th scope="row">Einkommensbonus Stufe&nbsp;3</th><td class="num">+10&nbsp;%</td><td>Selbstnutzer, zvE 40.001–50.000&nbsp;€</td></tr>
+            <tr><th scope="row">Klimageschwindigkeitsbonus</th><td class="num">+16&nbsp;%*</td><td>Tausch einer funktionstüchtigen Ölheizung oder einer funktionstüchtigen, mindestens 20&nbsp;Jahre alten Gasheizung</td></tr>
+            <tr><th scope="row">Kinderzuschlag</th><td class="num">−10.000&nbsp;€ zvE</td><td>Mindestens ein minderjähriges, kindergeldberechtigtes Kind im Haushalt</td></tr>
+            <tr><th scope="row" class="gone">Effizienzbonus</th><td class="num gone">5&nbsp;%</td><td>Zum 21.07.2026 entfallen</td></tr>
+            <tr><th scope="row" class="gone">Emissionsminderungszuschlag</th><td class="num gone">2.500&nbsp;€</td><td>Zum 21.07.2026 entfallen</td></tr>
+            <tr class="hl"><th scope="row">Wertschöpfungsbonus</th><td class="num">+15&nbsp;%</td><td>Geplant ab 2027 für Wärmepumpen mit mindestens 15&nbsp;% EU-Wertschöpfung (Eckpunkte vom 08.07.2026). <b>Keine Zusatzförderung:</b> Die Grundförderung soll gleichzeitig von 30&nbsp;% auf 15&nbsp;% sinken. <b>Die gesetzliche Regelung steht aus;</b> der Rechner rechnet deshalb mit 30&nbsp;% Grundförderung</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>* Wert im 2.&nbsp;Halbjahr 2026; sinkt ab 01.02.2027 halbjährlich um 4&nbsp;Prozentpunkte und entfällt ab dem 2.&nbsp;Halbjahr 2028.</p>
+    </div>
+  </details>
+
+  <details class="info">
+    <summary><span class="ttl">Einkommensstufen und Förderdeckel</span><span class="chev" aria-hidden="true">▾</span></summary>
+    <div class="body">
+      <div class="tablewrap">
+        <table>
+          <caption>Fördersatz je Einkommensstufe im 2. Halbjahr 2026</caption>
+          <thead><tr><th scope="col">Stufe (zvE)</th><th class="num" scope="col">Grund</th><th class="num" scope="col">Eink.-Bonus</th><th class="num" scope="col">Klimabonus</th><th class="num" scope="col">Summe</th><th class="num" scope="col">nach Deckel</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">A: bis 30.000&nbsp;€</th><td class="num">30&nbsp;%</td><td class="num">40&nbsp;%</td><td class="num">16&nbsp;%</td><td class="num">86&nbsp;%</td><td class="num"><b>80&nbsp;%</b></td></tr>
+            <tr><th scope="row">B: 30.001–40.000&nbsp;€</th><td class="num">30&nbsp;%</td><td class="num">30&nbsp;%</td><td class="num">16&nbsp;%</td><td class="num">76&nbsp;%</td><td class="num"><b>70&nbsp;%</b></td></tr>
+            <tr><th scope="row">C: 40.001–50.000&nbsp;€</th><td class="num">30&nbsp;%</td><td class="num">10&nbsp;%</td><td class="num">16&nbsp;%</td><td class="num">56&nbsp;%</td><td class="num"><b>56&nbsp;%</b></td></tr>
+            <tr><th scope="row">D: über 50.000&nbsp;€</th><td class="num">30&nbsp;%</td><td class="num">–</td><td class="num">16&nbsp;%</td><td class="num">46&nbsp;%</td><td class="num"><b>46&nbsp;%</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Der Gesamtfördersatz ist gedeckelt: <b>80&nbsp;%</b> für Selbstnutzer mit einem zvE (nach Kinderzuschlag) bis 30.000&nbsp;€, sonst <b>70&nbsp;%</b>. Maßgeblich ist das zu versteuernde Haushaltseinkommen laut Steuerbescheid, in der Regel des vorletzten Kalenderjahres vor Antragstellung – alle Haushaltsmitglieder zusammengerechnet.</p>
+      <p><b>Achtung, zwei verschiedene Einkommensgrenzen:</b> Der <em>Einkommensbonus</em> im Zuschuss endet bei 50.000&nbsp;€. Die <em>Zinsverbilligung</em> im Ergänzungskredit&nbsp;358 läuft dagegen bis 90.000&nbsp;€. Viele Haushalte bekommen also keinen Einkommensbonus mehr, aber sehr wohl den günstigen Kredit.</p>
+    </div>
+  </details>
+
+  <details class="info">
+    <summary><span class="ttl">Abschmelzpfad bis 2030 – Warten kostet Geld</span><span class="chev" aria-hidden="true">▾</span></summary>
+    <div class="body">
+      <div class="tablewrap">
+        <table>
+          <caption>Förderdeckel und Klimabonus im Zeitverlauf</caption>
+          <thead><tr><th scope="col">Antragszeitraum</th><th class="num" scope="col">Förderfähige Kosten (max.)</th><th class="num" scope="col">Klimabonus</th></tr></thead>
+          <tbody id="tbl-abschmelz"></tbody>
+        </table>
+      </div>
+      <p>Der Förderdeckel sinkt ab dem 01.02.2027 halbjährlich um 750&nbsp;€, der Klimageschwindigkeitsbonus um 4&nbsp;Prozentpunkte. Beide Effekte wirken multiplikativ: Ein Haushalt der Stufe&nbsp;A verliert vom 2.&nbsp;Halbjahr 2026 bis 2030 rund <b>7.000&nbsp;€ Zuschuss</b> – allein durch Zuwarten.</p>
+    </div>
+  </details>
+
+  <details class="info">
+    <summary><span class="ttl">Wann gibt es den Klimageschwindigkeitsbonus?</span><span class="chev" aria-hidden="true">▾</span></summary>
+    <div class="body">
+      <p>Den Bonus erhalten Selbstnutzer, wenn eine <b>funktionstüchtige</b> Altheizung ersetzt wird:</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th scope="col">Altheizung</th><th scope="col">Bedingung</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Ölheizung</th><td>ohne Altersgrenze</td></tr>
+            <tr><th scope="row">Kohleheizung</th><td>ohne Altersgrenze</td></tr>
+            <tr><th scope="row">Gasetagenheizung</th><td>ohne Altersgrenze</td></tr>
+            <tr><th scope="row">Nachtspeicherheizung</th><td>ohne Altersgrenze</td></tr>
+            <tr><th scope="row">Gaszentralheizung</th><td>mindestens 20 Jahre alt</td></tr>
+            <tr><th scope="row">Biomasseheizung</th><td>mindestens 20 Jahre alt</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Keine Fördervoraussetzung, aber gut zu wissen: Nach dem GModG besteht <b>kein Austauschzwang</b> für funktionierende Heizungen – der Bonus ist ein freiwilliger Anreiz für den frühen Umstieg.</p>
+    </div>
+  </details>
+
+  <details class="info">
+    <summary><span class="ttl">Der Ergänzungskredit KfW 358 – Bedingungen und Fallstricke</span><span class="chev" aria-hidden="true">▾</span></summary>
+    <div class="body">
+      <ul class="tick">
+        <li><b>Nur mit Zuschusszusage.</b> Der Ergänzungskredit setzt voraus, dass Ihnen die Heizungsförderung bereits zugesagt wurde. Er wird also <em>nach</em> dem Zuschussantrag beantragt, nicht davor.</li>
+        <li><b>Nicht bei der KfW selbst.</b> Sie beantragen ihn über Ihre Bank oder einen Finanzierungsvermittler. Die Bank prüft Ihre Bonität – ein Rechtsanspruch besteht nicht.</li>
+        <li><b>Bis 120.000&nbsp;€ je Wohneinheit</b> an förderfähigen Kosten. Der bereits gewährte Zuschuss darf nicht mitfinanziert werden.</li>
+        <li><b>Zinsverbilligung nur bis 90.000&nbsp;€</b> zu versteuerndem Haushaltseinkommen und nur für Selbstnutzer. Maßgeblich ist hier der <em>Durchschnitt</em> der Steuerbescheide des zweiten und dritten Jahres vor Antragstellung. Oberhalb der Grenze gilt Programm&nbsp;359 ohne Zinsverbilligung.</li>
+        <li><b>Die Zinsverbilligung gilt für die erste Zinsbindungsfrist</b> (in der Regel 10&nbsp;Jahre). Danach folgt eine Anschlussfinanzierung zu dann marktüblichen Konditionen – das ist bei Laufzeiten über 10&nbsp;Jahre ein echtes Risiko, das dieser Rechner bewusst nicht wegrechnet.</li>
+        <li><b>Tilgungsfreie Anlaufjahre</b> senken die Anfangsrate, erhöhen aber die Zinssumme.</li>
+        <li><b>Laufzeit und Lebensdauer.</b> Die 25- und die 35-Jahre-Variante laufen deutlich länger, als eine Wärmepumpe üblicherweise hält (15 bis 20&nbsp;Jahre).</li>
+      </ul>
+
+      <p><b>Laufzeit, tilgungsfreie Jahre und Zins sind nicht einzeln wählbar.</b> Die KfW bietet nur die folgenden Kombinationen an – deshalb wählen Sie oben eine Variante, statt Zahlen einzutippen. Es gibt also keine 25&nbsp;Jahre zum Zinssatz der Fünfjahresvariante.</p>
+      <div class="tablewrap">
+        <table>
+          <caption id="kond-caption">Laufzeitvarianten des Ergänzungskredits – Konditionen der KfW</caption>
+          <thead><tr>
+            <th scope="col">Variante</th>
+            <th class="num" scope="col">tilgungsfrei</th>
+            <th class="num" scope="col">Zinsbindung</th>
+            <th class="num" scope="col">358 effektiv</th>
+            <th class="num" scope="col">359 effektiv</th>
+          </tr></thead>
+          <tbody id="tbl-kond358"></tbody>
+        </table>
+      </div>
+
+      <div class="tablewrap nur-pv">
+        <table>
+          <caption>Laufzeitvarianten des PV-Kredits&nbsp;270 – Sonderkondition „PV-Aufdach“, Preisklasse&nbsp;A</caption>
+          <thead><tr>
+            <th scope="col">Variante</th>
+            <th class="num" scope="col">tilgungsfrei</th>
+            <th class="num" scope="col">Zinsbindung</th>
+            <th class="num" scope="col">nominal</th>
+            <th class="num" scope="col">effektiv</th>
+          </tr></thead>
+          <tbody id="tbl-kond270"></tbody>
+        </table>
+      </div>
+      <p class="quelle"><b>Preisklassen beim 270er:</b> Die KfW staffelt diesen Kredit nach Bonität und Besicherung in neun Klassen von&nbsp;A bis&nbsp;I. Hinterlegt ist die beste Klasse&nbsp;A; in Klasse&nbsp;B liegt der Satz rund 0,4&nbsp;Prozentpunkte höher, in Klasse&nbsp;C rund 0,7. Die Einstufung nimmt Ihre Hausbank vor – fragen Sie danach, bevor Sie mit dem Ergebnis planen. Der Ergänzungskredit&nbsp;358/359 kennt diese Staffelung nicht.</p>
+    </div>
+  </details>
+
+  <details class="info">
+    <summary><span class="ttl">Was sich mit dem EEG ab 2027 für die Photovoltaik ändert</span><span class="chev" aria-hidden="true">▾</span></summary>
+    <div class="body">
+      <p>Das Bundeskabinett hat am 29.07.2026 einen Regierungsentwurf beschlossen, der die <b>feste Einspeisevergütung für Neuanlagen zum 01.01.2027 abschafft</b>. Bundestag und Bundesrat müssen noch zustimmen, zentrale Förderregeln brauchen zusätzlich die Zustimmung der EU-Kommission. Der Entwurf sieht vor:</p>
+      <div class="tablewrap">
+        <table>
+          <caption>Vergütung neuer Dachanlagen nach Inbetriebnahmejahr (Entwurfsstand; Satz je Inbetriebnahme-Halbjahr, ab August 2027 halbjährlich sinkend)</caption>
+          <thead><tr><th scope="col">Inbetriebnahme</th><th scope="col">Modell</th><th class="num" scope="col">Satz</th><th scope="col">Gilt für Anlagen</th><th scope="col">Dauer</th></tr></thead>
+          <tbody>
+            <tr class="hl"><th scope="row">bis 31.12.2026</th><td>feste EEG-Einspeisevergütung</td><td class="num">7,70&nbsp;ct</td><td>bis 10&nbsp;kWp</td><td>20&nbsp;Jahre + Inbetriebnahmejahr</td></tr>
+            <tr><th scope="row">2027</th><td>Übergangszahlung</td><td class="num">5,20–5,14&nbsp;ct</td><td>unter 50&nbsp;kW</td><td>36&nbsp;Monate</td></tr>
+            <tr><th scope="row">2028</th><td>Übergangszahlung</td><td class="num">5,14–5,02&nbsp;ct</td><td>unter 25&nbsp;kW</td><td>36&nbsp;Monate</td></tr>
+            <tr><th scope="row">2029</th><td>Übergangszahlung</td><td class="num">5,02–4,90&nbsp;ct</td><td><b>unter 7&nbsp;kW</b></td><td>36&nbsp;Monate</td></tr>
+            <tr><th scope="row">2030</th><td>Übergangszahlung</td><td class="num">4,90–4,78&nbsp;ct</td><td><b>unter 7&nbsp;kW</b></td><td>36&nbsp;Monate</td></tr>
+            <tr><th scope="row">ab 2031</th><td>keine Übergangszahlung</td><td class="num">–</td><td>–</td><td>–</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Nach Ablauf der Übergangszahlung erlösen Sie in der Direktvermarktung nur noch den <b>Marktwert Solar</b> abzüglich der Vermarktungskosten. Zusätzlich ist ein <b>Direktvermarktungsbonus von 1,5&nbsp;ct/kWh</b> für Anlagen unter 25&nbsp;kW über höchstens 48&nbsp;Monate vorgesehen. Für ab 2027 errichtete Dachanlagen unter 100&nbsp;kW gilt außerdem eine dauerhafte <b>Einspeisebegrenzung auf 50&nbsp;%</b> der installierten Leistung; sie trifft nur die Einspeisung, nicht Eigenverbrauch und Speicherung.</p>
+      <p><b>Was daraus folgt:</b> Der Zeitpunkt entscheidet über die Vergütung. Wer <em>2026</em> in Betrieb geht, sichert sich 20&nbsp;Jahre feste Vergütung. Wer <em>2029</em> baut, bekommt die Übergangszahlung nur noch für Anlagen unter 7&nbsp;kW – eine 8- oder 10-kWp-Anlage geht dann leer aus.</p>
+      <p>Diese Sätze stehen hier zur <b>Einordnung des Zeitpunkts</b>; gerechnet wird damit nicht. Ertrag, Eigenverbrauch und Rendite der Photovoltaik rechnen die <b>BNS-Berater</b> mit Ihnen durch.</p>
+    </div>
+  </details>
+
+  <details class="info">
+    <summary><span class="ttl">Warum ein Förderkredit oft besser ist als Barzahlung</span><span class="chev" aria-hidden="true">▾</span></summary>
+    <div class="body">
+      <p>Wer das Geld auf dem Konto hat, zahlt intuitiv lieber bar – „dann habe ich keine Schulden“. Rechnerisch ist das bei einem stark zinsverbilligten Kredit häufig die teurere Entscheidung. Der Grund ist die Inflation:</p>
+      <blockquote><p>Eine Kreditrate von 200&nbsp;€ im Jahr&nbsp;2027 ist etwas anderes als eine Rate von 200&nbsp;€ im Jahr&nbsp;2045. Bei 2&nbsp;%&nbsp;Preissteigerung hat der spätere Betrag nur noch rund <b>70&nbsp;%</b> der heutigen Kaufkraft. Der Kredit wird also mit Geld getilgt, das laufend an Wert verliert.</p></blockquote>
+      <p>Der Rechner beantwortet das so: Er zinst alle künftigen Kreditraten mit der von Ihnen gewählten Inflationsrate auf den heutigen Tag ab und vergleicht diesen <b>Barwert</b> mit dem Betrag, den Sie bei Barzahlung sofort auf den Tisch legen müssten. Die Faustregel dahinter ist einfach:</p>
+      <ul class="tick">
+        <li><b>Kreditzins unter der Inflationsrate</b> → der Kredit ist real günstiger als Barzahlung, der Vorteil ist positiv.</li>
+        <li><b>Kreditzins über der Inflationsrate</b> → Barzahlung ist real günstiger, der Vorteil wird negativ.</li>
+      </ul>
+      <p>Genau deshalb lohnt es sich, den Eigenanteil richtig aufzuteilen: Der zinsverbilligte 358er liegt regelmäßig unter der Inflationsrate, der PV-Kredit&nbsp;270 typischerweise darüber. Der Rechner weist beide Effekte getrennt aus, damit Sie sehen, welcher Teil Ihres Pakets sich als Kredit lohnt und welchen Sie besser aus Eigenmitteln bezahlen.</p>
+      <p><b>Nicht vergessen:</b> Diese Betrachtung unterstellt, dass Sie das Geld tatsächlich haben. Sie ersetzt keine Risikobetrachtung – eine Kreditverpflichtung über 20&nbsp;Jahre bindet, Barzahlung nicht.</p>
+    </div>
+  </details>
+
+  <details class="info">
+    <summary><span class="ttl">So rechnet dieser Rechner – Schritt für Schritt</span><span class="chev" aria-hidden="true">▾</span></summary>
+    <div class="body">
+      <ol class="num">
+        <li>Ihr Einkommen wird ggf. um den Kinderzuschlag (−10.000&nbsp;€) gemindert und einer Bonusstufe zugeordnet.</li>
+        <li>Fördersatz = Grundförderung von 30&nbsp;% + Einkommensbonus + Klimageschwindigkeitsbonus des gewählten Halbjahres, gedeckelt auf 70&nbsp;% bzw. 80&nbsp;%. Die für Wärmepumpen ab 2027 geplante Aufteilung in 15&nbsp;% Grundförderung und 15&nbsp;% Wertschöpfungsbonus ist nicht gesondert ausgewiesen, solange die gesetzliche Regelung aussteht.</li>
+        <li>Von den <b>Wärmepumpenkosten</b> wird höchstens der Förderdeckel des Halbjahres angesetzt. Zuschuss = förderfähige Kosten × Fördersatz.</li>
+        <li>Der Eigenanteil wird aufgeteilt: Eigenmittel zuerst auf den PV-Teil, dann Wärmepumpen-Eigenanteil in den Ergänzungskredit&nbsp;358 (bzw.&nbsp;359 ohne Zinsverbilligung), Photovoltaik und Speicher in den KfW-Kredit&nbsp;270, ein etwaiger Rest in einen Konsumentenkredit.</li>
+        <li>Jedes Darlehen wird monatsgenau als Annuitätendarlehen mit tilgungsfreien Anlaufjahren gerechnet; aus dem effektiven Jahreszins folgt der Monatszins über die zwölfte Wurzel.</li>
+        <li>Der <b>Vorteil gegenüber Barzahlung</b> ist die Differenz zwischen der Kreditsumme und dem mit Ihrer Inflationsrate abgezinsten Barwert aller Raten.</li>
+        <li>Der <b>Vorteil gegenüber einem Konsumentenkredit</b> ist die Differenz der Zinssummen bei gleicher Kreditsumme, gleicher Laufzeit und gleicher Tilgungsstruktur.</li>
+        <li>Der <b>Zeitpunktvergleich</b> rechnet dieselben Eingaben für jedes Halbjahr und zeigt, um wie viel der Eigenanteil gegenüber dem günstigsten Zeitpunkt steigt.</li>
+      </ol>
+    </div>
+  </details>
+</section>
+
+<section class="zone">
+  <p class="disclaimer"><b>Wichtiger Hinweis:</b> Dieser Rechner wurde nach bestem Wissen auf Basis der verfügbaren Informationen erstellt – Beschlussstand der BEG-Reform vom 10.07.2026 mit Konditionen ab 21.07.2026, Gebäudemodernisierungsgesetz (GModG) sowie EEG-Regierungsentwurf mit Kabinettsbeschluss vom 29.07.2026. <b>Die EEG-Novelle ist noch nicht in Kraft:</b> Bundestag und Bundesrat müssen zustimmen, zentrale Förderregelungen zusätzlich die EU-Kommission. Alle Ergebnisse sind unverbindliche Beispielrechnungen ohne Gewähr für Richtigkeit, Vollständigkeit und Aktualität; die Förderbedingungen können sich jederzeit ändern. Die für Wärmepumpen ab 2027 angekündigte Absenkung der Grundförderung auf 15&nbsp;% mit einem Wertschöpfungsbonus von 15&nbsp;% beruht auf den Eckpunkten vom 08.07.2026; die gesetzliche Regelung steht aus. Der Rechner rechnet deshalb mit 30&nbsp;% Grundförderung – Geräte ohne EU-Wertschöpfung erhielten nach den Eckpunkten ab 2027 nur 15&nbsp;%. Zinssätze der KfW werden regelmäßig angepasst und sind bonitäts- und besicherungsabhängig – ein Anspruch auf einen bestimmten Zinssatz besteht nicht; die Zinsverbilligung im Programm&nbsp;358 gilt nur für die erste Zinsbindungsfrist. Das BürgerNetzwerkSolar arbeitet neutral und herstellerunabhängig, gibt keine Kaufempfehlungen und ergreift nicht Partei für Anbieter oder Produkte; es übernimmt – soweit gesetzlich zulässig – keinerlei Haftung für den Inhalt, die Richtigkeit der getroffenen Aussagen oder die Ergebnisse; die Nutzung erfolgt auf eigene Verantwortung. Es gilt ausschließlich die offizielle Förderzusage der KfW auf Grundlage der jeweils gültigen Förderrichtlinien. Dieser Rechner ersetzt keine Förder-, Energie-, Steuer- oder Rechtsberatung. Bitte beachten Sie: Der Förderantrag muss stets <b>vor</b> der Auftragserteilung gestellt werden; binden Sie einen Energieeffizienz-Experten ein.</p>
+</section>
+
+<footer>
+  <p><b>Förderrechner Wärmepumpe und Photovoltaik</b> · BürgerNetzwerkSolar Worms</p>
+  <p>KfW&nbsp;458 (Heizungszuschuss) · KfW&nbsp;358/359 (Ergänzungskredit) · KfW&nbsp;270 (Photovoltaik) · GModG&nbsp;2026 · EEG-Novelle&nbsp;2027 · Alle Angaben ohne Gewähr</p>
+  <p><b>Die fünf Rechner des Netzwerks:</b> <b>Dieser hier</b> beantwortet, was Förderung und Finanzierung aus einer Investition machen – und was es an Förderung kostet, mit dem Tausch einer noch laufenden Heizung zu warten. Wer ohnehin tauschen muss und wissen will, ob die Wärmepumpe gegenüber einer <b>neuen</b> Gas- oder Ölheizung günstiger ist, nimmt den <b>BNS-Wirtschaftlichkeitsrechner Wärmepumpe</b> (Vollkostenvergleich über 20 und 30 Jahre). Ob ein PV-Angebot preislich in Ordnung ist, prüft der <b>BNS-PV-Preisrechner</b>. Ob sich ein Tarif mit stündlich wechselndem Preis lohnt, rechnet der <b>BNS-Tarif-Vergleichsrechner</b>. Welche Anlagengröße zum eigenen Verbrauch passt, zeigt die <b>BNS-PV-Auswahlhilfe</b>. Alle fünf finden Sie beim BürgerNetzwerkSolar Worms: <a href="https://bns.worms.de" target="_blank" rel="noopener" title="Webseite des Bürgernetzwerks öffnen">bns.worms.de</a>.</p>
+
+</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ===== Rechenmodell (Quelle: tools/modell.mjs) ===== */
+/* =====================================================================
+   Förder- und Wirtschaftlichkeitsmodell
+   Wärmepumpe + Photovoltaik + Batteriespeicher
+   KfW 458 (Zuschuss) · KfW 358/359 (Ergänzungskredit) · KfW 270 (PV)
+   GModG 2026 · EEG-Novelle ab 2027
+
+   Dieses Modul ist die EINZIGE Quelle der Rechenlogik. Der Build-Schritt
+   (tools/build.mjs) kopiert den Quelltext wortgleich in den Rechner und
+   in die Studie, damit beide Dokumente nie auseinanderlaufen können.
+
+   Alle Beträge in Euro (brutto), alle Zinssätze als Prozent p. a.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. Förderperioden (Halbjahresraster der BEG-Heizungsförderung)
+
+   Förderdeckel und Klimageschwindigkeitsbonus folgen dem GModG-Beschluss
+   vom 10.07.2026 (Konditionen ab 21.07.2026): Deckel 28.000 € für die
+   erste Wohneinheit, ab 01.02.2027 halbjährlich −750 €; Klimabonus 16 %,
+   ab 01.02.2027 halbjährlich −4 Prozentpunkte.
+
+   Wertschöpfungsbonus ab 2027 (Eckpunkte der Bundesregierung vom
+   08.07.2026): Die Grundförderung für Wärmepumpen sinkt von 30 % auf 15 %.
+   Wärmepumpen, bei denen mindestens 15 % der Wertschöpfung in der EU oder
+   assoziierten Märkten stattfindet, erhalten 15 % Wertschöpfungsbonus und
+   kommen damit wieder auf 30 %. Für Geräte von außerhalb bleibt es bei
+   15 %. Der Bonus ist also KEINE Zusatzförderung, sondern der Ausgleich
+   einer Absenkung – wer ein Nicht-EU-Gerät wählt, verliert ab 2027
+   15 Prozentpunkte.
+
+   grund   Grundförderung in Prozent
+   wsb     Wertschöpfungsbonus in Prozent (nur bei EU-Fertigung)
+
+   Die PV-Felder bilden die EEG-Novelle ab (Regierungsentwurf, Kabinetts-
+   beschluss 29.07.2026): feste Einspeisevergütung nur noch für Anlagen mit
+   Inbetriebnahme bis 31.12.2026; danach befristete Übergangszahlung mit
+   sinkender Leistungsgrenze, zusätzlich Direktvermarktungsbonus.
+
+   pvModus     "eeg"       feste EEG-Einspeisevergütung über 20 Jahre
+               "uebergang" Übergangszahlung, danach Direktvermarktung
+               "markt"     sofort Direktvermarktung (keine Übergangszahlung)
+   pvSatz      ct/kWh der festen Vergütung bzw. der Übergangszahlung; die
+               Übergangszahlung je Kalenderhalbjahr mit dem Satz, der für fünf
+               seiner sechs Monate gilt (Drucksache 21/7867 §§ 48, 49, 53:
+               6,20 ct, ab 01.08.2027 halbjährlich −1 %, minus 1 ct; wie das
+               Excel-Tool, BNS_StromVerbrauch_Preise!AD13)
+   pvMonate    Dauer der Übergangszahlung in Monaten
+   pvGrenzeKw  Leistungsgrenze (kW), bis zu der die Übergangszahlung gilt
+   dvBonus     Direktvermarktungsbonus in ct/kWh (nur Anlagen < 25 kW)
+   dvMonate    Höchstdauer des Direktvermarktungsbonus in Monaten, gezählt ab
+               dem Beginn der Direktvermarktung
+   einspeiseKappung  true = 50-%-Einspeisebegrenzung nach EEG-Novelle
+--------------------------------------------------------------------- */
+const PERIODEN = [
+  { id: 0, label: "2. Halbjahr 2026 (ab 21.07.)", kurz: "H2/2026", jahr: 2026,
+    cap: 28000, klima: 16, grund: 30, wsb: 0,
+    pvModus: "eeg", pvSatz: 7.70, pvMonate: 240, pvGrenzeKw: 100,
+    dvBonus: 0, dvMonate: 0, einspeiseKappung: false },
+  { id: 1, label: "1. Halbjahr 2027", kurz: "H1/2027", jahr: 2027,
+    cap: 27250, klima: 12, grund: 15, wsb: 15,
+    pvModus: "uebergang", pvSatz: 5.20, pvMonate: 36, pvGrenzeKw: 50,
+    dvBonus: 1.5, dvMonate: 48, einspeiseKappung: true },
+  { id: 2, label: "2. Halbjahr 2027", kurz: "H2/2027", jahr: 2027,
+    cap: 26500, klima: 8, grund: 15, wsb: 15,
+    pvModus: "uebergang", pvSatz: 5.14, pvMonate: 36, pvGrenzeKw: 50,
+    dvBonus: 1.5, dvMonate: 48, einspeiseKappung: true },
+  { id: 3, label: "1. Halbjahr 2028", kurz: "H1/2028", jahr: 2028,
+    cap: 25750, klima: 4, grund: 15, wsb: 15,
+    pvModus: "uebergang", pvSatz: 5.08, pvMonate: 36, pvGrenzeKw: 25,
+    dvBonus: 1.5, dvMonate: 48, einspeiseKappung: true },
+  { id: 4, label: "2. Halbjahr 2028", kurz: "H2/2028", jahr: 2028,
+    cap: 25000, klima: 0, grund: 15, wsb: 15,
+    pvModus: "uebergang", pvSatz: 5.02, pvMonate: 36, pvGrenzeKw: 25,
+    dvBonus: 1.5, dvMonate: 48, einspeiseKappung: true },
+  { id: 5, label: "1. Halbjahr 2029", kurz: "H1/2029", jahr: 2029,
+    cap: 24250, klima: 0, grund: 15, wsb: 15,
+    pvModus: "uebergang", pvSatz: 4.96, pvMonate: 36, pvGrenzeKw: 7,
+    dvBonus: 1.5, dvMonate: 48, einspeiseKappung: true },
+  { id: 6, label: "2. Halbjahr 2029", kurz: "H2/2029", jahr: 2029,
+    cap: 23500, klima: 0, grund: 15, wsb: 15,
+    pvModus: "uebergang", pvSatz: 4.90, pvMonate: 36, pvGrenzeKw: 7,
+    dvBonus: 1.5, dvMonate: 48, einspeiseKappung: true },
+  /* Die 7-kW-Stufe der Uebergangszahlung deckt ZWEI Baujahre ab, 2029 UND
+     2030: § 21 Abs. 1 S. 1 Nr. 1 Buchst. c des Entwurfs knuepft an die
+     Inbetriebnahme „vor dem 1. Januar 2031", die Begruendung uebersetzt das
+     mit „also im Laufe der Jahre 2029 und 2030". */
+  { id: 7, label: "1. Halbjahr 2030", kurz: "H1/2030", jahr: 2030,
+    cap: 22750, klima: 0, grund: 15, wsb: 15,
+    pvModus: "uebergang", pvSatz: 4.84, pvMonate: 36, pvGrenzeKw: 7,
+    dvBonus: 1.5, dvMonate: 48, einspeiseKappung: true },
+  { id: 8, label: "2. Halbjahr 2030", kurz: "H2/2030", jahr: 2030,
+    cap: 22000, klima: 0, grund: 15, wsb: 15,
+    pvModus: "uebergang", pvSatz: 4.78, pvMonate: 36, pvGrenzeKw: 7,
+    dvBonus: 1.5, dvMonate: 48, einspeiseKappung: true },
+  /* Der KfW-Foerderdeckel endet bei 22.000 EUR und sinkt nicht weiter. */
+  { id: 9, label: "ab 2031", kurz: "ab 2031", jahr: 2031,
+    cap: 22000, klima: 0, grund: 15, wsb: 15,
+    pvModus: "markt", pvSatz: 0, pvMonate: 0, pvGrenzeKw: 0,
+    dvBonus: 1.5, dvMonate: 48, einspeiseKappung: true }
+];
+
+/* ---------------------------------------------------------------------
+   2. Anlagenbaukasten mit Richtkosten (schlüsselfertig, brutto)
+
+   Kostenmodell für Photovoltaik und Speicher
+
+   Beide Preise bestehen aus einem Grundbetrag, der unabhängig von der
+   Größe anfällt (Gerüst, Anfahrt, Wechselrichter,
+     Planung und die Grundarbeitszeit des Betriebs), und einem mengenabhängigen Anteil. Deshalb sinkt der Preis je
+   kWp beziehungsweise je kWh mit wachsender Anlage.
+
+   Die Aufteilung folgt der Kostenstruktur der Bauteile, nicht einer
+   pauschalen Annahme:
+
+   Photovoltaik – was mit der Größe wächst, ist wenig:
+     Module liegen bei rund 200 €/kWp, Gestell und Verkabelung ändern sich
+     mit der Anlagengröße kaum, und der Wechselrichter ist über die ganze
+     Leistungsspanne vergleichsweise günstig. Groß ist dagegen der
+     größenunabhängige Block: Gerüst, Anfahrt,
+     Planung und die Grundarbeitszeit des Betriebs. Deshalb ein hoher
+     Grundbetrag und ein flacher mengenabhängiger Anteil.
+     Der Grundbetrag enthält auch die vier Elektro-Nebenleistungen, die
+     zu jeder betriebsfertigen Anlage gehören: Wechselstromleitung bis
+     zum Zähler 350 €, Inbetriebnahme und Einmessung 350 €, Anmeldung
+     bei Netzbetreiber und Marktstammdatenregister 250 €, Kleinmaterial
+     300 € – zusammen 1.250 €, Niveau Standard des BNS-PV-Preisrechners.
+     Stützpunkte:
+        5 kWp  = 1.750 €/kWp
+       10 kWp  = 1.140 €/kWp
+       15 kWp  =   937 €/kWp
+     → 6.100 € Grundbetrag + 530 €/kWp
+
+     Der Systempreis des Fraunhofer ISE von 1.015 €/kWp (Stand März 2026)
+     mittelt über ALLE Anlagengrößen, auch über große Dachanlagen mit
+     besserer Degression; für eine 10-kWp-Anlage im Einfamilienhaus
+     markiert er das untere Ende. Maßgeblich ist hier die eigene
+     Marktkalibrierung des Netzwerks: 10 kWp + 10 kWh schlüsselfertig
+     kosten 2026 real 13.000–18.000 €, Marktmitte 15.000–16.000 €.
+
+   Batteriespeicher – der Gerätepreis dominiert und ist niedrig:
+     Ein 10-kWh-LFP-Speicher kostet als Gerät rund 3.400 € (340 €/kWh);
+     das Marktmittel im 1. Halbjahr 2026 liegt bei etwa 315 €/kWh,
+     Gerätepreise reichen von 250 bis 450 €/kWh. Die Montage im Verbund
+     mit einer neuen PV-Anlage ist überschaubar, weil Hybridwechselrichter
+     und Energiemanagement ohnehin gesetzt werden.
+     Stützpunkte:
+        5 kWh  = 560 €/kWh
+       10 kWh  = 450 €/kWh   3.400 € Gerät + rund 1.100 € Montage
+       15 kWh  = 413 €/kWh
+     → 1.100 € Grundbetrag + 340 €/kWh
+
+   Ergebnis:
+        5 kWp +  5 kWh =  8.750 € + 2.800 € = 11.550 €
+       10 kWp + 10 kWh = 11.400 € + 4.500 € = 15.900 €
+       15 kWp + 15 kWh = 14.050 € + 6.200 € = 20.250 €
+
+   Damit deckt sich der Richtwert auf den Euro genau mit dem Niveau
+   Standard des BNS-PV-Preisrechners ohne Kernbohrung (10/10: dort
+   ebenfalls 15.900 €) und liegt in der Marktmitte.
+
+   NICHT enthalten sind: Wallbox, Erneuerung des Zählerschranks
+   (1.600 € im Niveau Standard, bei älteren Häusern häufig nötig),
+   Not- oder Ersatzstromumschaltung, Bauarbeiten und die Kernbohrung
+   (180–850 € je Abdichtungsart) – sie hängen vom einzelnen Haus ab.
+   Wer ein konkretes Angebot einordnen will, nimmt den
+   BNS-PV-Preisrechner, der dieselben Positionen einzeln ausweist.
+   Für Wohngebäude fällt keine Umsatzsteuer an (§ 12 Abs. 3 UStG).
+
+   Einordnung: Für installierte Speicher werden vielfach auch 5.000–8.000 €
+   bei 10 kWh genannt. Das sind Nachrüstungen oder Angebote mit eigenem
+   Speicherwechselrichter. Der hier gewählte Ansatz beschreibt den Aufbau
+   gemeinsam mit einer neuen PV-Anlage – dort ist der Speicher deutlich
+   billiger. Beide Kostenfelder sind im Rechner überschreibbar.
+
+   Quellen siehe Kapitel 3.1 und 12 der Studie.
+--------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------
+   Wärmepumpe (Luft/Wasser), schlüsselfertig im Bestandsgebäude
+
+   Die Quellenlage ist hier deutlich uneinheitlicher als bei Photovoltaik,
+   weil selten dazugesagt wird, ob Umfeldmaßnahmen enthalten sind. Es gibt
+   zwei Cluster:
+     · 27.000–40.000 € für Luft/Wasser inklusive Einbau – der am
+       häufigsten genannte Bereich, meint eine vollständige Sanierung
+       mit Heizkörpertausch, Pufferspeicher und Entsorgung der Altanlage;
+     · 13.000–30.000 € – meint Gerät plus Grundinstallation, ohne
+       nennenswerte Umfeldmaßnahmen oder im Neubau.
+
+   Aufgelöst wird der Widerspruch über die Gerätepreise, die belastbarer
+   dokumentiert sind:
+     Split Luft/Wasser        6.300 € (6 kW) … 10.800 € (12 kW)
+     Monoblock, dt. Hersteller 9.500 € (7 kW) … 14.800 € (12 kW)
+     Anteil des Geräts an den Gesamtkosten: 35–50 %
+   Daraus folgt für ein typisches Einfamilienhaus mit 8–10 kW ein
+   Gesamtpreis um 29.000–31.500 € – zwischen beiden Clustern und mit
+   beiden verträglich.
+
+   Ebenfalls belegt: Ein 12-kW-Gerät kostet nicht doppelt so viel wie ein
+   6-kW-Gerät, sondern 40–60 % mehr. Weil Montage, Hydraulik, Anmeldung und
+   Entsorgung kaum von der Leistung abhängen, ist die Preisspreizung über
+   die Baugrößen entsprechend flach.
+
+     Grundbetrag 28.500 € + 750 €/kW, unterhalb 4 kW fest 31.500 €
+        5 kW = 32.250 €     8 kW = 34.500 €     10 kW = 36.000 €
+
+     Die Steigung von 750 €/kW folgt dem realen Marktpreis, nicht der
+     Herstellerliste: Diese weist 1.205 €/kW aus (Vaillant aroTHERM
+     plus, unverbindliche Preisempfehlung), doch der Handelsrabatt
+     beträgt über alle Leistungsklassen gleich 44–45 %; real bleiben
+     330–670 €/kW (fünf Baureihen von Buderus, Vaillant und Wolf). Eine
+     Kurve mit der Listensteigung rechnet kleine Anlagen um bis zu 21 %
+     zu billig.
+
+     Die Kurve ist die Umrechnung des BNS-Kostenblatts auf die
+     reine Heizlast (28.609 € + 663 €/kW), gerundet auf halbem Weg zur
+     Empirie der Verbraucherzentrale Rheinland-Pfalz: zwei Stichproben
+     à 160 reale Angebote (2024/25 und 2025/26) ergeben 28.000 € +
+     830 €/kW bei einem Mittelwert von 36.279 € bzw. 36.397 € für die
+     mittlere Anlage von 10 kW. Rheinland-Pfalz ist der Angebotsmarkt
+     von Worms. Die Kurve liegt innerhalb von 3 % zu beiden Referenzen.
+
+     Unterhalb von 4 kW gibt es kein Seriengerät (kleinste Vaillant
+     4,26 kW); dort gilt der feste Sockel von 31.500 €.
+
+   Nicht enthalten: Fußbodenheizung, Dämmung, Fundamentarbeiten größeren
+   Umfangs, Schallschutzgehäuse, Neubau des Schornsteins.
+--------------------------------------------------------------------- */
+const KOSTENBASIS = {
+  wp: { grund: 28500, proKw: 750 },   // unter 4 kW fest 31.500 €
+  pv: { grund: 6100, proKwp: 530 },   // 5 kWp = 1.750 €/kWp … 15 kWp = 937 €/kWp
+  sp: { grund: 1100, proKwh: 340 }    // 5 kWh =   560 €/kWh … 15 kWh = 413 €/kWh
+};
+
+/* Unterhalb von WP_MIN_KW gibt es kein Seriengerät – dort gilt ein
+   fester Sockel statt einer Extrapolation ins Unbelegte. 0 kW bedeutet
+   „keine Wärmepumpe" und kostet nichts. */
+const WP_MIN_KW = 4;
+function kostenWaermepumpe(kw) {
+  if (!(kw > 0)) return 0;
+  const wirksam = Math.max(kw, WP_MIN_KW);
+  return Math.round(KOSTENBASIS.wp.grund + KOSTENBASIS.wp.proKw * wirksam);
+}
+
+function kostenPV(kwp) {
+  return kwp > 0 ? Math.round(KOSTENBASIS.pv.grund + KOSTENBASIS.pv.proKwp * kwp) : 0;
+}
+function kostenSpeicher(kwh) {
+  return kwh > 0 ? Math.round(KOSTENBASIS.sp.grund + KOSTENBASIS.sp.proKwh * kwh) : 0;
+}
+/* Preis je Einheit – nur für die Anzeige */
+function proKwp(kwp) { return kwp > 0 ? kostenPV(kwp) / kwp : 0; }
+function proKwh(kwh) { return kwh > 0 ? kostenSpeicher(kwh) / kwh : 0; }
+
+/* Zulässiger Eingabebereich für Photovoltaik und Speicher */
+const BEREICH = { wpMin: 3, wpMax: 20, pvMin: 5, pvMax: 15, spMin: 5, spMax: 15 };
+
+const BAUKASTEN = {
+  wp: [
+    { kw: 5,  kosten: kostenWaermepumpe(5),  label: "5 kW – kleines/saniertes Einfamilienhaus" },
+    { kw: 8,  kosten: kostenWaermepumpe(8),  label: "8 kW – typisches Einfamilienhaus" },
+    { kw: 10, kosten: kostenWaermepumpe(10), label: "10 kW – großes/teilsaniertes Einfamilienhaus" }
+  ],
+  /* aus dem Kostenmodell abgeleitet, damit nichts auseinanderlaufen kann */
+  pv: [0, 5, 8, 10, 15].map(kwp => ({
+    kwp, kosten: kostenPV(kwp),
+    label: kwp === 0 ? "keine PV-Anlage" : kwp + " kWp"
+  })),
+  sp: [0, 5, 7.5, 10, 15].map(kwh => ({
+    kwh, kosten: kostenSpeicher(kwh),
+    label: kwh === 0 ? "kein Speicher" : String(kwh).replace(".", ",") + " kWh"
+  }))
+};
+
+/* ---------------------------------------------------------------------
+   3. Voreinstellungen
+--------------------------------------------------------------------- */
+const DEFAULTS = {
+  /* Förderung */
+  zve: 45000, kinder: false, selbst: true, heizung: "oel", periode: 1,
+  herkunft: "eu",   // "eu" = Wertschöpfung überwiegend in der EU, sonst "welt"
+
+  /* Finanzierung */
+  eigenmittel: 0,
+  eigenmittelVerwendung: "optimal", // "optimal" | "pv" | "wp" | "anteilig"
+  anlagezins: 2.50,                 // Rendite, die die Eigenmittel sonst brächten
+
+  /* Die Laufzeitvarianten stammen aus dem KfW-Konditionsblatt. Gewählt sind
+     die längeren Varianten, weil sie die Monatsrate am stärksten senken –
+     die typische Wahl eines Haushalts, der die Rate tragbar halten will.
+     Zins, Laufzeit und tilgungsfreie Jahre folgen der Variante und sind
+     nicht einzeln eingebbar; es gibt sie bei der KfW nur im Paket. */
+  variante358: "25-3-10",           // Ergänzungskredit: 25 Jahre, 3 tilgungsfreie
+  variante270: "20-3-10",           // KfW 270: 20 Jahre, 3 tilgungsfreie
+  zinsKonsum: 7.00,// privater Modernisierungs-/Ratenkredit – kein Förderzins
+  inflation: 2.00, // mittlere Preissteigerung (EZB-Ziel)
+
+  /* Energie */
+  haushaltsstrom: 3500,      // kWh/a ohne Wärmepumpe
+  vollbenutzung: 1800,       // h/a Heizungsvollbenutzungsstunden
+  jaz: 3.4,                  // Jahresarbeitszahl – Mittelwert Fraunhofer-ISE-
+                             // Feldtest Bestand (77 Anlagen, 11/2025)
+  ertragProKwp: 950,         // kWh/(kWp·a)
+  strompreis: 0.30,          // €/kWh – nach Tarifwechsel erreichbarer Fest-
+                             // preis 08/2026 (BNS-Dauerregel: nie mit dem
+                             // Bestands-Durchschnitt rechnen)
+  strompreisSteigerung: 2.0, // % p. a. – wachsender EE-Anteil dämpft
+  /* Entlastung nach § 14a EnWG, brutto je Jahr. Wer die Wärmepumpe beim
+     Netzbetreiber als steuerbare Verbrauchseinrichtung anmeldet, zahlt
+     weniger Netzentgelt. Voreinstellung ist Modul 1 — der pauschale
+     Abschlag, in den man automatisch fällt, wenn man nichts wählt:
+     130,66 €/a netto x 1,19 = 155,49 € (EWR Netz GmbH, Preisblatt 3 ab
+     01.01.2026). Modul 2 (reduzierter Arbeitspreis) und Modul 1 + 3
+     (zeitvariables Netzentgelt) können mehr bringen; WELCHES Modul für
+     den eigenen Fall trägt, rechnet der BNS-Wirtschaftlichkeitsrechner
+     Wärmepumpe aus. Hier steht nur der Jahresbetrag, der dort herauskommt.
+     0 eintragen, wenn nicht angemeldet wird. Die Entlastung wächst mit dem
+     Strompreis NICHT mit: Netzentgelte folgen einer eigenen Entwicklung. */
+  entlastung14a: 155,        // €/a brutto
+  marktwert: 4.00,           // ct/kWh Marktwert Solar (Excel-Tool: Szenario Basis); Vermarktungskosten getrennt (EINSPEISUNG)
+  degradation: 0.5,          // % Modulalterung p. a.
+  betrachtung: 20,           // Jahre
+
+  /* Reale Preisentwicklung der Anlagentechnik, bezogen auf den Preisstand
+     des 2. Halbjahres 2026. 0 % bedeutet: die Preise steigen genau mit der
+     Inflation, der reale Preis bleibt gleich. Negative Werte bilden einen
+     realen Preisrückgang ab (bei PV und Speichern historisch der Normalfall). */
+  realePreisentwicklung: 0,
+
+  /* Referenz: die bisherige Heizung, gegen die gerechnet wird */
+  brennstoff: "gas",         // "gas" | "oel" | "keine"
+  brennstoffpreis: 0.115,    // €/kWh Endenergie (Erdgas, erreichbarer Festpreis)
+  brennstoffSteigerung: 4.0, // % p. a. – entspricht 3 % Grundsteigerung plus dem
+                             // CO₂-Preis des ab 2028 startenden ETS 2 nach der
+                             // vorsichtigen Kurve des BNS-Wirtschaftlichkeits-
+                             // rechners (unteres Drittel der Studienlage),
+                             // über 20 Jahre gerechnet
+  kesselNutzungsgrad: 85,    // % Jahresnutzungsgrad der Altanlage
+  sonstigeEinsparung: 150    // €/a Schornsteinfeger, Wartung, Zählergebühren
+};
+
+/* Voreingestellte Brennstoffpreise je Referenzheizung (€/kWh Endenergie) */
+/* Öl: 1,35 €/l ÷ 10,7 kWh/l = 0,126 €/kWh – mittlerer Einkaufspreis,
+   NICHT die aktuelle Spitze von 1,50–1,60 €/l (Ende 08/2026): Öl wird
+   1–2× jährlich getankt, es zählt der erwartbare Jahresmittelwert. */
+const BRENNSTOFFPREISE = { gas: 0.115, oel: 0.126, keine: 0 };
+
+/* Einkommensgrenze der Zinsverbilligung im Ergänzungskredit 358 */
+const GRENZE_358 = 90000;
+/* Höchstbetrag Ergänzungskredit je Wohneinheit */
+const MAX_358 = 120000;
+
+/* ---------------------------------------------------------------------
+   KfW-Konditionsblätter
+
+   Laufzeit, tilgungsfreie Anlaufjahre und Zins sind bei der KfW fest
+   aneinander gekoppelt: Es gibt nicht „20 Jahre zu 0,01 %“, sondern nur
+   die hier aufgeführten Kombinationen. Deshalb wählt der Rechner eine
+   Variante, statt Laufzeit und Zins einzeln eintippen zu lassen.
+
+   Für den Ergänzungskredit gelten die Laufzeitvarianten in 358 und 359
+   gleichermaßen, nur der Zinssatz unterscheidet sich: 358 ist der
+   zinsverbilligte Fall (zvE bis 90.000 €), 359 der Fall ohne
+   Verbilligung.
+
+   Beim 270er ist die Sonderkondition „PV-Aufdach“ in der besten
+   Preisklasse A hinterlegt. Die KfW staffelt diesen Kredit nach Bonität
+   und Besicherung in neun Klassen A bis I; die Einstufung nimmt die
+   Hausbank vor. In Preisklasse B liegt der Satz je Variante rund
+   0,4 Prozentpunkte höher, in Klasse C rund 0,7.
+
+   Wird eine Zinsanpassung nötig, weil die KfW ihre Sätze ändert: nur die
+   Zahlen in diesem Block anfassen, sonst nichts.
+   --------------------------------------------------------------------- */
+const KFW_STAND = "6. Oktober 2026";
+
+/* Die Labels sind bewusst knapp gehalten, damit die Auswahlliste im
+   Rechner nicht breiter wird als ihre längste Zeile; die vollständigen
+   Konditionen stehen direkt unter dem Feld. „Zins fest" bedeutet:
+   Zinsbindung über die gesamte Laufzeit (sonst 10 Jahre, siehe zb). */
+const KFW_VARIANTEN = {
+  ergaenzung: [
+    { id: "5-1-5",    lz: 5,  tf: 1,  zb: 5,
+      soll358: 0.01, eff358: 0.01, soll359: 4.40, eff359: 4.49,
+      label: "5 Jahre · 1 Jahr tilgungsfrei" },
+    { id: "10-2-10",  lz: 10, tf: 2,  zb: 10,
+      soll358: 1.48, eff358: 1.49, soll359: 4.53, eff359: 4.63,
+      label: "10 Jahre · 2 Jahre tilgungsfrei" },
+    { id: "25-3-10",  lz: 25, tf: 3,  zb: 10,
+      soll358: 2.53, eff358: 2.56, soll359: 4.62, eff359: 4.72,
+      label: "25 Jahre · 3 Jahre tilgungsfrei" },
+    { id: "35-5-10",  lz: 35, tf: 5,  zb: 10,
+      soll358: 2.68, eff358: 2.71, soll359: 4.63, eff359: 4.73,
+      label: "35 Jahre · 5 Jahre tilgungsfrei" },
+    { id: "10-10-10", lz: 10, tf: 10, zb: 10,
+      soll358: 2.77, eff358: 2.81, soll359: 4.64, eff359: 4.74,
+      endfaellig: true,
+      label: "10 Jahre · Tilgung erst am Ende" }
+  ],
+  pv270: [
+    { id: "5-1-5",   lz: 5,  tf: 1, zb: 5,  soll: 4.34, eff: 4.41,
+      label: "5 Jahre · 1 Jahr tilgungsfrei" },
+    { id: "10-2-10", lz: 10, tf: 2, zb: 10, soll: 4.50, eff: 4.58,
+      label: "10 Jahre · 2 Jahre tilgungsfrei" },
+    { id: "15-3-15", lz: 15, tf: 3, zb: 15, soll: 4.90, eff: 4.99,
+      label: "15 Jahre · 3 Jahre tilgungsfrei · Zins fest" },
+    { id: "20-3-10", lz: 20, tf: 3, zb: 10, soll: 4.68, eff: 4.76,
+      label: "20 Jahre · 3 Jahre tilgungsfrei" },
+    { id: "20-3-20", lz: 20, tf: 3, zb: 20, soll: 5.16, eff: 5.26,
+      label: "20 Jahre · 3 Jahre tilgungsfrei · Zins fest" },
+    { id: "30-5-10", lz: 30, tf: 5, zb: 10, soll: 4.71, eff: 4.79,
+      label: "30 Jahre · 5 Jahre tilgungsfrei" }
+  ]
+};
+
+function variante(liste, id) {
+  return KFW_VARIANTEN[liste].find(v => v.id === id) || KFW_VARIANTEN[liste][0];
+}
+
+/* =====================================================================
+   4. Zuschuss nach KfW 458
+   ===================================================================== */
+function berechneFoerderung(e) {
+  const p = PERIODEN[e.periode];
+  const zveEff = Math.max(0, e.zve - (e.kinder ? 10000 : 0));
+
+  let inc = 0, stufe = "–", stufeName = "keine (Vermietung)";
+  if (e.selbst) {
+    if (zveEff <= 30000)      { inc = 40; stufe = "A"; stufeName = "A · bis 30.000 €"; }
+    else if (zveEff <= 40000) { inc = 30; stufe = "B"; stufeName = "B · 30.001–40.000 €"; }
+    else if (zveEff <= 50000) { inc = 10; stufe = "C"; stufeName = "C · 40.001–50.000 €"; }
+    else                      { inc = 0;  stufe = "D"; stufeName = "D · über 50.000 €"; }
+  }
+
+  const klimaBerechtigt = (e.heizung === "oel" || e.heizung === "gas20");
+  const klima = (klimaBerechtigt && e.selbst) ? p.klima : 0;
+  const maxSatz = (e.selbst && zveEff <= 30000) ? 80 : 70;
+
+  /* Wertschöpfungsbonus: gleicht ab 2027 die abgesenkte Grundförderung
+     wieder aus – aber nur für Geräte mit EU-Wertschöpfung. */
+  const wsb = e.herkunft === "eu" ? p.wsb : 0;
+
+  /* Ohne Heizungsmaßnahme gibt es nichts zu bezuschussen. Der Satz wird
+     dann auf null gesetzt statt stehen gelassen: Ein ausgewiesener
+     Fördersatz von 52 % neben einem Zuschuss von 0 € ist ein Widerspruch,
+     den kein Leser auflösen kann. */
+  const heizungsmassnahme = e.kostenWP > 0;
+
+  const roh = heizungsmassnahme ? p.grund + inc + klima + wsb : 0;
+  const satz = heizungsmassnahme ? Math.min(roh, maxSatz) : 0;
+
+  const foerderfaehig = heizungsmassnahme ? Math.min(e.kostenWP, p.cap) : 0;
+  const zuschuss = Math.round(foerderfaehig * satz / 100);
+
+  return {
+    periode: p, zveEff, heizungsmassnahme,
+    inc: heizungsmassnahme ? inc : 0,
+    stufe, stufeName, klima: heizungsmassnahme ? klima : 0, klimaBerechtigt,
+    grund: heizungsmassnahme ? p.grund : 0,
+    wsb: heizungsmassnahme ? wsb : 0, wsbMoeglich: p.wsb,
+    maxSatz, roh, satz, foerderfaehig, zuschuss,
+    ueberDeckel: Math.max(0, e.kostenWP - p.cap),
+    gekappt: Math.max(0, roh - satz)
+  };
+}
+
+/* =====================================================================
+   5. Finanzierungsmix
+
+   Aufteilung des Eigenanteils nach den Programmregeln:
+
+   · KfW 358/359 finanziert ausschließlich die Kosten der geförderten
+     Maßnahme (Heizungstausch inkl. Umfeldmaßnahmen), höchstens 120.000 €
+     je Wohneinheit, und der bereits gewährte Zuschuss darf nicht
+     mitfinanziert werden.
+   · Photovoltaik und Batteriespeicher sind im Ergänzungskredit NICHT
+     förderfähig – dafür steht der KfW-Kredit 270 offen (bis 100 % der
+     Investitionskosten).
+   · Ein Restbetrag (z. B. bei Verzicht auf KfW-Kredite) läuft über den
+     privaten Konsumentenkredit.
+   ===================================================================== */
+function berechneFinanzierung(e, f) {
+  const kostenPV = e.kostenPV + e.kostenSP;
+  const gesamt = e.kostenWP + kostenPV;
+
+  /* Eigenanteil bei der Wärmepumpe, danach beim PV-Teil verrechnen */
+  const eigenWP = Math.max(0, e.kostenWP - f.zuschuss);
+  const eigenGesamt = Math.max(0, gesamt - f.zuschuss);
+
+  /* Ergänzungskredit: Variante Plus (358) nur mit zvE bis 90.000 € */
+  const plus = e.selbst && e.zve <= GRENZE_358;
+
+  /* --- Gewählte Laufzeitvarianten aus dem KfW-Konditionsblatt ------------
+     Beide Kredite haben eigene Konditionsblätter mit unterschiedlichen
+     Laufzeiten, tilgungsfreien Jahren und Zinssätzen. Sie werden deshalb
+     getrennt geführt – auch in der Praxis sind es zwei Kreditverträge. */
+  const v358 = variante("ergaenzung", e.variante358);
+  const v270 = variante("pv270", e.variante270);
+  const zins358 = plus ? v358.eff358 : v358.eff359;
+
+  /* --- Drei Finanzierungstöpfe, jeder mit eigenem Zinssatz ---------------
+     Der Wärmepumpen-Eigenanteil geht bis 120.000 € in den Ergänzungskredit,
+     alles darüber in den Konsumentenkredit; Photovoltaik und Speicher immer
+     in den KfW-Kredit 270. Eigenmittel verringern diese Töpfe.
+     Der Restbetrag folgt den Konditionen des Ergänzungskredits, weil er
+     denselben Gegenstand finanziert – nur zum Zins einer normalen Bank. */
+  const toepfe = [
+    { id: "358",  bedarf: Math.min(eigenWP, MAX_358),      zins: zins358,
+      lz: v358.lz, tf: v358.tf, endf: !!v358.endfaellig },
+    { id: "270",  bedarf: kostenPV,                        zins: v270.eff,
+      lz: v270.lz, tf: v270.tf, endf: false },
+    { id: "rest", bedarf: Math.max(0, eigenWP - MAX_358),  zins: e.zinsKonsum,
+      lz: v358.lz, tf: v358.tf, endf: !!v358.endfaellig }
+  ];
+
+  const eigenmittel = Math.min(Math.max(0, e.eigenmittel), eigenGesamt);
+  verteileEigenmittel(toepfe, eigenmittel, e.eigenmittelVerwendung);
+
+  const topf = id => toepfe.find(t => t.id === id);
+  const kredit358 = topf("358").bedarf - topf("358").em;
+  const kredit270 = topf("270").bedarf - topf("270").em;
+  const kreditRest = topf("rest").bedarf - topf("rest").em;
+
+  const summeKredit = kredit358 + kredit270 + kreditRest;
+
+  /* --- Lohnt der Einsatz der Eigenmittel? ------------------------------
+     Verglichen werden zwei Strategien mit gleichem Mitteleinsatz:
+       A) Eigenmittel anlegen und den Kredit aus dem Einkommen bedienen,
+       B) Eigenmittel in das Projekt stecken und die dadurch gesparte Rate
+          anlegen.
+     Der saubere Vergleich ist der Barwert: Ein Euro Eigenmittel lohnt
+     sich genau dann, wenn der Barwert der dadurch vermiedenen Kreditraten
+     – abgezinst mit der Rendite der Alternativanlage – über einem Euro
+     liegt. Das ist gleichbedeutend mit: Kreditzins über Anlagezins. */
+  toepfe.forEach(t => {
+    t.barwertfaktor = darlehen(1, t.zins, t.lz, t.tf, t.endf).barwert(e.anlagezins);
+    t.vorteil = t.em * (t.barwertfaktor - 1);
+  });
+  const eigenmittelVorteil = toepfe.reduce((s, t) => s + t.vorteil, 0);
+
+  /* Sinnvoll ist genau so viel Eigenkapital, wie es Schulden gibt, deren
+     Zins über der Rendite der Alternativanlage liegt. */
+  const optimaleEigenmittel = toepfe
+    .filter(t => t.zins > e.anlagezins)
+    .reduce((s, t) => s + t.bedarf, 0);
+  const eigenmittelVorteilOptimal = toepfe
+    .filter(t => t.zins > e.anlagezins)
+    .reduce((s, t) => s + t.bedarf * (t.barwertfaktor - 1), 0);
+
+  const d358 = darlehen(kredit358, zins358, v358.lz, v358.tf, v358.endfaellig);
+  const d270 = darlehen(kredit270, v270.eff, v270.lz, v270.tf, false);
+  const dRest = darlehen(kreditRest, e.zinsKonsum, v358.lz, v358.tf, v358.endfaellig);
+
+  /* Vergleichsfall: dieselben Beträge mit demselben Zahlungsplan, aber zum
+     Zins eines gewöhnlichen Bankkredits. Gleiche Laufzeit und gleiche
+     tilgungsfreie Zeit je Teilbetrag – nur so misst der Vergleich wirklich
+     den Zinsvorteil und nicht nebenbei einen Laufzeiteffekt. */
+  const dKonsum358 = darlehen(kredit358, e.zinsKonsum, v358.lz, v358.tf, v358.endfaellig);
+  const dKonsum270 = darlehen(kredit270, e.zinsKonsum, v270.lz, v270.tf, false);
+  const dKonsumRest = dRest;
+  const dKonsum = {
+    zinsSumme:      dKonsum358.zinsSumme + dKonsum270.zinsSumme + dKonsumRest.zinsSumme,
+    gesamtZahlung:  dKonsum358.gesamtZahlung + dKonsum270.gesamtZahlung + dKonsumRest.gesamtZahlung,
+    rateTilgung:    dKonsum358.rateTilgung + dKonsum270.rateTilgung + dKonsumRest.rateTilgung,
+    rateFrei:       dKonsum358.rateFrei + dKonsum270.rateFrei + dKonsumRest.rateFrei,
+    barwert: dp => dKonsum358.barwert(dp) + dKonsum270.barwert(dp) + dKonsumRest.barwert(dp),
+    jahresZahlung: j => dKonsum358.jahresZahlung(j) + dKonsum270.jahresZahlung(j) + dKonsumRest.jahresZahlung(j)
+  };
+
+  const zinsSumme = d358.zinsSumme + d270.zinsSumme + dRest.zinsSumme;
+  const zahlungSumme = d358.gesamtZahlung + d270.gesamtZahlung + dRest.gesamtZahlung;
+
+  /* Realer Barwert des Zahlungsstroms, abgezinst mit der Inflationsrate */
+  const barwertKfw = d358.barwert(e.inflation) + d270.barwert(e.inflation) + dRest.barwert(e.inflation);
+  const barwertKonsum = dKonsum.barwert(e.inflation);
+
+  /* Mischzinssatz des Pakets (effektiv, betragsgewichtet) */
+  const mischzins = summeKredit > 0
+    ? (kredit358 * zins358 + kredit270 * v270.eff + kreditRest * e.zinsKonsum) / summeKredit
+    : 0;
+
+  return {
+    gesamt, kostenPV, eigenWP, eigenGesamt, eigenmittel,
+    emAuf358: topf("358").em, emAuf270: topf("270").em, emAufRest: topf("rest").em,
+    emVorteil358: topf("358").vorteil, emVorteil270: topf("270").vorteil, emVorteilRest: topf("rest").vorteil,
+    eigenmittelVorteil, optimaleEigenmittel, eigenmittelVorteilOptimal,
+    /* Wie viel der Eigenmittel arbeitet gegen teure, wie viel gegen billige Schulden? */
+    emGegenTeuer: toepfe.filter(t => t.zins > e.anlagezins).reduce((s, t) => s + t.em, 0),
+    emGegenBillig: toepfe.filter(t => t.zins <= e.anlagezins).reduce((s, t) => s + t.em, 0),
+    plus, programm358: plus ? "358 (Plus, zinsverbilligt)" : "359 (ohne Zinsverbilligung)",
+    v358, v270, zins270: v270.eff,
+    kredit358, zins358, kredit270, kreditRest, summeKredit, mischzins,
+    d358, d270, dRest, dKonsum,
+    zinsSumme, zahlungSumme,
+
+    /* Vorteil 1: gegenüber Barzahlung, inflationsbereinigt.
+       Positiv, sobald der Kreditzins unter der Inflationsrate liegt: dann
+       wird die Schuld mit Geld getilgt, das laufend an Kaufkraft verliert. */
+    barwertKfw,
+    vorteilBar: summeKredit - barwertKfw,
+    vorteilBar358: kredit358 - d358.barwert(e.inflation),
+    vorteilBar270: kredit270 - d270.barwert(e.inflation),
+    vorteilBarRest: kreditRest - dRest.barwert(e.inflation),
+    vorteilBarKonsum: summeKredit - barwertKonsum,
+
+    /* Vorteil 2: gegenüber einem privaten Konsumentenkredit */
+    zinsSummeKonsum: dKonsum.zinsSumme,
+    vorteilKonsum: dKonsum.zinsSumme - zinsSumme,
+    barwertKonsum,
+    vorteilKonsumBarwert: barwertKonsum - barwertKfw,
+    rateKfw: d358.rateTilgung + d270.rateTilgung + dRest.rateTilgung,
+    rateKfwFrei: d358.rateFrei + d270.rateFrei + dRest.rateFrei,
+    rateKonsum: dKonsum.rateTilgung,
+    rateKonsumFrei: dKonsum.rateFrei
+  };
+}
+
+/* ---------------------------------------------------------------------
+   Eigenmittel auf die Finanzierungstöpfe verteilen.
+
+   "optimal"  gegen den jeweils teuersten Topf zuerst – das spart die
+              meisten Zinsen und ist die betriebswirtschaftlich richtige
+              Reihenfolge.
+   "pv"       zuerst Photovoltaik und Speicher (praktische Vereinfachung,
+              deckt sich in aller Regel mit "optimal").
+   "wp"       zuerst die Wärmepumpe – die meistgewählte, aber meist
+              teuerste Variante, weil sie den billigsten Kredit verdrängt.
+   "anteilig" gleichmäßig nach Bedarf verteilt.
+
+   Setzt bei jedem Topf das Feld `em` (eingesetzte Eigenmittel).
+--------------------------------------------------------------------- */
+function verteileEigenmittel(toepfe, betrag, verwendung) {
+  toepfe.forEach(t => { t.em = 0; });
+  let rest = Math.max(0, betrag);
+  const gesamtbedarf = toepfe.reduce((s, t) => s + t.bedarf, 0);
+  if (rest <= 0 || gesamtbedarf <= 0) return toepfe;
+
+  if (verwendung === "anteilig") {
+    const quote = Math.min(1, rest / gesamtbedarf);
+    toepfe.forEach(t => { t.em = t.bedarf * quote; });
+    return toepfe;
+  }
+
+  const reihenfolge =
+    verwendung === "wp" ? ["358", "rest", "270"] :
+    verwendung === "pv" ? ["270", "rest", "358"] :
+    /* optimal: teuerster Zins zuerst */
+    toepfe.slice().sort((a, b) => b.zins - a.zins).map(t => t.id);
+
+  for (const id of reihenfolge) {
+    if (rest <= 0) break;
+    const t = toepfe.find(x => x.id === id);
+    const anteil = Math.min(rest, t.bedarf);
+    t.em = anteil;
+    rest -= anteil;
+  }
+  return toepfe;
+}
+
+/* ---------------------------------------------------------------------
+   Annuitätendarlehen mit tilgungsfreien Anlaufjahren.
+   Gerechnet wird monatlich; der eingegebene Zinssatz ist der effektive
+   Jahreszins, daraus folgt der Monatszins über die 12. Wurzel.
+--------------------------------------------------------------------- */
+function darlehen(betrag, zinsProzent, jahre, tilgungsfreiJahre, endfaellig) {
+  const P = Math.max(0, betrag);
+  const i = Math.pow(1 + zinsProzent / 100, 1 / 12) - 1;
+  const mGes = Math.round(jahre * 12);
+
+  /* Bei endfälliger Tilgung läuft die Zinsphase über die volle Laufzeit;
+     sonst wird die tilgungsfreie Zeit auf höchstens Laufzeit minus ein
+     Jahr begrenzt, damit immer eine Tilgungsphase übrig bleibt. */
+  const mFrei = endfaellig
+    ? mGes
+    : Math.min(Math.round(tilgungsfreiJahre * 12), Math.max(0, mGes - 12));
+  const mTilg = endfaellig ? 0 : Math.max(1, mGes - mFrei);
+
+  const rateFrei = P * i;
+  const rateTilgung = endfaellig
+    ? rateFrei
+    : (i === 0 ? P / mTilg : P * i / (1 - Math.pow(1 + i, -mTilg)));
+
+  /* Schlusszahlung: nur beim endfälligen Darlehen, dann die volle Summe */
+  const schluss = endfaellig ? P : 0;
+
+  const gesamtZahlung = rateFrei * mFrei + (endfaellig ? 0 : rateTilgung * mTilg) + schluss;
+
+  return {
+    betrag: P, zins: zinsProzent, jahre, mFrei, mTilg, endfaellig: !!endfaellig, schluss,
+    rateFrei, rateTilgung,
+    gesamtZahlung, zinsSumme: gesamtZahlung - P,
+    /* Barwert des Zahlungsstroms bei gegebener Diskontrate in % p. a. */
+    barwert(diskontProzent) {
+      if (P <= 0) return 0;
+      const d = Math.pow(1 + diskontProzent / 100, 1 / 12) - 1;
+      let bw = 0;
+      for (let m = 1; m <= mFrei; m++) bw += rateFrei / Math.pow(1 + d, m);
+      for (let m = mFrei + 1; m <= mFrei + mTilg; m++) bw += rateTilgung / Math.pow(1 + d, m);
+      if (schluss > 0) bw += schluss / Math.pow(1 + d, mGes);
+      return bw;
+    },
+    /* Zahlung im Jahr j (1-basiert) */
+    jahresZahlung(j) {
+      const von = (j - 1) * 12 + 1, bis = j * 12;
+      let s = 0;
+      for (let m = von; m <= bis; m++) {
+        if (m <= mFrei) s += rateFrei;
+        else if (m <= mFrei + mTilg) s += rateTilgung;
+      }
+      if (schluss > 0 && bis >= mGes && von <= mGes) s += schluss;
+      return s;
+    }
+  };
+}
+
+/* =====================================================================
+   6. Energiebilanz PV + Speicher + Wärmepumpe
+
+   Die Eigenverbrauchsquote folgt einer in der Praxis gebräuchlichen
+   Näherung: ohne Speicher sinkt sie mit wachsendem Verhältnis von
+   Erzeugung zu Verbrauch; ein Speicher hebt sie mit abnehmendem
+   Grenznutzen. Beide Kurven sind bewusst konservativ parametriert.
+   ===================================================================== */
+function berechneEnergie(e) {
+  const wpStrom = e.wpKw > 0 ? Math.round(e.wpKw * e.vollbenutzung / e.jaz) : 0;
+  const verbrauch = e.haushaltsstrom + wpStrom;
+  const ertrag = Math.round(e.pvKwp * e.ertragProKwp);
+
+  if (ertrag <= 0) {
+    return { wpStrom, verbrauch, ertrag: 0, quote: 0, eigenverbrauch: 0,
+             einspeisung: 0, abregelung: 0, autarkie: 0, netzbezug: verbrauch };
+  }
+
+  const x = ertrag / verbrauch;                       // Erzeugung je Verbrauchseinheit
+  const s = e.spKwh / e.pvKwp;                        // Speicher je kWp
+
+  let quote = 0.35 / Math.pow(Math.max(0.25, x), 0.6);         // ohne Speicher
+  quote += 0.32 * (1 - Math.exp(-1.2 * s));                    // Speicherbeitrag
+  quote = Math.min(0.92, quote);
+
+  let eigenverbrauch = Math.min(ertrag * quote, verbrauch);
+  let einspeisung = Math.max(0, ertrag - eigenverbrauch);
+
+  /* 50-%-Einspeisebegrenzung ab 2027: Erzeugungsspitzen oberhalb der
+     halben Anlagenleistung dürfen nicht mehr eingespeist werden. Ein
+     Speicher fängt einen großen Teil davon ab. */
+  let abregelung = 0;
+  if (e.einspeiseKappung) {
+    const verlustquote = 0.07 * Math.max(0, 1 - 0.7 * s);
+    abregelung = Math.round(einspeisung * verlustquote);
+    einspeisung -= abregelung;
+  }
+
+  eigenverbrauch = Math.round(eigenverbrauch);
+  einspeisung = Math.round(einspeisung);
+
+  return {
+    wpStrom, verbrauch, ertrag,
+    quote: ertrag > 0 ? eigenverbrauch / ertrag : 0,
+    eigenverbrauch, einspeisung, abregelung,
+    autarkie: verbrauch > 0 ? eigenverbrauch / verbrauch : 0,
+    netzbezug: verbrauch - eigenverbrauch
+  };
+}
+
+/* ---------------------------------------------------------------------
+   Einspeiseerlös im Jahr j (1-basiert), in Euro, nach EEG-Regime.
+   Nachgebildet nach dem BNS-Excel-Tool Stand 172 (Blatt BNS_Ergebnisse:
+   Rechenblock Spalten AI bis AR, Kontostand P37 bis P66):
+   - Negative Börsenpreise: 500 Stunden × PV-Faktor 0,40 = 200 von 950
+     Volllaststunden. Ab dem 2. Betriebsjahr gibt es in diesen Stunden
+     keine Vergütung (feste Vergütung, Übergangszahlung) bzw. keinen Bonus
+     (Direktvermarktung); im neuen Recht abzüglich der Abregelungsquote,
+     weil abgeregelte Kilowattstunden in dieselben Mittagsstunden fallen.
+   - Inbetriebnahme bis 2026: 20 Jahre feste Vergütung, Verlängerung nach
+     § 51a um die ausgefallene Menge (abgebaut nur in positiven Stunden),
+     danach Marktwert minus Vermarktergebühr, je Jahr mindestens 0 €. Den
+     Monatsverlauf im letzten Verlängerungsjahr setzt der Rechner
+     gleichmäßig an (er kennt keinen Inbetriebnahmemonat).
+   - Inbetriebnahme ab 2027: Übergangszahlung pvMonate lang (Anlage unter
+     der Leistungsgrenze), danach Direktvermarktung mit Bonus dvMonate ab
+     ihrem Beginn (Anlagen unter 25 kW); Vermarktergebühr 66 € im Jahr plus
+     1 ct je kWh, Einrichtung 0 €. Die Direktvermarktung zählt nur, wenn
+     die Summe ihrer Jahressalden bis Betriebsjahr 30 die Einrichtung
+     übersteigt, sonst unentgeltliche Abgabe (0 ct, keine Kosten).
+--------------------------------------------------------------------- */
+const EINSPEISUNG = {
+  negStundenPV: 500 * 0.40,  // Stunden mit negativem Börsenpreis × PV-Faktor
+  volllast: 950,             // Volllaststunden je Jahr
+  vermFix: 66,               // € je Jahr Grundgebühr des Vermarkters
+  vermCt: 1.0,               // ct je vermarktete kWh
+  vermEinrichtung: 0,        // € einmalig
+  pruefJahre: 30             // Direktvermarktung zählt, wenn sie sich bis Jahr 30 rechnet
+};
+
+/* Phase je Betriebsjahr: 0 feste Vergütung (bis 2026), 1 Übergangszahlung,
+   2 Direktvermarktung mit Bonus, 3 Direktvermarktung ohne Bonus */
+function einspeisePhase(p, j, pvKwp) {
+  if (p.pvModus === "eeg") return 0;
+  const ueb = p.pvModus === "uebergang" && pvKwp < p.pvGrenzeKw ? p.pvMonate / 12 : 0;
+  if (j <= ueb) return 1;
+  const bonus = p.dvBonus > 0 && pvKwp < 25 ? p.dvMonate / 12 : 0;
+  return j <= ueb + bonus ? 2 : 3;
+}
+
+/* Was für alle Jahre gilt: Anteil der Negativstunden, Verlängerung nach
+   § 51a in Jahren (bis 2026) und ob sich die Direktvermarktung bis Jahr 30
+   rechnet (ab 2027). */
+function einspeisePlan(p, e, en) {
+  const E = EINSPEISUNG;
+  const negRoh = E.negStundenPV / E.volllast;
+  const kapp = en.ertrag > 0 ? en.abregelung / en.ertrag : 0;
+  const neg = p.pvModus === "eeg" ? negRoh : Math.max(0, negRoh - kapp);
+  const verlaengerung = E.negStundenPV * 19 / (2 * (E.volllast - E.negStundenPV));
+  let dvSaldo = 0, dvJahre = 0;
+  if (p.pvModus !== "eeg" && e.pvKwp > 0) {
+    for (let j = 1; j <= E.pruefJahre; j++) {
+      const ph = einspeisePhase(p, j, e.pvKwp);
+      if (ph < 2) continue;
+      dvJahre++;
+      const menge = en.einspeisung * Math.pow(1 - e.degradation / 100, j - 1);
+      const bonus = ph === 2 ? p.dvBonus : 0;
+      dvSaldo += menge * (e.marktwert + bonus) / 100 - E.vermFix - menge * E.vermCt / 100
+               - menge * neg * bonus / 100;
+    }
+  }
+  return { neg, verlaengerung, dvSaldo, dvLohnt: dvJahre > 0 && dvSaldo > E.vermEinrichtung };
+}
+
+function einspeiseErloes(p, j, menge, pvKwp, marktwertCt, plan) {
+  if (menge <= 0 || pvKwp <= 0) return 0;
+  const E = EINSPEISUNG;
+  const ph = einspeisePhase(p, j, pvKwp);
+  if (ph === 0) {
+    if (j === 1) return menge * p.pvSatz / 100;
+    const rest = 20 + plan.verlaengerung - j + 1;          // Jahre fester Vergütung, die noch bleiben
+    if (rest > 0 && rest < 1) return menge * p.pvSatz / 100 * (1 - plan.neg) * rest;
+    if (rest < 0) return Math.max(0, menge * marktwertCt / 100 - E.vermFix - menge * E.vermCt / 100);
+    return menge * p.pvSatz / 100 * (1 - plan.neg);
+  }
+  if (ph === 1) return menge * p.pvSatz / 100 * (j === 1 ? 1 : 1 - plan.neg);
+  if (!plan.dvLohnt) return 0;
+  const bonus = ph === 2 ? p.dvBonus : 0;
+  const erstesJahr = j === 1 || einspeisePhase(p, j - 1, pvKwp) < 2;
+  return menge * (marktwertCt + bonus) / 100 - E.vermFix - menge * E.vermCt / 100
+       - (erstesJahr ? E.vermEinrichtung : 0) - menge * plan.neg * bonus / 100;
+}
+
+/* =====================================================================
+   7. 20-Jahres-Bilanz (nominal und real)
+   ===================================================================== */
+function berechneBilanz(e, f, fin, en) {
+  const p = f.periode;
+  const jahre = e.betrachtung;
+  const reihen = [];
+  let kumNominal = 0, kumReal = 0;
+
+  /* Endenergie der Altanlage: Nutzwärme geteilt durch ihren Nutzungsgrad */
+  const nutzwaerme = e.wpKw * e.vollbenutzung;
+  const brennstoffKwh = (e.brennstoff === "keine" || !(e.kesselNutzungsgrad > 0))
+    ? 0 : nutzwaerme / (e.kesselNutzungsgrad / 100);
+  const plan = einspeisePlan(p, e, en);
+
+  for (let j = 1; j <= jahre; j++) {
+    const alterung = Math.pow(1 - e.degradation / 100, j - 1);
+    const strompreis = e.strompreis * Math.pow(1 + e.strompreisSteigerung / 100, j - 1);
+    const brennpreis = e.brennstoffpreis * Math.pow(1 + e.brennstoffSteigerung / 100, j - 1);
+
+    /* Referenz: alte Heizung weiterbetreiben, Strom komplett aus dem Netz */
+    const refBrennstoff = Math.round(brennstoffKwh * brennpreis);
+    const refStrom = Math.round(e.haushaltsstrom * strompreis);
+    /* Schornsteinfeger, Wartung und Zählergebühren spart nur, wer
+       tatsächlich eine Heizung ersetzt – ohne Wärmepumpe kein Abzug. */
+    const sonstige = e.wpKw > 0 ? e.sonstigeEinsparung : 0;
+    const referenz = refBrennstoff + refStrom + sonstige;
+
+    /* Neu: Wärmepumpe und PV, Reststrom aus dem Netz, Überschuss vergütet */
+    const eigenJ = en.eigenverbrauch * alterung;
+    const einspJ = en.einspeisung * alterung;
+    const netzbezug = Math.max(0, en.verbrauch - eigenJ);
+    const kostenStrom = Math.round(netzbezug * strompreis);
+    const erloesNetz = Math.round(einspeiseErloes(p, j, einspJ, e.pvKwp, e.marktwert, plan));
+    /* § 14a EnWG: Die Entlastung gibt es nur, wenn auch eine steuerbare
+       Verbrauchseinrichtung da ist — ohne Wärmepumpe entfällt sie. */
+    const rabatt14a = e.wpKw > 0 ? (e.entlastung14a || 0) : 0;
+    const neu = kostenStrom - erloesNetz - rabatt14a;
+
+    const energievorteil = referenz - neu;
+
+    const kredit = Math.round(
+      fin.d358.jahresZahlung(j) + fin.d270.jahresZahlung(j) + fin.dRest.jahresZahlung(j)
+    );
+
+    const saldo = energievorteil - kredit;
+    kumNominal += saldo;
+    kumReal += saldo / Math.pow(1 + e.inflation / 100, j);
+
+    reihen.push({
+      jahr: j, referenz, refBrennstoff, refStrom,
+      kostenStrom, erloesNetz, energievorteil, kredit, saldo,
+      kumNominal, kumReal
+    });
+  }
+
+  const summe = k => reihen.reduce((a, r) => a + r[k], 0);
+  /* Erstes Jahr mit dauerhaft positivem kumuliertem Saldo */
+  let amortisation = null;
+  for (const r of reihen) {
+    if (r.kumNominal - fin.eigenmittel >= 0) { amortisation = r.jahr; break; }
+  }
+
+  /* Raten, die erst nach dem Ende der Betrachtung fällig werden: Kredite
+     mit längerer Laufzeit (etwa 25 oder 35 Jahre bei 20 Jahren
+     Betrachtung) laufen weiter, das kumulierte Ergebnis endet aber mit
+     dem letzten Betrachtungsjahr. Der Betrag wird getrennt ausgewiesen,
+     damit die langen Laufzeitvarianten im Gesamtergebnis nicht besser
+     aussehen, als sie sind. */
+  const laufzeitMax = Math.ceil(Math.max(fin.d358.jahre, fin.d270.jahre, fin.dRest.jahre));
+  let ratenNachBetrachtung = 0;
+  for (let j = jahre + 1; j <= laufzeitMax; j++) {
+    ratenNachBetrachtung += fin.d358.jahresZahlung(j) + fin.d270.jahresZahlung(j) + fin.dRest.jahresZahlung(j);
+  }
+  ratenNachBetrachtung = Math.round(ratenNachBetrachtung);
+
+  /* Was die Eigenmittel angelegt am Ende der Laufzeit wert wären – rein
+     informativ. Für die Frage „einsetzen oder anlegen?" ist nicht dieser
+     Betrag maßgeblich, sondern der Barwertvergleich in der Finanzierung:
+     die durch den Einsatz gesparte Rate lässt sich ja ebenfalls anlegen. */
+  const endwertAnlage = fin.eigenmittel * Math.pow(1 + e.anlagezins / 100, jahre);
+
+  return {
+    reihen, brennstoffKwh, endwertAnlage,
+    laufzeitMax, ratenNachBetrachtung,
+    summeReferenz: summe("referenz"),
+    summeStromkosten: summe("kostenStrom"),
+    summeErloes: summe("erloesNetz"),
+    summeEnergievorteil: summe("energievorteil"),
+    summeKredit: summe("kredit"),
+    kumNominal, kumReal, amortisation,
+    /* Eigenmittel sind eine Auszahlung im Zeitpunkt 0 */
+    ergebnisNominal: kumNominal - fin.eigenmittel,
+    ergebnisReal: kumReal - fin.eigenmittel,
+    jahr1: reihen[0]
+  };
+}
+
+/* =====================================================================
+   8. Komplettrechnung
+   ===================================================================== */
+function rechne(eingabe) {
+  const e = Object.assign({}, DEFAULTS, eingabe);
+
+  /* --- Preisstand ------------------------------------------------------
+     Das gesamte Modell rechnet in konstanten Preisen des 2. Halbjahres
+     2026: Investitionskosten und Startpreise für Strom und Brennstoff
+     gelten für jeden Antragszeitpunkt gleichermaßen, die Steigerungsraten
+     sind nominal, abgezinst wird mit der Inflation.
+
+     Das heißt: Ohne weitere Angabe unterstellt das Modell nicht konstante
+     Preisschilder, sondern konstante *reale* Preise – die Anlagentechnik
+     wird nominal genauso teurer wie alles andere. Wer einen darüber
+     hinausgehenden realen Preisrückgang erwartet, trägt ihn hier ein. */
+  const jahreSeitBasis = (e.periode || 0) / 2;
+  e.preisfaktor = Math.pow(1 + (e.realePreisentwicklung || 0) / 100, jahreSeitBasis);
+  e.kostenWPBasis = e.kostenWP;
+  e.kostenPVBasis = e.kostenPV;
+  e.kostenSPBasis = e.kostenSP;
+  if (e.preisfaktor !== 1) {
+    e.kostenWP = Math.round(e.kostenWP * e.preisfaktor);
+    e.kostenPV = Math.round(e.kostenPV * e.preisfaktor);
+    e.kostenSP = Math.round(e.kostenSP * e.preisfaktor);
+  }
+
+  const f = berechneFoerderung(e);
+  const fin = berechneFinanzierung(e, f);
+  const en = berechneEnergie(Object.assign({}, e, {
+    einspeiseKappung: f.periode.einspeiseKappung
+  }));
+  const bil = berechneBilanz(e, f, fin, en);
+  return { e, f, fin, en, bil };
+}
+
+/* Bequemer Einstieg: Baukasten-Auswahl in ein Eingabeobjekt übersetzen */
+function ausBaukasten(wpKw, pvKwp, spKwh, rest) {
+  /* Ein Speicher ohne Photovoltaik hätte nichts zu speichern – er würde
+     sonst bepreist und über den 270er finanziert, ohne je zu wirken. */
+  const sp = pvKwp > 0 ? spKwh : 0;
+  return Object.assign({
+    wpKw, kostenWP: kostenWaermepumpe(wpKw),
+    pvKwp, kostenPV: kostenPV(pvKwp),
+    spKwh: sp, kostenSP: kostenSpeicher(sp)
+  }, rest || {});
+}
+
+/* Formatierung */
+const nf = new Intl.NumberFormat("de-DE");
+const nf1 = new Intl.NumberFormat("de-DE", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const nf2 = new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+function eur(n) { return nf.format(Math.round(n)) + " €"; }
+function prz(n, k) { return (k === 1 ? nf1 : nf).format(n) + " %"; }
+
+
+/* ===== Bedienung ===== */
+var MODUS = "wppv";           /* "wp" = nur Wärmepumpe, "wppv" = mit Solarteil */
+var MIT_PV = (MODUS !== "wp");
+var $ = function(id){ return document.getElementById(id); };
+var state = Object.assign({}, DEFAULTS, ausBaukasten(8, MIT_PV ? 10 : 0, MIT_PV ? 10 : 0, {}));
+
+var ZAHLENFELDER = ["kostenWP","kostenPV","kostenSP","wpKw","pvKwp","spKwh","zve","eigenmittel","anlagezins",
+  "zinsKonsum","inflation","realePreisentwicklung"];
+
+/* Auswahllisten aus dem Baukasten aufbauen */
+function fuelleSelect(id, liste, wert, feld, einheit){
+  var s = $(id); s.innerHTML = "";
+  liste.forEach(function(o){
+    var opt = document.createElement("option");
+    opt.value = String(o[feld]);
+    opt.textContent = o.label;
+    s.appendChild(opt);
+  });
+  s.value = String(wert);
+}
+
+PERIODEN.forEach(function(p){
+  var o = document.createElement("option");
+  o.value = String(p.id); o.textContent = p.label;
+  $("periode").appendChild(o);
+});
+$("periode").value = String(state.periode);
+$("heizung").value = state.heizung;
+if($("eigenmittelVerwendung")) $("eigenmittelVerwendung").value = state.eigenmittelVerwendung;
+
+/* --- KfW-Laufzeitvarianten -------------------------------------------
+   Laufzeit, tilgungsfreie Jahre und Zins sind im Konditionsblatt fest
+   gekoppelt; deshalb eine Auswahl statt dreier freier Zahlenfelder. */
+$("kfw-stand").textContent = KFW_STAND;
+(function(){
+  [["variante358", KFW_VARIANTEN.ergaenzung], ["variante270", KFW_VARIANTEN.pv270]].forEach(function(paar){
+    var el = $(paar[0]); if(!el) return;
+    paar[1].forEach(function(v){
+      var o = document.createElement("option");
+      o.value = v.id; o.textContent = v.label;
+      el.appendChild(o);
+    });
+    el.value = state[paar[0]];
+    el.addEventListener("change", function(){ state[paar[0]] = this.value; update(); });
+  });
+})();
+
+function gewaehlteLaufzeit(){
+  var v = variante("ergaenzung", state.variante358);
+  var w = variante("pv270", state.variante270);
+  var mitPv = MIT_PV && state.pvKwp + state.spKwh > 0;
+  /* Ohne Wärmepumpe gibt es keinen Ergänzungskredit 358 – dann zählt
+     allein die Laufzeit des 270ers. */
+  if(!(state.wpKw > 0)) return mitPv ? String(w.lz) : String(v.lz);
+  return mitPv && w.lz !== v.lz ? v.lz + "/" + w.lz : String(v.lz);
+}
+
+/* Konditionen der gewählten Variante im Klartext unter das Menü */
+function zeigeKonditionen(fin){
+  var v = fin.v358;
+  var zins = fin.plus ? v.eff358 : v.eff359;
+  var soll = fin.plus ? v.soll358 : v.soll359;
+  $("kond-358").textContent = (fin.plus ? "Programm 358: " : "Programm 359: ") +
+    nf2.format(zins) + " % effektiv (" + nf2.format(soll) + " % nominal), Zins " + v.zb + " Jahre fest" +
+    (v.endfaellig ? " – Schlusszahlung am Ende" : "");
+  if($("kond-270")){
+    var w = fin.v270;
+    $("kond-270").textContent = nf2.format(w.eff) + " % effektiv (" + nf2.format(w.soll) +
+      " % nominal), Zins " + w.zb + " Jahre fest, Preisklasse A";
+  }
+}
+
+/* Konditionstabellen im Kompendium */
+(function(){
+  var t1 = $("tbl-kond358");
+  KFW_VARIANTEN.ergaenzung.forEach(function(v){
+    var tr = document.createElement("tr");
+    tr.innerHTML = '<th scope="row">' + (v.endfaellig ? v.lz + " Jahre, endfällig" : v.lz + " Jahre") +
+      '</th><td class="num">' + (v.endfaellig ? "ganze Laufzeit" : jahre(v.tf)) +
+      '</td><td class="num">' + jahre(v.zb) +
+      '</td><td class="num">' + nf2.format(v.eff358) + " %" +
+      '</td><td class="num">' + nf2.format(v.eff359) + ' %</td>';
+    t1.appendChild(tr);
+  });
+  var t2 = $("tbl-kond270"); if(!t2) return;
+  KFW_VARIANTEN.pv270.forEach(function(v){
+    var tr = document.createElement("tr");
+    tr.innerHTML = '<th scope="row">' + v.lz + ' Jahre' + (v.zb === v.lz ? ', Zins fest' : '') +
+      '</th><td class="num">' + jahre(v.tf) +
+      '</td><td class="num">' + jahre(v.zb) +
+      '</td><td class="num">' + nf2.format(v.soll) + " %" +
+      '</td><td class="num">' + nf2.format(v.eff) + ' %</td>';
+    t2.appendChild(tr);
+  });
+  $("kond-caption").textContent = "Laufzeitvarianten des Ergänzungskredits – Konditionen der KfW, Stand " + KFW_STAND;
+})();
+
+/* Abschmelztabelle in der Info-Zone */
+(function(){
+  var tb = $("tbl-abschmelz");
+  PERIODEN.forEach(function(p){
+    var tr = document.createElement("tr");
+    tr.innerHTML = '<th scope="row">' + p.label + '</th><td class="num">' + eur(p.cap) +
+                   '</td><td class="num">' + (p.klima > 0 ? p.klima + " %" : "0 % (entfallen)") + '</td>';
+    tb.appendChild(tr);
+  });
+})();
+
+function schreibeFelder(){
+  ZAHLENFELDER.forEach(function(k){ if($(k)) $(k).value = state[k]; });
+  $("periode").value = String(state.periode);
+  $("heizung").value = state.heizung;
+  if($("eigenmittelVerwendung")) $("eigenmittelVerwendung").value = state.eigenmittelVerwendung;
+  $("variante358").value = state.variante358;
+  if($("variante270")) $("variante270").value = state.variante270;
+  $("kinder-ja").checked = state.kinder;
+  $("kinder-nein").checked = !state.kinder;
+  $("selbst-ja").checked = state.selbst;
+  $("selbst-nein").checked = !state.selbst;
+}
+
+ZAHLENFELDER.forEach(function(k){
+  var el = $(k); if(!el) return;
+  /* Untergrenze aus dem min-Attribut, damit Felder, die negativ sein
+     dürfen (Preisentwicklung, Preissteigerungen), nicht auf 0 geklemmt
+     werden. */
+  var min = parseFloat(el.getAttribute("min"));
+  if(isNaN(min)) min = 0;
+  var max = parseFloat(el.getAttribute("max"));
+  var h = function(korrigieren){
+    var v = parseFloat(String(el.value).replace(",", "."));
+    if(isNaN(v)) v = min;
+    v = Math.max(min, v);
+    if(!isNaN(max)) v = Math.min(max, v);
+    /* Nach dem Verlassen des Feldes den tatsächlich verwendeten Wert
+       zurückschreiben, damit Anzeige und Rechnung nicht auseinanderfallen. */
+    if(korrigieren === true && String(v) !== String(el.value)) el.value = v;
+    state[k] = v;
+    update();
+  };
+  el.addEventListener("input", function(){ h(false); });
+  el.addEventListener("change", function(){ h(true); });
+});
+
+/* Größe geändert -> Kostenrichtwert neu berechnen. Der Nutzer kann den
+   Betrag danach jederzeit durch sein konkretes Angebot ersetzen. */
+["wpKw", "pvKwp", "spKwh"].forEach(function(id){
+  if(!$(id)) return;
+  $(id).addEventListener("input", function(){
+    state.kostenWP = kostenWaermepumpe(state.wpKw);
+    state.kostenPV = kostenPV(state.pvKwp);
+    state.kostenSP = state.pvKwp > 0 ? kostenSpeicher(state.spKwh) : 0;
+    if(state.pvKwp <= 0) state.spKwh = 0;
+    schreibeFelder(); update();
+  });
+});
+$("periode").addEventListener("change", function(){ state.periode = parseInt(this.value, 10); update(); });
+$("heizung").addEventListener("change", function(){ state.heizung = this.value; update(); });
+if($("eigenmittelVerwendung")) $("eigenmittelVerwendung").addEventListener("change", function(){ state.eigenmittelVerwendung = this.value; update(); });
+["kinder","selbst"].forEach(function(name){
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="' + name + '"]'), function(r){
+    r.addEventListener("change", function(){ state[name] = (this.value === "ja"); update(); });
+  });
+});
+$("em-optimum").addEventListener("click", function(){
+  state.eigenmittel = Math.round(rechne(state).fin.optimaleEigenmittel);
+  state.eigenmittelVerwendung = "optimal";
+  schreibeFelder(); update();
+  /* Kein Sprung zur Ergebniszone: Die Seite bleibt stehen, der Fokus
+     wandert auf das soeben befüllte Feld, damit die Übernahme sichtbar ist. */
+  $("eigenmittel").focus({ preventScroll: true });
+});
+/* Der Knopf in der Kopfzeile loest denselben Vorgang aus. Er wird
+   ferngesteuert statt die Routine zu kopieren — so koennen die beiden
+   Knoepfe nicht auseinanderlaufen. Wichtig hier: Der urspruengliche Knopf
+   steckt in einem eingeklappten Abschnitt und ist praktisch unauffindbar. */
+$("resetOben").addEventListener("click", function(){ $("reset").click(); });
+/* Drucken: window.print() oeffnet den Druckdialog des Geraets mit dem dort
+   eingestellten Standarddrucker. Ohne Dialog drucken koennen Browser nicht. */
+$("druckenOben").addEventListener("click", function(){ window.print(); });
+/* ---------------------------------------------------------------------
+   Drucken: Was zugeklappt ist, kommt nicht aufs Papier.
+
+   ★ Chromium klappt beim Drucken JEDEN Aufklapp-Block auf — und zwar schon,
+   bevor „beforeprint" ausgeloest wird (gemessen 18.09.2026). Im Druckmoment
+   ist deshalb nicht mehr feststellbar, was der Anwender zugeklappt hatte.
+   Der Zustand wird darum LAUFEND als Klasse mitgefuehrt und im Druckmodus
+   nicht mehr angefasst. Das Kompendium wird vor dem Drucken bewusst
+   aufgeklappt und danach wieder geschlossen.
+   --------------------------------------------------------------------- */
+function zustandMerken(el){ el.classList.toggle("zugeklappt", !el.open); }
+/* Nur das Anklicken durch den Anwender aendert die Markierung. Auf das
+   Ereignis „toggle" ist kein Verlass: Chromium loest es beim Drucken selbst
+   aus und wuerde die Markierung damit loeschen. */
+document.addEventListener("click", function(ev){
+  var s = ev.target && ev.target.closest ? ev.target.closest("summary") : null;
+  if (!s || !s.parentElement) return;
+  var d = s.parentElement;
+  setTimeout(function(){ zustandMerken(d); }, 0);
+}, true);
+document.querySelectorAll("details").forEach(zustandMerken);
+function druckVorbereiten(){
+  document.querySelectorAll("#zone-kompendium details").forEach(function(d){
+    if (!d.open) { d.setAttribute("data-zu", "1"); d.open = true; }
+    d.classList.remove("zugeklappt");
+  });
+}
+function druckAufraeumen(){
+  document.querySelectorAll("details[data-zu]").forEach(function(d){
+    d.open = false; d.removeAttribute("data-zu"); d.classList.add("zugeklappt");
+  });
+}
+window.addEventListener("beforeprint", druckVorbereiten);
+window.addEventListener("afterprint", druckAufraeumen);
+$("reset").addEventListener("click", function(){
+  state = Object.assign({}, DEFAULTS, ausBaukasten(8, MIT_PV ? 10 : 0, MIT_PV ? 10 : 0, {}));
+  try { sessionStorage.removeItem(SPEICHER); } catch (e) {}
+  schreibeFelder(); update();
+  /* Kein Sprung zur Ergebniszone – die Seite bleibt stehen (wie beim
+     Optimum-Knopf), damit man die zurückgesetzten Felder sieht. */
+});
+
+/* Einheit rechts im Eingabefeld: Der Platzbedarf hängt von Text, Schriftart
+   und Zoomstufe ab und lässt sich nicht sinnvoll fest verdrahten. Deshalb
+   wird er gemessen und als Innenabstand gesetzt, damit die Zahl niemals
+   unter das Einheitenzeichen läuft. */
+function passeEinheitenAn(){
+  Array.prototype.forEach.call(document.querySelectorAll(".unitwrap"), function(w){
+    var feld = w.querySelector("input"), einheit = w.querySelector(".unit");
+    if(!feld || !einheit) return;
+    feld.style.paddingRight = (einheit.offsetWidth + 28) + "px";
+  });
+}
+passeEinheitenAn();
+window.addEventListener("resize", passeEinheitenAn);
+
+/* Ein Abschnitt des Fördersatzbalkens zeigt seine Prozentzahl nur, wenn sie
+   GANZ hineinpasst. Auch das wird gemessen: Schriftbreiten unterscheiden sich
+   je Browser, und eine angeschnittene Zahl liest sich wie eine andere. Passt
+   sie nicht, steht sie weiter im Hinweis beim Darüberfahren und im Vorlesetext
+   des Balkens. Ein Größenwechsel misst neu. */
+function beschrifteBalken(){
+  Array.prototype.forEach.call(document.querySelectorAll("#stackbar .segb"), function(d){
+    d.textContent = d.dataset.beschriftung || "";
+    if(d.scrollWidth > d.clientWidth) d.textContent = "";
+  });
+}
+window.addEventListener("resize", beschrifteBalken);
+/* Aufgeklappte Feineinstellungen enthalten Felder, die erst dann messbar sind */
+Array.prototype.forEach.call(document.querySelectorAll("details"), function(d){
+  d.addEventListener("toggle", passeEinheitenAn);
+});
+
+/* Erläuterungs-Buttons
+   Der Kasten erscheint direkt unter seinem Eingabefeld und legt sich über den
+   Inhalt darunter, statt ihn wegzuschieben. Stünde er im Textfluss, verschöbe
+   jedes Öffnen die Seite: Unter einem Fragezeichen am oberen Bildschirmrand
+   gleicht der Browser das mit einem Sprung aus, das Fragezeichen rutscht unter
+   der Maus weg, der Kasten schließt, die Seite springt zurück – ein Flackern
+   ohne Ende. Deshalb wandert jeder Kasten beim Start in sein Feld (.feld ist
+   der Bezugsrahmen) und wird so verschoben, dass er nicht über den Rand ragt. */
+function legeKastenAn(box){
+  box.style.left = "0px";
+  var rand = 8;
+  var breite = document.documentElement.clientWidth;
+  var r = box.getBoundingClientRect();
+  var schub = 0;
+  if(r.right > breite - rand) schub = (breite - rand) - r.right;
+  if(r.left + schub < rand) schub = rand - r.left;
+  box.style.left = schub + "px";
+}
+function schliesseOffene(ausser){
+  Array.prototype.forEach.call(document.querySelectorAll(".tipbox.open"), function(b){ if(b !== ausser) b.classList.remove("open"); });
+  Array.prototype.forEach.call(document.querySelectorAll('.qmark[aria-expanded="true"]'), function(b){
+    if($(b.getAttribute("data-tip")) !== ausser) b.setAttribute("aria-expanded", "false");
+  });
+}
+Array.prototype.forEach.call(document.querySelectorAll(".qmark"), function(q){
+  var eigen = $(q.getAttribute("data-tip"));
+  if(!eigen) return;
+  var feld = q.closest(".feld");
+  if(feld) feld.appendChild(eigen);
+  /* Darueberstreichen zeigt die Erklaerung kurz. Es schliesst dabei
+     ausdruecklich KEINE anderen Kaesten — anders als der Klick unten.
+     Sonst wuerde ein festgehaltener Kasten beim blossen Vorbeifahren
+     verschwinden. */
+  var zeigen = function(){ eigen.classList.add("schwebt"); legeKastenAn(eigen); };
+  var weg = function(){ eigen.classList.remove("schwebt"); };
+  q.addEventListener("mouseenter", zeigen);
+  q.addEventListener("mouseleave", weg);
+  q.addEventListener("focus", zeigen);
+  q.addEventListener("blur", weg);
+  q.addEventListener("click", function(){
+    var offen = eigen.classList.contains("open");
+    schliesseOffene(null);
+    if(!offen){ eigen.classList.add("open"); q.setAttribute("aria-expanded", "true"); legeKastenAn(eigen); }
+  });
+});
+/* Ein geöffneter Kasten liegt über anderen Feldern: Escape und ein Klick
+   daneben schließen ihn wieder. */
+document.addEventListener("keydown", function(ev){ if(ev.key === "Escape") schliesseOffene(null); });
+document.addEventListener("click", function(ev){
+  if(ev.target.closest && (ev.target.closest(".qmark") || ev.target.closest(".tipbox"))) return;
+  schliesseOffene(null);
+});
+window.addEventListener("resize", function(){
+  Array.prototype.forEach.call(document.querySelectorAll(".tipbox.open,.tipbox.schwebt"), legeKastenAn);
+});
+
+/* ===== Ausgabe ===== */
+function txt(id, v){ var el = $(id); if(el) el.textContent = v; }
+function vzeichen(n){ return (n >= 0 ? "+" : "−") + eur(Math.abs(n)); }
+function jahre(n){ return n === 1 ? "1 Jahr" : (Number.isInteger(n) ? nf.format(n) : nf1.format(n)) + " Jahre"; }
+
+function update(){
+  /* Wertschöpfungsbonus: Solange die gesetzliche Regelung aussteht, ist das
+     Feld gesperrt und gerechnet wird mit 30 % Grundförderung. Im Modell
+     entspricht das der Herkunft "eu" (ab 2027: 15 % Grundförderung + 15 %
+     Bonus); ausgewiesen wird die Summe als Grundförderung. */
+  state.herkunft = "eu";
+  var r = rechne(state);
+  var f = r.f, fin = r.fin, e = r.e;
+  var grundGesamt = f.grund + f.wsb;
+
+  /* Reiner Wärmepumpen- oder reiner Photovoltaikfall: gegenstandslose
+     Blöcke ausblenden, statt sie mit Nullen zu füllen. Die Regeln dazu
+     stehen im Stylesheet (body.ohne-pv / body.ohne-wp). */
+  var ohnePv = !(e.pvKwp > 0);
+  var ohneWp = !(e.kostenWP > 0);
+  document.body.classList.toggle("ohne-pv", ohnePv);
+  document.body.classList.toggle("ohne-wp", ohneWp);
+
+  /* --- Kopfzahlen --- */
+  $("out-zuschuss").innerHTML = nf.format(f.zuschuss) + "&nbsp;<small>€</small>";
+  txt("out-sub", "bei " + eur(fin.gesamt) + " Gesamtinvestition · Antrag im " + f.periode.label +
+      " · Einkommensstufe " + f.stufeName);
+  txt("out-satz", prz(f.satz));
+
+  /* --- Fördersatzbalken --- */
+  var scale = Math.max(f.roh, f.maxSatz, 80);
+  var sb = $("stackbar"); sb.innerHTML = "";
+  function seg(cls, w, label){
+    if(w <= 0) return;
+    var d = document.createElement("div");
+    d.className = "segb " + cls;
+    d.style.width = (w / scale * 100) + "%";
+    if(w / scale > 0.08) d.dataset.beschriftung = label;
+    d.title = label;
+    sb.appendChild(d);
+  }
+  var rest = f.satz;
+  var basis = Math.min(grundGesamt, rest); rest -= basis; seg("base", basis, grundGesamt + " %");
+  var incS = Math.min(f.inc, Math.max(0, rest)); rest -= incS; seg("inc", incS, "+" + f.inc + " %");
+  var spS = Math.min(f.klima, Math.max(0, rest)); seg("speed", spS, "+" + f.klima + " %");
+  seg("cut", f.gekappt, "−" + f.gekappt + " %");
+  beschrifteBalken();
+
+  var cw = $("capwrap"); cw.innerHTML = "";
+  var pos = f.maxSatz / scale * 100;
+  var line = document.createElement("div"); line.className = "capline"; line.style.left = pos + "%"; cw.appendChild(line);
+  var lab = document.createElement("div"); lab.className = "caplabel"; lab.style.left = pos + "%";
+  lab.textContent = "Deckel " + f.maxSatz + " %"; cw.appendChild(lab);
+  txt("stack-desc", "Fördersatz " + f.satz + " Prozent: " + grundGesamt + " Prozent Grundförderung, " + f.inc +
+      " Prozentpunkte Einkommensbonus, " + f.klima + " Prozentpunkte Klimabonus" +
+      (f.gekappt > 0 ? ", davon " + f.gekappt + " Prozentpunkte durch den Höchstsatz von " + f.maxSatz + " Prozent gekappt" : "") + ".");
+
+  /* --- Kosten --- */
+  /* Hinweistexte unter den Kostenfeldern: spezifischer Preis und Abgleich
+     mit dem Richtwert, damit ein eigenes Angebot einordbar wird. */
+  function kostenHinweis(feld, menge, kosten, richtwert, einheit){
+    if(!$(feld)) return;
+    if(menge <= 0){ txt(feld, "Ohne Anlage entfallen diese Kosten."); return; }
+    var spez = Math.round(kosten / menge);
+    var abw = richtwert > 0 ? Math.round((kosten / richtwert - 1) * 100) : 0;
+    txt(feld, nf.format(spez) + " €/" + einheit +
+      (Math.abs(abw) >= 3 ? " · " + (abw > 0 ? "+" : "−") + Math.abs(abw) + " % ggü. Richtwert"
+                          : " · marktüblich"));
+  }
+  kostenHinweis("hint-wp", e.wpKw, e.kostenWPBasis, kostenWaermepumpe(e.wpKw), "kW");
+  kostenHinweis("hint-pv", e.pvKwp, e.kostenPVBasis, kostenPV(e.pvKwp), "kWp");
+  kostenHinweis("hint-sp", e.spKwh, e.kostenSPBasis, kostenSpeicher(e.spKwh), "kWh");
+
+  txt("r-kwp", e.kostenWP > 0 ? eur(e.kostenWP) : "keine Wärmepumpe geplant");
+  if(!MIT_PV){ ["zeile-kpv","zeile-ksp"].forEach(function(id){ if($(id)) $(id).style.display = "none"; }); }
+  txt("r-kpv", e.kostenPV > 0 ? eur(e.kostenPV) : "keine PV-Anlage geplant");
+  txt("r-ksp", e.kostenSP > 0 ? eur(e.kostenSP) : "kein Speicher geplant");
+  txt("r-kges", eur(fin.gesamt));
+  var pz = $("zeile-preis");
+  if(e.preisfaktor !== 1 && e.periode > 0){
+    pz.style.display = "";
+    var basis = e.kostenWPBasis + e.kostenPVBasis + e.kostenSPBasis;
+    txt("r-preis", vzeichen(fin.gesamt - basis) + " gegenüber " + eur(basis) + " zum Preisstand heute");
+  } else {
+    pz.style.display = "none";
+  }
+  txt("r-cap", eur(f.foerderfaehig) + (f.ueberDeckel > 0 ? " (von " + eur(e.kostenWP) + ")" : ""));
+  txt("r-grund", prz(grundGesamt));
+  txt("r-inc", f.inc > 0 ? "+" + prz(f.inc) : (e.selbst ? "– (Einkommen über 50.000 €)" : "– (nicht selbstgenutzt)"));
+  txt("r-klima", f.klima > 0 ? "+" + prz(f.klima) : "–");
+  txt("r-satz", prz(f.satz) + (f.roh > f.satz ? " (rechnerisch " + prz(f.roh) + ")" : ""));
+  txt("r-zuschuss", eur(f.zuschuss));
+  txt("r-eigen", eur(fin.eigenGesamt));
+
+  /* --- Finanzierung --- */
+  txt("k-358", fin.kredit358 > 0
+    ? "Ergänzungskredit KfW " + (fin.plus ? "358 (zinsverbilligt)" : "359 (ohne Zinsverbilligung)")
+    : "Ergänzungskredit KfW 358/359");
+  txt("r-358", fin.kredit358 > 0 ? eur(fin.kredit358) + " zu " + nf2.format(fin.zins358) + " %" : "–");
+  txt("r-270", fin.kredit270 > 0 ? eur(fin.kredit270) + " zu " + nf2.format(fin.zins270) + " %" : "–");
+  txt("r-rest", fin.kreditRest > 0 ? eur(fin.kreditRest) + " zu " + nf2.format(e.zinsKonsum) + " %" : "–");
+  txt("r-em", fin.eigenmittel > 0
+    ? eur(fin.eigenmittel) + (fin.eigenmittel < state.eigenmittel ? " (begrenzt auf den Eigenanteil)" : "")
+    : "–");
+  function emZeile(zeile, wert, feld, vorteil){
+    var an = fin.eigenmittel > 0 && wert > 0;
+    $(zeile).style.display = an ? "" : "none";
+    if(an) txt(feld, eur(wert) + " · " + (vorteil >= 0 ? "+" : "−") + eur(Math.abs(vorteil)) + " Barwert");
+  }
+  emZeile("zeile-em358", fin.emAuf358, "r-em358", fin.emVorteil358);
+  emZeile("zeile-em270", fin.emAuf270, "r-em270", fin.emVorteil270);
+  emZeile("zeile-emrest", fin.emAufRest, "r-emrest", fin.emVorteilRest);
+  txt("r-kredit", eur(fin.summeKredit));
+  zeigeKonditionen(fin);
+  txt("r-rate", eur(fin.rateKfw) + " / Monat");
+  var tfJahre = Math.max(fin.d358.mFrei, fin.d270.mFrei) / 12;
+  txt("r-ratefrei", tfJahre > 0 ? eur(fin.rateKfwFrei) + " / Monat (" + jahre(tfJahre) + ")" : "keine tilgungsfreie Zeit");
+  txt("r-misch", nf2.format(fin.mischzins) + " % effektiv");
+  txt("r-zinsen", eur(fin.zinsSumme));
+
+  var sp = $("splitbar"); sp.innerHTML = "";
+  var sl = $("splitlegend"); sl.innerHTML = "";
+  var teile = [
+    { k: "z",     w: f.zuschuss,      n: "Zuschuss 458",       c: "var(--pine)" },
+    { k: "k358",  w: fin.kredit358,   n: "Kredit " + (fin.plus ? "358" : "359"), c: "var(--pine-soft)" },
+    { k: "k270",  w: fin.kredit270,   n: "Kredit 270",         c: "var(--sky)" },
+    { k: "krest", w: fin.kreditRest,  n: "Konsumentenkredit",  c: "var(--red)" },
+    { k: "em",    w: fin.eigenmittel, n: "Eigenmittel",        c: "var(--amber)" }
+  ];
+  var beschreibung = [];
+  teile.forEach(function(t){
+    if(t.w <= 0 || fin.gesamt <= 0) return;
+    var d = document.createElement("div");
+    d.className = t.k; d.style.width = (t.w / fin.gesamt * 100) + "%";
+    d.title = t.n + " " + eur(t.w); sp.appendChild(d);
+    sl.innerHTML += '<span><i style="background:' + t.c + '"></i>' + t.n + " " + eur(t.w) +
+                    " (" + Math.round(t.w / fin.gesamt * 100) + " %)</span>";
+    beschreibung.push(t.n + " " + eur(t.w));
+  });
+  txt("split-desc", "Aufteilung der Gesamtinvestition: " + beschreibung.join(", ") + ".");
+
+  /* --- Vorteilskarten --- */
+  var bar = fin.vorteilBar;
+  $("c-bar").textContent = vzeichen(bar);
+  $("c-bar").className = "big" + (bar < 0 ? " minus" : "");
+  txt("c-bar-exp",
+    "Bei " + nf1.format(e.inflation) + " % Inflation sind die " + eur(fin.zahlungSumme) +
+    " künftiger Raten heute nur " + eur(fin.barwertKfw) + " wert. Gegenüber " + eur(fin.summeKredit) +
+    " Barzahlung " + (bar >= 0 ? "sparen Sie damit " + eur(bar) + " an Kaufkraft." :
+    "zahlen Sie real " + eur(-bar) + " mehr – der Mischzins von " + nf2.format(fin.mischzins) +
+    " % liegt über der Inflationsrate.") +
+    (fin.kredit358 > 0 && fin.kredit270 > 0
+      ? " Getrennt betrachtet: Kredit " + (fin.plus ? "358" : "359") + " " + vzeichen(fin.vorteilBar358) +
+        ", Kredit 270 " + vzeichen(fin.vorteilBar270) + "."
+      : ""));
+
+  $("c-konsum").textContent = vzeichen(fin.vorteilKonsum);
+  txt("c-konsum-exp",
+    "Dieselbe Summe über einen privaten Kredit zu " + nf2.format(e.zinsKonsum) + " % würde " +
+    eur(fin.zinsSummeKonsum) + " Zinsen kosten statt " + eur(fin.zinsSumme) + ". Die Monatsrate läge bei " +
+    eur(fin.rateKonsum) + " statt " + eur(fin.rateKfw) + " – " + eur(Math.abs(fin.rateKonsum - fin.rateKfw)) +
+    " Unterschied pro Monat. In heutiger Kaufkraft entspricht der Vorteil " + eur(fin.vorteilKonsumBarwert) + ".");
+
+  /* --- Eigenmittel: einsetzen oder anlegen? --- */
+  var emv = fin.eigenmittelVorteil;
+  $("c-em").textContent = fin.eigenmittel > 0 ? vzeichen(emv) : "noch keine";
+  $("c-em").className = "big" + (fin.eigenmittel > 0 && emv < 0 ? " minus" : "");
+  var emText;
+  if(fin.eigenmittel <= 0){
+    emText = "Sie finanzieren das Vorhaben vollständig. Bei " + nf1.format(e.anlagezins) +
+      " % Anlagerendite wären " + eur(fin.optimaleEigenmittel) + " Eigenmittel optimal – das brächte " +
+      eur(fin.eigenmittelVorteilOptimal) + " in heutiger Kaufkraft. Grund: Jeder Euro lohnt sich genau dann, wenn er einen Kredit tilgt, dessen Zins über " +
+      nf1.format(e.anlagezins) + " % liegt.";
+  } else {
+    emText = "Ihre " + eur(fin.eigenmittel) + " senken die Monatsrate auf " + eur(fin.rateKfw) +
+      " und die Zinssumme auf " + eur(fin.zinsSumme) + ". Gegenüber einer Anlage zu " +
+      nf1.format(e.anlagezins) + " % " +
+      (emv >= 0 ? "ist das ein Vorteil von " + eur(emv) + "." : "kostet Sie das " + eur(-emv) + " – das Geld wäre angelegt besser aufgehoben.") +
+      (Math.abs(fin.eigenmittel - fin.optimaleEigenmittel) > 500
+        ? " Am besten wären " + eur(fin.optimaleEigenmittel) + " (" + vzeichen(fin.eigenmittelVorteilOptimal) + ")."
+        : " Das ist der optimale Betrag.");
+  }
+  txt("c-em-exp", emText);
+
+  /* --- Hinweise --- */
+  var notes = [];
+  if(f.ueberDeckel > 0)
+    notes.push({ t: eur(f.ueberDeckel) + " der Wärmepumpenkosten liegen über dem Förderdeckel von " +
+      eur(f.periode.cap) + " und sind vollständig Eigenanteil.", g: 0 });
+  if(f.gekappt > 0)
+    notes.push({ t: "Ihre Boni ergäben rechnerisch " + prz(f.roh) + " – gesetzlich gedeckelt auf " + prz(f.satz) + ".", g: 0 });
+  if(state.kinder && state.selbst){
+    var ohne = state.zve;
+    var stufeOhne = ohne <= 30000 ? 40 : ohne <= 40000 ? 30 : ohne <= 50000 ? 10 : 0;
+    if(stufeOhne < f.inc)
+      notes.push({ t: "Der Kinderzuschlag hebt Sie in eine höhere Bonusstufe: angesetztes Einkommen " +
+        eur(f.zveEff) + " statt " + eur(ohne) + ".", g: 1 });
+  }
+  if(!state.selbst)
+    notes.push({ t: "Ohne Selbstnutzung entfallen Einkommensbonus, Klimageschwindigkeitsbonus, der 80-%-Deckel und der zinsverbilligte Ergänzungskredit 358.", g: 0 });
+  if(state.selbst && state.zve > 90000)
+    notes.push({ t: "Mit einem zvE über 90.000 € gibt es keine Zinsverbilligung mehr. Der Eigenanteil läuft über Programm 359 zu marktnahen Konditionen – hier gerechnet mit " +
+      nf2.format(fin.v358.eff359) + " %.", g: 0 });
+  else if(state.selbst && state.zve > 50000)
+    notes.push({ t: "Ihr Einkommen liegt über der Bonusgrenze von 50.000 €, aber unter 90.000 € – der Zuschuss fällt kleiner aus, den zinsverbilligten Ergänzungskredit 358 bekommen Sie aber trotzdem.", g: 1 });
+  if(e.kostenPV > 0)
+    notes.push({ t: "Photovoltaik und Speicher (" + eur(fin.kostenPV) + ") erhalten keinen Zuschuss und sind im Ergänzungskredit 358 nicht förderfähig – sie laufen über den KfW-Kredit 270.", g: 0 });
+  if(f.periode.pvModus === "uebergang" && e.pvKwp > 0 && e.pvKwp >= f.periode.pvGrenzeKw)
+    notes.push({ t: "Ihre " + nf1.format(e.pvKwp) + "-kWp-Anlage liegt ab " + f.periode.kurz +
+      " über der Leistungsgrenze von " + f.periode.pvGrenzeKw + " kW: Es gibt keine Übergangszahlung mehr, sondern von Anfang an nur den Marktwert. Eine kleinere Anlage oder ein früherer Zeitpunkt ändert das.", g: 2 });
+  if(f.periode.pvModus === "eeg" && e.pvKwp > 0)
+    notes.push({ t: "Inbetriebnahme noch 2026: Sie sichern sich " + nf2.format(f.periode.pvSatz) +
+      " ct/kWh feste Einspeisevergütung für 20 Jahre plus das Inbetriebnahmejahr. Ab 2027 gibt es das nicht mehr.", g: 1 });
+  if(fin.vorteilBar270 < 0 && fin.kredit270 > 0 && state.eigenmittel < fin.kostenPV)
+    notes.push({ t: "Der PV-Kredit 270 kostet real mehr als er bringt (" + vzeichen(fin.vorteilBar270) +
+      "). Wenn Sie Eigenmittel haben, setzen Sie sie zuerst hier ein – nicht bei der Wärmepumpe.", g: 0 });
+  if(fin.eigenmittel > 0 && state.eigenmittelVerwendung === "wp" && fin.kredit270 > 0 && fin.zins270 > fin.zins358){
+    var besser = rechne(Object.assign({}, state, { eigenmittelVerwendung: "optimal" })).fin.eigenmittelVorteil;
+    notes.push({ t: "Sie setzen die Eigenmittel gegen die Wärmepumpe ein und verdrängen damit den billigsten Kredit des Pakets (" +
+      nf2.format(fin.zins358) + " %), während der teurere PV-Kredit (" + nf2.format(fin.zins270) +
+      " %) stehen bleibt. Dieselbe Summe zuerst gegen Photovoltaik und Speicher gerechnet brächte " +
+      eur(besser - fin.eigenmittelVorteil) + " mehr.", g: 2 });
+  }
+  if(fin.eigenmittel > 0 && fin.emGegenBillig > 0 && fin.eigenmittelVorteil < 0)
+    notes.push({ t: eur(fin.emGegenBillig) + " Ihrer Eigenmittel tilgen Schulden, die billiger sind als Ihre Anlagerendite von " +
+      nf1.format(e.anlagezins) + " %. Dieses Geld arbeitet angelegt für Sie besser als im Projekt.", g: 0 });
+  if(state.eigenmittel > fin.eigenGesamt && fin.eigenGesamt > 0)
+    notes.push({ t: "Sie haben mehr Eigenmittel angegeben, als überhaupt gebraucht werden. Gerechnet wird mit " +
+      eur(fin.eigenGesamt) + "; die restlichen " + eur(state.eigenmittel - fin.eigenGesamt) + " bleiben Ihnen erhalten.", g: 1 });
+  if(fin.vorteilBar358 > 0 && fin.kredit358 > 0)
+    notes.push({ t: "Der Ergänzungskredit 358 ist mit " + nf2.format(fin.zins358) + " % billiger als die angenommene Inflation von " +
+      nf1.format(e.inflation) + " % – hier lohnt sich Finanzieren gegenüber Barzahlung um " + eur(fin.vorteilBar358) + ".", g: 1 });
+  if(f.heizungsmassnahme && f.wsbMoeglich > 0){
+    var ohneEu = rechne(Object.assign({}, state, { herkunft: "welt" })).f.zuschuss;
+    notes.push({ t: "Wertschöpfungsbonus: Nach den Eckpunkten der Bundesregierung soll die Grundförderung für Wärmepumpen ab 2027 auf " +
+      prz(f.grund) + " sinken und für Geräte mit EU-Wertschöpfung durch einen Bonus von " + prz(f.wsbMoeglich) +
+      " wieder ausgeglichen werden. Die gesetzliche Regelung steht aus; gerechnet ist mit " + prz(grundGesamt) +
+      " Grundförderung. Für ein Gerät ohne EU-Wertschöpfung fiele der Zuschuss nach den Eckpunkten um " +
+      eur(f.zuschuss - ohneEu) + " niedriger aus.", g: 0 });
+  }
+  if(fin.v358.endfaellig)
+    notes.push({ t: "Sie haben die endfällige Variante gewählt: Zehn Jahre lang zahlen Sie nur Zinsen, dann werden " +
+      eur(fin.kredit358) + " auf einen Schlag fällig. Das setzt eine gesicherte Rücklage voraus – sonst brauchen Sie eine Anschlussfinanzierung zu dann unbekannten Konditionen.", g: 0 });
+  else if(tfJahre > 0)
+    notes.push({ t: "In den tilgungsfreien Anlaufjahren – bei Ihnen " +
+      jahre(tfJahre) + " – zahlen Sie nur Zinsen. Danach steigt die Rate auf " + eur(fin.rateKfw) + " im Monat.", g: 0 });
+  var ueberBindung = [];
+  if(fin.kredit358 > 0 && fin.v358.lz > fin.v358.zb) ueberBindung.push("der Heizungskredit nach " + fin.v358.zb + " Jahren");
+  if(fin.kredit270 > 0 && fin.v270.lz > fin.v270.zb) ueberBindung.push("der PV-Kredit nach " + fin.v270.zb + " Jahren");
+  if(ueberBindung.length)
+    notes.push({ t: "Die Laufzeit reicht über die Zinsbindung hinaus: " + ueberBindung.join(" und ") +
+      ". Für die Restschuld gelten dann die Konditionen von morgen, nicht die von heute. Der Rechner unterstellt vereinfachend den heutigen Zins über die ganze Laufzeit – rechnen Sie das als Risiko mit.", g: 0 });
+  var laengste = Math.max(fin.kredit358 > 0 ? fin.v358.lz : 0, fin.kreditRest > 0 ? fin.v358.lz : 0);
+  if(laengste > 20)
+    notes.push({ t: "Der Heizungskredit läuft " + laengste + " Jahre. Eine Wärmepumpe hält üblicherweise 15 bis 20 Jahre – ein längerer Kredit läuft weiter, auch wenn das Gerät bereits ersetzt werden muss.", g: 0 });
+  if(f.heizungsmassnahme && state.selbst && state.heizung === "gasneu")
+    notes.push({ t: "Für den Klimabonus muss eine funktionstüchtige Gas-Zentral- oder Biomasseheizung mindestens 20 Jahre alt sein. Öl-, Kohle-, Gasetagen- und Nachtspeicherheizungen erhalten ihn ohne Altersgrenze – ebenfalls nur, wenn sie noch funktionieren.", g: 0 });
+  if(f.heizungsmassnahme && state.selbst && state.heizung === "keine")
+    notes.push({ t: "Ohne funktionstüchtige fossile Altheizung gibt es keinen Klimageschwindigkeitsbonus – auch nicht für eine defekte Heizung, die älter als 20 Jahre ist.", g: 0 });
+
+  var nb = $("notes"); nb.innerHTML = "";
+  notes.forEach(function(n){
+    var d = document.createElement("div");
+    d.className = "note" + (n.g === 1 ? " good" : n.g === 2 ? " stop" : "");
+    d.textContent = n.t;
+    nb.appendChild(d);
+  });
+
+  zeitvergleich();
+}
+
+/* ===== Zeitpunktvergleich ===== */
+function zeitvergleich(){
+  var tb = $("tbl-zeit"); tb.innerHTML = "";
+  var reihen = PERIODEN.map(function(p){
+    var r = rechne(Object.assign({}, state, { periode: p.id }));
+    return { p: p, r: r };
+  });
+  var best = Math.min.apply(null, reihen.map(function(x){ return x.r.fin.eigenGesamt; }));
+
+  reihen.forEach(function(x){
+    var r = x.r, verlust = r.fin.eigenGesamt - best;
+    var tr = document.createElement("tr");
+    if(x.p.id === state.periode) tr.className = "hl";
+    tr.innerHTML =
+      '<th scope="row">' + x.p.label + (x.p.id === state.periode ? " <b>(gewählt)</b>" : "") + "</th>" +
+      '<td class="num nur-wp">' + prz(r.f.satz) + "</td>" +
+      '<td class="num nur-wp">' + eur(r.f.zuschuss) + "</td>" +
+      '<td class="num">' + eur(r.fin.eigenGesamt) + "</td>" +
+      '<td class="num">' + eur(r.fin.rateKfw) + "</td>" +
+      '<td class="num">' + (verlust <= 0 ? '<span class="pos">bester Zeitpunkt</span>' : '<span class="neg">+' + eur(verlust) + "</span>") + "</td>";
+    tb.appendChild(tr);
+  });
+
+  var teile = [];
+  if(state.wpKw > 0) teile.push(nf1.format(state.wpKw) + " kW Wärmepumpe");
+  if(state.pvKwp > 0) teile.push(nf1.format(state.pvKwp) + " kWp Photovoltaik");
+  if(state.spKwh > 0 && state.pvKwp > 0) teile.push(nf1.format(state.spKwh) + " kWh Speicher");
+  $("zeit-caption").textContent = "Zeitpunktvergleich für " +
+    (teile.length ? teile.join(" + ") : "die gewählte Anlage") +
+    ", zvE " + eur(state.zve) + ", " + gewaehlteLaufzeit() + " Jahre Laufzeit";
+
+  var jetzt = reihen[0], gewaehlt = reihen[state.periode];
+  var zn = $("zeit-notes"); zn.innerHTML = "";
+  var diffZuschuss = jetzt.r.f.zuschuss - gewaehlt.r.f.zuschuss;
+  var diffEigen = gewaehlt.r.fin.eigenGesamt - jetzt.r.fin.eigenGesamt;
+  var texte = [];
+  if(state.periode > 0 && diffZuschuss > 0)
+    texte.push({ t: "Gegenüber einem Antrag noch im 2. Halbjahr 2026 verlieren Sie " + eur(diffZuschuss) +
+      " Zuschuss; Ihr Eigenanteil steigt um " + eur(diffEigen) + ".", g: 0 });
+  if(state.periode === 0)
+    texte.push({ t: "Sie rechnen mit dem frühestmöglichen Zeitpunkt: höchster Förderdeckel, voller Klimabonus und die letzte Chance auf die feste EEG-Einspeisevergütung.", g: 1 });
+  texte.push({ t: state.realePreisentwicklung === 0
+    ? "Gerechnet in konstanten Preisen: Die Anlagentechnik wird nominal genauso teurer wie alles andere, der reale Preis bleibt gleich. Wer mit einem darüber hinausgehenden realen Preisrückgang rechnet, trägt ihn oben ein – er verringert den Nachteil des Wartens."
+    : "Sie rechnen mit " + nf1.format(state.realePreisentwicklung) + " % realer Preisentwicklung pro Jahr. Die Investitionssumme sinkt dadurch bis zum Zeitraum „" + reihen[reihen.length - 1].p.label + "“ auf " +
+      eur(reihen[reihen.length - 1].r.fin.gesamt) + " gegenüber " + eur(reihen[0].r.fin.gesamt) + " heute.", g: 0 });
+  var letzte = reihen[reihen.length - 1];
+  texte.push({ t: "Spanne insgesamt: Zwischen dem 2. Halbjahr 2026 und dem Zeitraum „" + letzte.p.label + "“ liegen bei sonst gleicher Anlage " +
+    eur(jetzt.r.f.zuschuss - letzte.r.f.zuschuss) + " Zuschuss; der Eigenanteil steigt um " +
+    eur(letzte.r.fin.eigenGesamt - jetzt.r.fin.eigenGesamt) + ".", g: 0 });
+  texte.forEach(function(n){
+    var d = document.createElement("div");
+    d.className = "note" + (n.g === 1 ? " good" : "");
+    d.textContent = n.t;
+    zn.appendChild(d);
+  });
+}
+
+function werkseinstellung() {
+  state = Object.assign({}, DEFAULTS, ausBaukasten(8, MIT_PV ? 10 : 0, MIT_PV ? 10 : 0, {}));
+  schreibeFelder();
+}
+/* --- Sitzung: halten oder verwerfen? -----------------------------------
+   Zwei Anforderungen, die zusammengehen muessen:
+     · Beim Neustart darf NICHTS vom Vorgaenger stehen bleiben.
+     · Beim Umschalten auf ein anderes Dokument und zurueck sollen die Werte
+       erhalten bleiben.
+   Unterschieden wird nach der Art des Seitenaufrufs. Der Sitzungsspeicher
+   endet mit dem Browserfenster — ein Neustart hat also zwangslaeufig einen
+   leeren Speicher. Ist er nicht verfuegbar (manche Browser sperren ihn fuer
+   file://-Seiten), bleibt es beim Zurueck-Knopf und der Werkseinstellung. */
+const SPEICHER = "bns-foerderrechner-sitzung";
+
+/* ★ Gesichert wird `state`, NICHT die Formularfelder. Dieser Rechner rechnet
+   ausschliesslich aus `state` (update() ruft rechne(state)); ein per Skript
+   gesetztes .value loest kein change-Ereignis aus und wuerde `state` nie
+   erreichen. Die Felder haetten dann die Werte des Anwenders gezeigt und die
+   Ergebnisse die der Voreinstellung — unsichtbar falsch.
+   schreibeFelder() bringt die Felder danach von allein in Deckung. */
+function zustandSichern() {
+  try { sessionStorage.setItem(SPEICHER, JSON.stringify(state)); }
+  catch (e) { /* kein Speicher verfuegbar */ }
+}
+
+function zustandLaden() {
+  try {
+    const o = JSON.parse(sessionStorage.getItem(SPEICHER) || "null");
+    if (!o || typeof o !== "object") return false;
+    /* Nur Schluessel uebernehmen, die es in state ohnehin gibt — ein
+       veralteter Speicherstand kann so nichts Fremdes einschleusen. */
+    Object.keys(state).forEach(k => { if (k in o) state[k] = o[k]; });
+    schreibeFelder();
+    return true;
+  } catch (e) { return false; }
+}
+
+function aufrufart() {
+  try {
+    const n = performance.getEntriesByType("navigation")[0];
+    return n ? n.type : "navigate";
+  } catch (e) { return "navigate"; }
+}
+
+const art = aufrufart();
+let ausSpeicher = false;
+if (art === "reload") {
+  /* Neu geladen: der Beratungsfall „naechster Ratsuchender". */
+  try { sessionStorage.removeItem(SPEICHER); } catch (e) {}
+} else {
+  ausSpeicher = zustandLaden();
+}
+
+/* ★ Der Browser stellt Formularwerte NACH dem Skriptlauf wieder her. Eine
+   Werkseinstellung beim Start wuerde davon ueberschrieben — gemessen am
+   03.09.2026. Die Entscheidung faellt deshalb im pageshow-Handler, der nach
+   der Wiederherstellung laeuft und damit gegen sie gewinnt. */
+function zustandHerstellen() {
+  if (art === "back_forward") return;   /* Zurueck-Knopf: Browser hat recht */
+  if (ausSpeicher) { zustandLaden(); return; }
+  werkseinstellung();
+}
+zustandHerstellen();
+window.addEventListener("pageshow", ev => {
+  /* persisted=true heisst: aus dem Seitenzwischenspeicher zurueck (Zurueck-
+     Knopf). Dann sind es die Werte DESSELBEN Anwenders — nicht anfassen. */
+  if (!ev.persisted) zustandHerstellen();
+  update();
+});
+
+/* ★ Der Sicherungshaken haengt am ENDE von update(), nicht an den
+   Roh-Ereignissen: Die change-Rueckrufe aktualisieren erst `state` und rufen
+   dann update(). Wer am Ereignis sichert, schreibt den Zustand VOR der
+   Aenderung weg und liegt immer einen Schritt zurueck. */
+const _update_ohne_sicherung = update;
+update = function () { _update_ohne_sicherung(); zustandSichern(); };
+update();
+zustandSichern();
+})();
+</script>
+</body>
+</html>
