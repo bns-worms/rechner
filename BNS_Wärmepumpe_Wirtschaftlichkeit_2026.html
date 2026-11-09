@@ -1,0 +1,2687 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BNS-Wirtschaftlichkeitsrechner Wärmepumpe</title>
+<meta name="description" content="Wärmepumpe gegenüber Gas-Brennwert und Öl-Brennwert – Stand 23. August 2026, BürgerNetzwerkSolar Worms.">
+<style>
+:root{
+  --pine:#114B41; --pine-deep:#0B332C; --pine-soft:#337367;
+  --mint:#EAF3EE; --paper:#F6F8F6; --card:#FFFFFF;
+  --ink:#182722; --muted:#4E635C; --line:#D7E3DC;
+  --amber:#E9A13B; --amber-deep:#8F5D12; --red:#B4402D;
+  --sky:#2E6FD8; --focus:#1B4FA8; --radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%;scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--paper);color:var(--ink);line-height:1.6;font-size:1.06rem}
+.wrap{max-width:1000px;margin:0 auto;padding:0 1.1rem 4rem}
+.skip{position:absolute;left:-9999px;top:0;z-index:100;background:#fff;
+  color:var(--pine-deep);padding:.9rem 1.3rem;border-radius:0 0 12px 0;font-weight:700}
+.skip:focus{left:0}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+header.site{background:linear-gradient(160deg,var(--pine-deep) 0%,var(--pine) 70%);
+  color:#F2F7F4;padding:2.2rem 0 2.6rem}
+header.site .wrap{padding-bottom:0}
+.headrow{display:flex;gap:1.2rem;align-items:flex-start;justify-content:space-between}
+.headtxt{min-width:0;flex:1 1 auto}
+.brand{flex:0 1 auto;background:#fff;border-radius:14px;padding:.55rem .8rem;
+  box-shadow:0 4px 14px rgba(0,0,0,.22)}
+.brand img{display:block;width:170px;max-width:100%;height:auto}
+.badge{display:inline-block;background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.34);border-radius:999px;padding:.35rem .95rem;
+  font-size:.88rem;margin-bottom:1rem}
+h1{font-family:Georgia,"Times New Roman",serif;font-weight:600;
+  font-size:clamp(1.55rem,4.6vw,2.7rem);line-height:1.14;margin-bottom:.7rem;
+  overflow-wrap:break-word;hyphens:auto}
+header.site p.lede{max-width:48rem;font-size:clamp(1.02rem,2.6vw,1.14rem);color:#DCEAE3}
+section.zone{margin-top:2.6rem}
+.eyebrow{display:flex;align-items:center;gap:.65rem;font-weight:700;font-size:.86rem;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--pine);margin-bottom:1rem}
+.eyebrow .step{display:inline-flex;align-items:center;justify-content:center;
+  width:1.9rem;height:1.9rem;border-radius:50%;flex:none;background:var(--pine);
+  color:#fff;font-size:1rem;letter-spacing:0}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
+/* --- Rücksetz-Knopf in der rechten unteren Ecke des Kopfbanners ---------
+   Er gehört sichtbar nach ganz oben: Wer den Rechner für den nächsten
+   Ratsuchenden leeren will, sucht ihn dort — nicht am Ende der
+   Eingabefelder und erst recht nicht in einem eingeklappten Abschnitt.
+   Der Banner ist dunkelgrün, der Knopf deshalb hell auf durchscheinendem
+   Grund. Auf schmalen Geräten läuft er in den Textfluss zurück, damit er
+   das Logo nicht überdeckt. */
+header.site .wrap{position:relative}
+.knopf-oben{position:absolute;right:0;bottom:0;font:inherit;font-size:.74rem;
+  font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:.42rem .8rem;min-height:0;border:1.5px solid rgba(255,255,255,.55);
+  background:rgba(255,255,255,.10);color:#fff;border-radius:8px;
+  cursor:pointer;white-space:nowrap}
+.knopf-oben:hover{background:rgba(255,255,255,.22);
+  border-color:rgba(255,255,255,.9)}
+.knopf-oben:focus-visible{outline:2px solid #fff;outline-offset:2px}
+@media (max-width:640px){
+  .knopf-oben{position:static;display:inline-block;margin-top:.9rem}
+}
+
+h2{font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:1.5rem;
+  color:var(--pine-deep);margin:0 0 .8rem;line-height:1.25}
+h3{font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:1.24rem;
+  color:var(--pine-deep);margin:1.8rem 0 .6rem;line-height:1.25}
+h4{font-size:1.04rem;color:var(--pine-deep);margin:1.3rem 0 .4rem}
+p{margin-bottom:.85rem;overflow-wrap:break-word;hyphens:auto}
+p:last-child{margin-bottom:0}
+a{color:var(--focus)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;
+  padding:1.4rem 1.3rem 1.6rem;margin-bottom:1rem}
+fieldset{border:none;padding:0;margin:0}
+fieldset+fieldset{margin-top:1rem;padding-top:.85rem;border-top:1px solid var(--line)}
+legend{font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:1.14rem;
+  color:var(--pine-deep);margin-bottom:.3rem;padding:0}
+.leghint{font-size:.9rem;color:var(--muted);margin-bottom:.6rem;max-width:52rem}
+/* Drei Felder nebeneinander; Erläuterungen nicht dauerhaft sichtbar,
+   sondern hinter einem ?-Knopf am Feld (weniger Scrollen). */
+.reihe{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem .9rem;
+  align-items:start}
+.feld{min-width:0}
+.feld-xl{grid-column:span 2}
+.labelrow{display:flex;align-items:flex-end;gap:.4rem;margin-bottom:.25rem;
+  min-height:2.3em}
+.labelrow label{flex:1;min-width:0;font-weight:700;font-size:.92rem;
+  color:var(--pine-deep);line-height:1.25;overflow-wrap:anywhere;hyphens:auto}
+.qmark{display:inline-flex;align-items:center;justify-content:center;flex:none;
+  width:1.5rem;height:1.5rem;border-radius:50%;background:var(--mint);
+  color:var(--pine);font:inherit;font-size:.85rem;font-weight:700;line-height:1;
+  border:1px solid var(--line);cursor:pointer;padding:0}
+/* Auf Touch-Geräten braucht der Knopf ein größeres Tippziel */
+@media (pointer:coarse){.qmark{width:1.9rem;height:1.9rem;font-size:1rem}}
+.qmark[aria-expanded="true"]{background:var(--pine);color:#fff;
+  border-color:var(--pine)}
+.tipbox{display:none;grid-column:1/-1;background:var(--pine-deep);color:#EAF3EE;
+  border-radius:10px;padding:.65rem .95rem;font-size:.92rem;line-height:1.5;
+  margin:-.15rem 0 .25rem}
+.tipbox.open,.tipbox.schwebt{display:block}
+.tipbox b{color:#fff}
+.unitwrap{position:relative}
+.unitwrap input{width:100%;font:inherit;font-size:1rem;font-weight:600;
+  padding:.45rem 3.4rem .45rem .7rem;border:2px solid var(--line);border-radius:10px;
+  background:#FBFDFC;color:var(--ink);min-height:44px;font-variant-numeric:tabular-nums}
+.unitwrap input:focus{outline:3px solid var(--focus);outline-offset:1px;
+  border-color:var(--focus)}
+.unitwrap .unit{position:absolute;right:.75rem;top:50%;transform:translateY(-50%);
+  font-weight:700;color:var(--muted);font-size:.95rem;pointer-events:none}
+/* Mindestens 16 px Schrift, sonst zoomt iOS beim Antippen in das Feld */
+select{width:100%;font:inherit;font-size:1rem;font-weight:600;
+  padding:.45rem 2.2rem .45rem .7rem;min-height:44px;border:2px solid var(--line);
+  border-radius:10px;background-color:#FBFDFC;color:var(--ink);appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='10'%3E%3Cpath d='M1 1l7 7 7-7' stroke='%23114B41' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right .75rem center}
+select:focus{outline:3px solid var(--focus);outline-offset:1px}
+select:disabled{background-color:#EEF2EF;color:var(--muted);cursor:not-allowed;opacity:1}
+.knopfzeile{margin-top:1.2rem;display:flex;flex-wrap:wrap;gap:.7rem}
+.knopf{font:inherit;font-size:.95rem;font-weight:700;padding:.6rem 1.1rem;
+  min-height:48px;border:2px solid var(--pine);background:#fff;color:var(--pine);
+  border-radius:10px;cursor:pointer}
+.knopf:hover{background:var(--mint)}
+.result{background:linear-gradient(165deg,#FFFFFF 0%,var(--mint) 130%);
+  border:1.5px solid var(--pine-soft);border-radius:22px;padding:1.6rem 1.3rem 1.8rem}
+.toplabel{font-weight:700;color:var(--pine-deep);font-size:1.03rem}
+.bignum{font-family:Georgia,"Times New Roman",serif;font-weight:700;
+  font-size:clamp(2rem,7vw,3.1rem);line-height:1.05;color:var(--pine);
+  margin:.15rem 0 .1rem;font-variant-numeric:tabular-nums}
+.bignum.minus{color:var(--red)}
+.subline{color:var(--muted);font-size:.97rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));
+  gap:1rem;margin-top:1.4rem}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:1.1rem 1.15rem;min-width:0}
+.card.accent{border-color:var(--pine-soft);
+  background:linear-gradient(160deg,#fff,var(--mint) 160%)}
+.card .cap{font-size:.86rem;font-weight:700;color:var(--pine);text-transform:uppercase;
+  letter-spacing:.07em;margin-bottom:.35rem}
+.card .big{font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:1.7rem;
+  color:var(--pine-deep);line-height:1.1;font-variant-numeric:tabular-nums;
+  margin-bottom:.3rem}
+.card .big.minus{color:var(--red)}
+.card .exp{font-size:.9rem;color:var(--muted);line-height:1.5}
+.row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.15rem 1rem;
+  padding:.36rem 0;font-size:1.01rem;border-bottom:1px dotted var(--line)}
+.row:last-child{border-bottom:none}
+.row .k{color:var(--muted);flex:1 1 auto;min-width:0}
+.row .v{font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.row.total{border-top:2px solid var(--pine);border-bottom:none;margin-top:.4rem;
+  padding-top:.6rem;font-size:1.1rem}
+.row.total .k{color:var(--pine-deep);font-weight:700}
+.row.total .v{color:var(--amber-deep)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin:.6rem 0}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:.9rem;
+  line-height:1.4;background:#fff}
+caption{text-align:left;padding:.7rem .8rem;font-weight:700;color:var(--pine-deep);
+  background:var(--mint);border-bottom:1px solid var(--line);font-size:.94rem}
+th,td{padding:.42rem .6rem;text-align:left;border-bottom:1px solid var(--line);
+  vertical-align:top}
+thead th{background:var(--mint);color:var(--pine-deep);font-weight:700;white-space:nowrap}
+tbody th{background:#FAFCFB;font-weight:600}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:none}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.hl td,tr.hl th{background:#FCF4E6}
+.pos{color:var(--pine);font-weight:700}
+.neg{color:var(--red);font-weight:700}
+details.info{background:var(--card);border:1px solid var(--line);
+  border-radius:var(--radius);margin-bottom:.7rem;overflow:hidden}
+details.info summary{list-style:none;cursor:pointer;display:flex;align-items:center;
+  gap:.8rem;padding:1rem 1.2rem;font-weight:600;font-size:1.03rem;
+  color:var(--pine-deep);min-height:56px}
+details.info summary::-webkit-details-marker{display:none}
+details.info summary::marker{content:""}
+details.info summary .ttl{flex:1;min-width:0}
+details.info summary .chev{margin-left:auto;flex:none;width:1.5rem;height:1.5rem;
+  border-radius:50%;background:var(--mint);color:var(--pine);display:inline-flex;
+  align-items:center;justify-content:center;transition:transform .25s ease}
+details.info[open] summary .chev{transform:rotate(180deg)}
+details.info .body{padding:0 1.2rem 1.3rem}
+.notes{margin-top:1.3rem;display:grid;gap:.55rem}
+.note{background:#FFF;border-left:4px solid var(--amber);border-radius:0 10px 10px 0;
+  padding:.7rem .95rem;font-size:.96rem;line-height:1.55}
+.note.good{border-left-color:var(--pine-soft)}
+.note.stop{border-left-color:var(--red)}
+.note .tag{font-weight:700;color:var(--pine-deep)}
+figure.chart{margin:1rem 0;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:1rem .8rem .6rem}
+svg.graf{display:block;width:100%;height:auto}
+figcaption{font-size:.9rem;color:var(--muted);margin-top:.5rem}
+.legende{display:flex;flex-wrap:wrap;gap:.9rem;font-size:.88rem;color:var(--muted);
+  margin-top:.4rem}
+.legende span{display:inline-flex;align-items:center}
+.legende svg{flex:none}
+footer{margin-top:3rem;padding-top:1.2rem;border-top:1px solid var(--line);
+  font-size:.85rem;color:var(--muted)}
+footer p{margin-bottom:.5rem}
+ul.tick{list-style:none;padding:0;margin:.6rem 0}
+ul.tick li{padding-left:1.7rem;position:relative;margin-bottom:.5rem}
+ul.tick li::before{content:"\25B8";position:absolute;left:.35rem;
+  color:var(--pine-soft);font-weight:700}
+@media (max-width:820px){
+  .cards{grid-template-columns:1fr 1fr}
+  .reihe{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:560px){
+  .reihe{grid-template-columns:1fr}
+  .feld-xl{grid-column:auto}
+  .cards{grid-template-columns:1fr}
+  .headrow{flex-direction:column-reverse;align-items:flex-start}
+  .headtxt{width:100%}
+  .brand{align-self:flex-end}
+  .brand img{width:135px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;
+  scroll-behavior:auto!important}}
+/* Zwei Knoepfe nebeneinander in der Kopfzeile: Drucken und Zuruecksetzen.
+   Der Druckknopf oeffnet den Druckdialog des Geraets (Ralf, 17.09.2026). */
+.knopfzeile-oben{position:absolute;right:0;bottom:0;display:flex;gap:.5rem;
+  flex-wrap:wrap;justify-content:flex-end}
+.knopfzeile-oben .knopf-oben{position:static}
+@media (max-width:640px){
+  .knopfzeile-oben{position:static;margin-top:.9rem;justify-content:flex-start}
+}
+/* =====================================================================
+   Druckbild (Ralf, 17.09.2026): „die EIngaben auf eine (oder Doppelseite)
+   und das Ergebnis auf 1 (oder Doppelseite) und das Kompendium/Erklärungen
+   auf weitere separate Seiten drucken".
+
+   Deshalb beginnt jeder Teil auf einer neuen Seite. Die Erläuterungskästen
+   an den Feldern werden NICHT mitgedruckt — sie füllten allein mehrere
+   Seiten und stehen ausführlich im Erläuterungsteil. Eingeklappte Blöcke
+   bleiben weg: Gedruckt wird der Bildschirmzustand. Der Erläuterungsteil
+   wird dagegen aufgeklappt gedruckt, damit nichts fehlt.
+   ===================================================================== */
+@media print{
+  body{background:#fff;font-size:9.5pt}
+  header.site{background:#fff;color:#000;padding:.5rem 0}
+  header.site h1{font-size:15pt}
+  header.site p.lede,.badge{display:none}
+  .brand img{width:110px}
+  .skip,.knopfzeile,.knopfzeile-oben,.knopf-oben,.qmark{display:none!important}
+  .tipbox{display:none!important}
+  /* Eingeklapptes bleibt weg. Chromium klappt beim Drucken JEDEN
+     Aufklapp-Block auf und setzt sich dabei ueber CSS hinweg (gemessen
+     18.09.2026) — deshalb markiert das Skript vor dem Drucken, was
+     zugeklappt ist, und klappt den Erläuterungsteil auf. */
+  details.zugeklappt{display:none!important}
+  #erklaerung details.info>.body{display:block!important}
+  details.info{break-inside:avoid}
+  /* Zusammengehalten werden nur kleine Bausteine: Formular und Ergebnisblock
+     als Ganzes zusammenzuhalten kostet je eine Seite mehr. */
+  .panel,.result{break-inside:auto}
+  .card,.note,figure.chart{break-inside:avoid}
+  /* Feldgruppen duerfen umbrechen — zusammengehalten kosten sie eine Seite mehr */
+  fieldset{break-inside:auto}
+  .tablewrap{overflow:visible;border:none}
+  /* Eingaben kompakt: festes Raster statt fliessender Felder, kleinere
+     Schrift und weniger Polster — sonst brauchen die Eingaben drei Seiten. */
+  #eingaben input,#eingaben select,#eingaben .autowert{min-height:0;padding:.1rem .3rem;font-size:9pt}
+  /* Der Einleitungstext der Eingabezone steht auf dem Papier nicht;
+     er erklaert die Bedienung, nicht die Werte. */
+  #eingaben>p:not(.eyebrow){display:none}
+  #eingaben .reihe{display:grid;grid-template-columns:repeat(4,1fr);gap:.25rem .5rem}
+  #eingaben .reihe>*{max-width:none;width:auto;margin:0}
+  #eingaben .feld-l,#eingaben .feld-ml,#eingaben .feld-xl,#eingaben .feld-voll,
+  #eingaben .feld-breit,#eingaben .voll{grid-column:span 2}
+  #eingaben fieldset{margin:0 0 .45rem 0;padding:.4rem .6rem}
+  #eingaben legend{font-size:11pt}
+  #eingaben label{font-size:8.5pt}
+  #eingaben .hint,#eingaben .leghint{font-size:7.5pt}
+  /* Ergebnis kompakt */
+  #ergebnis .result{padding:.5rem .7rem}
+  #ergebnis .bignum{font-size:19pt;margin:.1rem 0}
+  #ergebnis .toplabel,#ergebnis .subline{margin:.1rem 0}
+  #ergebnis .row{padding:.1rem 0}
+  #ergebnis .card{padding:.45rem .6rem}
+  #ergebnis .note{padding:.25rem .45rem;margin:.2rem 0;font-size:8pt}
+  #ergebnis table{font-size:8.5pt}
+  #ergebnis .tablewrap{margin:.3rem 0}
+  /* ★ Die letzten Kniffe, damit die Eingaben auf eine Doppelseite passen:
+     gemessen fehlten 45 px (Auftrag Ralf, 18.09.2026). Die Einleitungen der
+     Feldgruppen erklaeren die Bedienung, nicht die Werte — auf dem Papier
+     bleiben sie weg; der Briefkopf faellt kleiner aus. */
+  #eingaben .leghint{display:none}
+  /* Zwei Auswahlfelder mit langen Texten stehen im Druck doppelt breit,
+     sonst schneidet das geschlossene Feld sie ab (gemessen 18.09.2026). */
+  #eingaben .feld:has(#f_altheizung),#eingaben .feld:has(#f_paragraf14a),
+  #eingaben .feld:has(#f_kostenbasis){grid-column:span 2}
+  header.site h1{font-size:13pt}
+  .brand img{width:85px}
+  /* Ergebnis: enger gesetzte Zeilen, sonst rutscht die letzte Zeile
+     („vermiedenes CO₂") allein auf eine dritte Seite. */
+  #ergebnis .row{padding:0;line-height:1.35}
+  /* Eingaben · Ergebnis · Jahresverlauf · Szenarien · Erläuterungen:
+     jeder Teil beginnt auf einer eigenen Seite */
+  #eingaben,#ergebnis{break-after:page}
+  #verlauf,#szenarien,#erklaerung{break-before:page}
+}
+@media (forced-colors:active){
+  .card,.panel,.result,figure.chart{border:1px solid CanvasText}
+  .qmark[aria-expanded="true"]{background:Highlight;color:HighlightText}
+  .legende svg,svg.graf{forced-color-adjust:none}
+}
+</style>
+<style>/* Button „Zurück zur Rechnerübersicht“ (06.11.2026) */.knopf-oben.knopf-zurueck{position:static;display:inline-block;margin:0 0 1.1rem;text-decoration:none;color:#fff}@media print{.knopf-zurueck{display:none!important}}</style>
+</head>
+<body>
+<a class="skip" href="#eingaben">Zu den Eingaben springen</a>
+
+<header class="site">
+  <div class="wrap">
+    <a class="knopf-oben knopf-zurueck" href="https://bns-worms.github.io/rechner/" title="Zur Übersicht aller fünf Rechner des BürgerNetzwerkSolar Worms">← Zurück zur Rechnerübersicht</a>
+    <div class="headrow">
+      <div class="headtxt">
+        <span class="badge">Stand 23. August 2026 · Förderung nach dem GModG 2026</span>
+        <h1>BNS-Wirtschaftlichkeitsrechner Wärmepumpe</h1>
+        <p class="lede">Wärmepumpe gegenüber Gas-Brennwert und Öl-Brennwert. Alle Kosten über 20 und 30 Jahre –
+        Investition, Förderung, Brennstoff, Strom, CO₂, Wartung und Rücklagen.</p>
+      </div>
+      <div class="brand"><a href="https://bns.worms.de" target="_blank" rel="noopener" title="Webseite des Bürgernetzwerks öffnen"><img src="data:image/jpeg;base64,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" alt="BürgerNetzwerkSolar Worms" width="170"></a></div>
+    </div>
+    <div class="knopfzeile-oben">
+      <button type="button" class="knopf-oben" id="druckenOben" title="Druckdialog öffnen – gedruckt werden Eingaben, Ergebnis und Erläuterungen auf getrennten Seiten">Ergebnisse ausdrucken</button>
+      <button type="button" class="knopf-oben" id="zuruecksetzenOben" title="Alle Eingaben auf die Voreinstellung zurücksetzen">Werte zurücksetzen</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section class="zone" id="eingaben">
+  <p class="eyebrow"><span class="step">1</span>Ihre Angaben</p>
+  <h2>Was rechnen wir durch?</h2>
+  <p>Ändern Sie, was bei Ihnen anders ist – das Ergebnis rechnet sofort mit.
+  Der „?“-Knopf an einem Feld blendet die Erläuterung dazu ein. Mehr unter
+  <a href="#erklaerung-titel">Bedienung und Erläuterungen</a> am Seitenende.</p>
+  <div class="panel">
+    <form id="form" onsubmit="return false">
+      <fieldset>
+<legend>A&nbsp;&nbsp;Gebäude und Wärmebedarf</legend>
+<p class="leghint">Wie viel Wärme das Haus braucht. Wer den Verbrauch aus der letzten Abrechnung kennt, trägt ihn unten ein – das ist genauer als jede Schätzung.</p>
+<div class="reihe">
+<div class="feld">
+<div class="labelrow"><label for="f_standard">Gebäudestandard</label></div>
+<select id="f_standard" data-feld="standard">
+<option value="Passivhaus">Passivhaus</option>
+<option value="Saniert">Saniert</option>
+<option value="Teilsaniert" selected>Teilsaniert</option>
+<option value="Unsaniert">Unsaniert</option>
+</select>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_flaeche">Beheizte Wohnfläche</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_flaeche" data-feld="flaeche" value="150" step="1">
+<span class="unit" aria-hidden="true">m²</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_waermebedarfManuell">Wärmebedarf, eigener Wert</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_waermebedarfManuell" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Wärmebedarf, eigener Wert">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_waermebedarfManuell" data-feld="waermebedarfManuell" value="" step="1" placeholder="automatisch">
+<span class="unit" aria-hidden="true">kWh/a</span>
+</div>
+</div>
+<div class="tipbox" id="tip_waermebedarfManuell">Leer lassen für die Automatik</div>
+<div class="feld">
+<div class="labelrow"><label for="f_stromWPManuell">Wärmepumpenstrom, gemessener Wert</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_stromWPManuell" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Wärmepumpenstrom, gemessener Wert">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_stromWPManuell" data-feld="stromWPManuell" value="" step="1" placeholder="automatisch">
+<span class="unit" aria-hidden="true">kWh/a</span>
+</div>
+</div>
+<div class="tipbox" id="tip_stromWPManuell">Vom Zähler abgelesen. Mal der Jahresarbeitszahl ergibt das den GESAMTEN Wärmebedarf — die Wärmepumpe macht Heizung und Warmwasser, das Warmwasser wird hier herausgerechnet statt addiert</div>
+<div class="feld">
+<div class="labelrow"><label for="f_spezManuell">spez. Wärmebedarf, eigener Wert</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_spezManuell" title="Erläuterung anzeigen" aria-label="Erläuterung zu: spez. Wärmebedarf, eigener Wert">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_spezManuell" data-feld="spezManuell" value="" step="1" placeholder="automatisch">
+<span class="unit" aria-hidden="true">kWh/m²a</span>
+</div>
+</div>
+<div class="tipbox" id="tip_spezManuell">Nachrangig gegenüber dem Feld „Wärmebedarf, eigener Wert“</div>
+<div class="feld">
+<div class="labelrow"><label for="f_personen">Personen im Haushalt</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_personen" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Personen im Haushalt">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_personen" data-feld="personen" value="3" step="0.01">
+</div>
+</div>
+<div class="tipbox" id="tip_personen">Der Warmwasserbedarf hängt an den Personen, nicht an der Dämmung</div>
+<div class="feld">
+<div class="labelrow"><label for="f_wwLiter">Warmwasser je Person und Tag</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_wwLiter" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Warmwasser je Person und Tag">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_wwLiter" data-feld="wwLiter" value="35" step="0.01">
+<span class="unit" aria-hidden="true">l</span>
+</div>
+</div>
+<div class="tipbox" id="tip_wwLiter">Speicher- und Zirkulationsverluste sind nicht eigens gerechnet</div>
+<div class="feld">
+<div class="labelrow"><label for="f_wwSpreizung">Temperaturspreizung Warmwasser</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_wwSpreizung" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Temperaturspreizung Warmwasser">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_wwSpreizung" data-feld="wwSpreizung" value="30" step="0.01">
+<span class="unit" aria-hidden="true">K</span>
+</div>
+</div>
+<div class="tipbox" id="tip_wwSpreizung">Zwischen Kalt- und Warmwasser; 30 Kelvin sind etwa 10 auf 40 °C</div>
+</div></fieldset>
+<fieldset>
+<legend>B&nbsp;&nbsp;Investitionskosten</legend>
+<p class="leghint">Drei Wege zum Preis: die BNS-Preistabelle, eine kalibrierte Kostenformel oder das eigene Angebot.</p>
+<div class="reihe">
+<div class="feld">
+<div class="labelrow"><label for="f_kostenbasis">Kostenbasis</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_kostenbasis" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Kostenbasis">?</button></div>
+<select id="f_kostenbasis" data-feld="kostenbasis">
+<option value="Kostenblatt" selected>BNS-Preistabelle</option>
+<option value="Formel">Marktmittel (Kostenkurve)</option>
+<option value="Manuell">Eigenes Angebot</option>
+</select>
+</div>
+<div class="tipbox" id="tip_kostenbasis">Unter 3 kW Heizlast rechnet immer die Preistabelle – dort ist die Kostenkurve nicht belegt</div>
+<div class="feld">
+<div class="labelrow"><label for="f_hersteller">Hersteller</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_hersteller" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Hersteller">?</button></div>
+<select id="f_hersteller" data-feld="hersteller">
+<option value="BUDERUS">BUDERUS</option>
+<option value="BOSCH">BOSCH</option>
+<option value="VAILLANT">VAILLANT</option>
+<option value="VIESSMANN">VIESSMANN</option>
+<option value="Durchschnitt" selected>Durchschnitt</option>
+</select>
+</div>
+<div class="tipbox" id="tip_hersteller">bestimmt die Preise der Preistabelle – auch als Rückfall, wenn bei „Eigenes Angebot“ ein Feld leer bleibt</div>
+<div class="feld">
+<div class="labelrow"><label for="f_investWPManuell">Wärmepumpe, eigenes Angebot</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_investWPManuell" data-feld="investWPManuell" value="" step="1" placeholder="automatisch">
+<span class="unit" aria-hidden="true">€</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_investGasManuell">Gasheizung, eigenes Angebot</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_investGasManuell" data-feld="investGasManuell" value="" step="1" placeholder="automatisch">
+<span class="unit" aria-hidden="true">€</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_investOelManuell">Ölheizung, eigenes Angebot</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_investOelManuell" data-feld="investOelManuell" value="" step="1" placeholder="automatisch">
+<span class="unit" aria-hidden="true">€</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_zaehlerplatzUmbau">Umbau des Zählerplatzes, einmalig</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_zaehlerplatzUmbau" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Umbau des Zählerplatzes, einmalig">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_zaehlerplatzUmbau" data-feld="zaehlerplatzUmbau" value="0" step="1">
+<span class="unit" aria-hidden="true">€</span>
+</div>
+</div>
+<div class="tipbox" id="tip_zaehlerplatzUmbau">Kundenanlage, nicht im Preisblatt des Netzbetreibers. Externe Box 1.000 bis 1.500 €, neuer Zählerschrank 2.500 €. Zählt zur Investition und ist damit förderfähig, soweit der Förderdeckel noch Luft hat</div>
+</div></fieldset>
+<fieldset>
+<legend>C&nbsp;&nbsp;Förderung</legend>
+<p class="leghint">Die Sätze folgen dem Gebäudeenergie-Modernisierungsgesetz mit den Konditionen ab 21.07.2026.</p>
+<div class="reihe">
+<div class="feld">
+<div class="labelrow"><label for="f_foerderungNutzen">Förderung beantragen</label></div>
+<select id="f_foerderungNutzen" data-feld="foerderungNutzen" data-art="jn">
+<option value="ja" selected>Ja</option>
+<option value="nein">Nein</option>
+</select>
+</div>
+<div class="feld feld-xl">
+<div class="labelrow"><label for="f_periode">Antragszeitpunkt</label></div>
+<select id="f_periode" data-feld="periode">
+<option value="2. Halbjahr 2026 (ab 21.07.)" selected>2. Halbjahr 2026 (ab 21.07.)</option>
+<option value="1. Halbjahr 2027">1. Halbjahr 2027</option>
+<option value="2. Halbjahr 2027">2. Halbjahr 2027</option>
+<option value="1. Halbjahr 2028">1. Halbjahr 2028</option>
+<option value="2. Halbjahr 2028">2. Halbjahr 2028</option>
+<option value="1. Halbjahr 2029">1. Halbjahr 2029</option>
+<option value="2. Halbjahr 2029">2. Halbjahr 2029</option>
+<option value="1. Halbjahr 2030">1. Halbjahr 2030</option>
+<option value="2. Halbjahr 2030">2. Halbjahr 2030</option>
+<option value="ab 2031">ab 2031</option>
+</select>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_selbstnutzung">Selbst genutzt</label></div>
+<select id="f_selbstnutzung" data-feld="selbstnutzung" data-art="jn">
+<option value="ja" selected>Ja</option>
+<option value="nein">Nein</option>
+</select>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_zve">zu versteuerndes Haushaltseinkommen</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_zve" title="Erläuterung anzeigen" aria-label="Erläuterung zu: zu versteuerndes Haushaltseinkommen">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_zve" data-feld="zve" value="45000" step="1">
+<span class="unit" aria-hidden="true">€/a</span>
+</div>
+</div>
+<div class="tipbox" id="tip_zve">Durchschnitt der beiden vorvergangenen Jahre</div>
+<div class="feld">
+<div class="labelrow"><label for="f_kinder">Minderjähriges Kind im Haushalt</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_kinder" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Minderjähriges Kind im Haushalt">?</button></div>
+<select id="f_kinder" data-feld="kinder" data-art="jn">
+<option value="ja">Ja</option>
+<option value="nein" selected>Nein</option>
+</select>
+</div>
+<div class="tipbox" id="tip_kinder">Lebt mindestens ein Kind unter 18 mit Hauptwohnsitz in der geförderten Wohnung, für das Kindergeldberechtigung besteht, sinkt das maßgebliche Einkommen einmalig um 10.000 € – unabhängig von der Kinderzahl. Volljährige Kinder zählen nicht, auch wenn für sie Kindergeld fließt (z. B. in Ausbildung bis 25).</div>
+<div class="feld">
+<div class="labelrow"><label for="f_altheizung">Alte Heizung, noch funktionstüchtig</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_altheizung" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Alte Heizung, noch funktionstüchtig">?</button></div>
+<select id="f_altheizung" data-feld="altheizung">
+<option value="Öl, Kohle oder Nachtspeicher" selected>Öl, Kohle oder Nachtspeicher</option>
+<option value="Gasetagenheizung">Gasetagenheizung</option>
+<option value="Gas oder Biomasse, ab 20 Jahre">Gas oder Biomasse, ab 20 Jahre</option>
+<option value="Gas oder Biomasse, jünger">Gas oder Biomasse, jünger</option>
+<option value="defekt oder nicht fossil">defekt oder nicht fossil</option>
+</select>
+</div>
+<div class="tipbox" id="tip_altheizung">Den Klimageschwindigkeitsbonus gibt es nur, wenn eine funktionstüchtige Heizung ersetzt wird: eine Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizung ohne Altersgrenze, eine Gas-Zentral- oder Biomasseheizung, wenn sie mindestens 20 Jahre alt ist. Ist die alte Heizung defekt, entfällt der Bonus – auch bei einer über 20 Jahre alten Anlage. Wählen Sie dann „defekt oder nicht fossil“.</div>
+<div class="feld">
+<div class="labelrow"><label for="f_wertschoepfung">Wertschöpfungsbonus</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_wertschoepfung" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Wertschöpfungsbonus">?</button></div>
+<select id="f_wertschoepfung" disabled><option>noch nicht geregelt</option></select>
+</div>
+<div class="tipbox" id="tip_wertschoepfung">Nach den Eckpunkten der Bundesregierung vom 08.07.2026 soll die Grundförderung für Wärmepumpen ab 2027 von 30 % auf 15 % sinken; Geräte mit mindestens 15 % Wertschöpfung in der EU sollen 15 % Wertschöpfungsbonus erhalten und damit wieder auf 30 % kommen. Die gesetzliche Regelung steht aus. Der Rechner rechnet deshalb für alle Antragszeitpunkte mit 30 % Grundförderung. Kommt die Regelung wie angekündigt, erhielten Geräte ohne EU-Wertschöpfung ab 2027 nur 15 %.</div>
+</div></fieldset>
+<fieldset>
+<legend>D&nbsp;&nbsp;Energiepreise</legend>
+<p class="leghint">Die Preise der letzten Rechnung eintragen – einschließlich CO₂-Abgabe. Der CO₂-Anteil wird herausgerechnet und getrennt fortgeschrieben.</p>
+<div class="reihe">
+<div class="feld">
+<div class="labelrow"><label for="f_gaspreis">Gaspreis</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_gaspreis" data-feld="gaspreis" value="0.115" step="0.001">
+<span class="unit" aria-hidden="true">€/kWh</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_gasGrundpreis">Gas-Grundpreis</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_gasGrundpreis" data-feld="gasGrundpreis" value="200" step="1">
+<span class="unit" aria-hidden="true">€/a</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_oelpreis">Heizölpreis</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_oelpreis" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Heizölpreis">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_oelpreis" data-feld="oelpreis" value="1.35" step="0.001">
+<span class="unit" aria-hidden="true">€/l</span>
+</div>
+</div>
+<div class="tipbox" id="tip_oelpreis">1,35 €/l ist der angesetzte mittlere Einkaufspreis – nicht der aktuelle Marktpreis von rund 1,50 bis 1,60 €/l (Ende August 2026). Öl wird ein- bis zweimal im Jahr getankt; für die Rechnung zählt der über die Jahre erwartbare Mittelwert. Wer jetzt zur Spitze kaufen muss, trägt den eigenen Preis ein.</div>
+<div class="feld">
+<div class="labelrow"><label for="f_strompreis">Haushaltsstrompreis</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_strompreis" data-feld="strompreis" value="0.3" step="0.001">
+<span class="unit" aria-hidden="true">€/kWh</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_steigerungFossil">Steigerung Gas und Öl</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_steigerungFossil" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Steigerung Gas und Öl">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_steigerungFossil" data-feld="steigerungFossil" value="3" step="0.01">
+<span class="unit" aria-hidden="true">% p. a.</span>
+</div>
+</div>
+<div class="tipbox" id="tip_steigerungFossil">ohne CO₂-Anteil</div>
+<div class="feld">
+<div class="labelrow"><label for="f_steigerungStrom">Steigerung Strom</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_steigerungStrom" data-feld="steigerungStrom" value="2" step="0.01">
+<span class="unit" aria-hidden="true">% p. a.</span>
+</div>
+</div>
+</div></fieldset>
+<fieldset>
+<legend>E&nbsp;&nbsp;Wirkungsgrade</legend>
+<p class="leghint">Die Jahresarbeitszahl ist die wichtigste Stellschraube der Wärmepumpe: Flächenheizung 3,5 bis 4,5, Heizkörper 2,8 bis 3,5.</p>
+<div class="reihe">
+<div class="feld">
+<div class="labelrow"><label for="f_jaz">Jahresarbeitszahl</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_jaz" data-feld="jaz" value="3.4" step="0.01">
+<span class="unit" aria-hidden="true"> </span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_wirkungsgradGas">Nutzungsgrad Gaskessel</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_wirkungsgradGas" data-feld="wirkungsgradGas" value="96" step="1">
+<span class="unit" aria-hidden="true">%</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_wirkungsgradOel">Nutzungsgrad Ölkessel</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_wirkungsgradOel" data-feld="wirkungsgradOel" value="92" step="1">
+<span class="unit" aria-hidden="true">%</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_brennwertGas">Brennwert Erdgas</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_brennwertGas" data-feld="brennwertGas" value="11.5" step="1">
+<span class="unit" aria-hidden="true">kWh/m³</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_brennwertOel">Brennwert Heizöl</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_brennwertOel" data-feld="brennwertOel" value="10.7" step="1">
+<span class="unit" aria-hidden="true">kWh/l</span>
+</div>
+</div>
+</div></fieldset>
+<fieldset>
+<legend>F&nbsp;&nbsp;CO₂-Preis, Wartung und Rücklagen</legend>
+<p class="leghint">Bis 2027 gilt der gesetzliche CO₂-Preis, danach der Marktpreis im europäischen Emissionshandel. Die Rücklage spart auf den späteren Ersatz.</p>
+<div class="reihe">
+<div class="feld">
+<div class="labelrow"><label for="f_co2Preis">CO₂-Preis 2026</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_co2Preis" data-feld="co2Preis" value="55" step="1">
+<span class="unit" aria-hidden="true">€/t</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_co2Preis2027">CO₂-Preis 2027</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_co2Preis2027" data-feld="co2Preis2027" value="65" step="1">
+<span class="unit" aria-hidden="true">€/t</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_co2FestpreisBis">Festpreis bis Jahr</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_co2FestpreisBis" data-feld="co2FestpreisBis" value="2027" step="1">
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_co2Faktor">CO₂-Faktor</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_co2Faktor" title="Erläuterung anzeigen" aria-label="Erläuterung zu: CO₂-Faktor">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_co2Faktor" data-feld="co2Faktor" value="1" step="0.01">
+<span class="unit" aria-hidden="true">×</span>
+</div>
+</div>
+<div class="tipbox" id="tip_co2Faktor">1,0 = Kurve unverändert</div>
+<div class="feld">
+<div class="labelrow"><label for="f_wartungWP">Wartung Wärmepumpe</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_wartungWP" data-feld="wartungWP" value="200" step="1">
+<span class="unit" aria-hidden="true">€/a</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_wartungGas">Wartung Gasheizung</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_wartungGas" data-feld="wartungGas" value="230" step="1">
+<span class="unit" aria-hidden="true">€/a</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_wartungOel">Wartung Ölheizung</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_wartungOel" data-feld="wartungOel" value="350" step="1">
+<span class="unit" aria-hidden="true">€/a</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_ruecklageWP">Rücklage Wärmepumpe</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_ruecklageWP" data-feld="ruecklageWP" value="2.5" step="0.01">
+<span class="unit" aria-hidden="true">% p. a.</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_ruecklageFossil">Rücklage Gas und Öl</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_ruecklageFossil" data-feld="ruecklageFossil" value="1.5" step="0.01">
+<span class="unit" aria-hidden="true">% p. a.</span>
+</div>
+</div>
+</div></fieldset>
+<fieldset>
+<legend>G&nbsp;&nbsp;Strombezug der Wärmepumpe</legend>
+<p class="leghint">Ein eigener Zählpunkt bringt einen günstigeren Arbeitspreis, kostet aber Grundgebühr. § 14a EnWG senkt zusätzlich das Netzentgelt – pauschal (Modul 1), prozentual (Modul 2) oder zeitvariabel (Modul 1 + 3).</p>
+<div class="reihe">
+<div class="feld">
+<div class="labelrow"><label for="f_wpZaehlpunkt">Eigener Zählpunkt</label></div>
+<select id="f_wpZaehlpunkt" data-feld="wpZaehlpunkt" data-art="jn">
+<option value="ja">Ja</option>
+<option value="nein" selected>Nein</option>
+</select>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_wpTarifAbschlag">Abschlag des Wärmepumpentarifs</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_wpTarifAbschlag" data-feld="wpTarifAbschlag" value="0.06" step="0.001">
+<span class="unit" aria-hidden="true">€/kWh</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_wpStrompreisManuell">WP-Strompreis, eigener Wert</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_wpStrompreisManuell" data-feld="wpStrompreisManuell" value="" step="0.001" placeholder="automatisch">
+<span class="unit" aria-hidden="true">€/kWh</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_zusatzZaehler">Zusatzkosten Zählpunkt</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_zusatzZaehler" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Zusatzkosten Zählpunkt">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_zusatzZaehler" data-feld="zusatzZaehler" value="200" step="1">
+<span class="unit" aria-hidden="true">€/a</span>
+</div>
+</div>
+<div class="tipbox" id="tip_zusatzZaehler">⚠ Die Vorgabe 200 € stammt aus der Grundversorgung, der Abschlag darüber unterstellt einen Wettbewerbstarif. Wer eine Zahl weitergibt, stellt beide Felder auf denselben Tarif</div>
+<div class="feld">
+<div class="labelrow"><label for="f_paragraf14a">Welchen Weg haben Sie gewählt?</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_paragraf14a" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Welchen Weg haben Sie gewählt?">?</button></div>
+<select id="f_paragraf14a" data-feld="paragraf14a">
+<option value="Modul 1" selected>Modul 1 — Pauschale</option>
+<option value="Modul 2">Modul 2 — Netzentgelt −60 %</option>
+<option value="Modul 1 + 3">Modul 1 + 3 — zeitvariabel</option>
+<option value="Altregelung">Altregelung — vor 2024</option>
+<option value="nicht genutzt">nicht genutzt — kein § 14a</option>
+</select>
+</div>
+<div class="tipbox" id="tip_paragraf14a">Modul 1 ist die Voreinstellung, wenn nichts gewählt wird: eine pauschale Reduzierung des Netzentgelts, Betrag im Feld „Modul 1, Reduzierung netto“. Modul 2: reduzierter Arbeitspreis, 3,38 statt 8,46 ct je kWh; verlangt eine getrennte Messung der Wärmepumpe. Modul 1 + 3: zusätzlich zeitvariables Netzentgelt, nur zu Modul 1 und nur mit intelligentem Messsystem. Altregelung: 2,97 ct je kWh für Vereinbarungen vor dem 01.01.2024 mit separatem Zählpunkt; sie läuft bis 31.12.2028</div>
+<div class="feld">
+<div class="labelrow"><label for="f_modul1Netto">Modul 1, Reduzierung netto</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_modul1Netto" data-feld="modul1Netto" value="130.66" step="1">
+<span class="unit" aria-hidden="true">€/a</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_modul3Anteil">Modul 3: Anteil Niedertarif</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_modul3Anteil" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Modul 3: Anteil Niedertarif">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_modul3Anteil" data-feld="modul3Anteil" value="30" step="1">
+<span class="unit" aria-hidden="true">%</span>
+</div>
+</div>
+<div class="tipbox" id="tip_modul3Anteil">Anteil des Winter-Netzbezugs zwischen 0 und 7 Uhr; ohne Optimierung ~30 %, mit Energiemanagement bis 50 %</div>
+<div class="feld">
+<div class="labelrow"><label for="f_modul3Rabatt">Modul 3: Rabatt Niedertarif</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_modul3Rabatt" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Modul 3: Rabatt Niedertarif">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_modul3Rabatt" data-feld="modul3Rabatt" value="60" step="1">
+<span class="unit" aria-hidden="true">%</span>
+</div>
+</div>
+<div class="tipbox" id="tip_modul3Rabatt">mindestens 60 % nach BNetzA-Festlegung</div>
+<div class="feld">
+<div class="labelrow"><label for="f_modul3Hochlast">Modul 3: Anteil Hochlast</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_modul3Hochlast" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Modul 3: Anteil Hochlast">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_modul3Hochlast" data-feld="modul3Hochlast" value="8" step="1">
+<span class="unit" aria-hidden="true">%</span>
+</div>
+</div>
+<div class="tipbox" id="tip_modul3Hochlast">17:15–19:15 Uhr kostet 16,91 statt 8,46 ct — 2 von 24 Stunden sind 8 % des Winter-Netzbezugs</div>
+<div class="feld">
+<div class="labelrow"><label for="f_messMehrkosten">Messmehrkosten je Modul</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_messMehrkosten" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Messmehrkosten je Modul">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_messMehrkosten" data-feld="messMehrkosten" value="25" step="1">
+<span class="unit" aria-hidden="true">€/a</span>
+</div>
+</div>
+<div class="tipbox" id="tip_messMehrkosten">Intelligentes Messsystem statt moderner Messeinrichtung. § 29 Abs. 1 Nr. 2a MsbG verlangt es bei jeder Vereinbarung nach § 14a — es trifft Modul 1, 2 und 3 gleichermaßen</div>
+</div></fieldset>
+<fieldset>
+<legend>H&nbsp;&nbsp;Eigene Photovoltaik</legend>
+<p class="leghint">Selbst erzeugter Strom ist billiger als bezogener. Der Deckungsgrad sagt, welcher Teil des Wärmepumpenstroms vom eigenen Dach kommt.</p>
+<div class="reihe">
+<div class="feld">
+<div class="labelrow"><label for="f_pvGenutzt">Photovoltaik vorhanden</label></div>
+<select id="f_pvGenutzt" data-feld="pvGenutzt" data-art="jn">
+<option value="ja" selected>Ja</option>
+<option value="nein">Nein</option>
+</select>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_bev">Elektroauto</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_bev" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Elektroauto">?</button></div>
+<select id="f_bev" data-feld="bev" data-art="jn">
+<option value="ja" selected>Ja</option>
+<option value="nein">Nein</option>
+</select>
+</div>
+<div class="tipbox" id="tip_bev">teilt sich die Erzeugung</div>
+<div class="feld">
+<div class="labelrow"><label for="f_deckungManuell">Deckungsgrad, eigener Wert</label></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_deckungManuell" data-feld="deckungManuell" value="" step="1" placeholder="automatisch">
+<span class="unit" aria-hidden="true">%</span>
+</div>
+</div>
+<div class="feld">
+<div class="labelrow"><label for="f_lcoe">Stromgestehungskosten</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_lcoe" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Stromgestehungskosten">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_lcoe" data-feld="lcoe" value="0.1" step="0.001">
+<span class="unit" aria-hidden="true">€/kWh</span>
+</div>
+</div>
+<div class="tipbox" id="tip_lcoe">nicht die Einspeisevergütung</div>
+</div></fieldset>
+<fieldset>
+<legend>I&nbsp;&nbsp;Finanzparameter</legend>
+<div class="reihe">
+<div class="feld">
+<div class="labelrow"><label for="f_zins">Kalkulationszins</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_zins" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Kalkulationszins">?</button></div>
+<div class="unitwrap">
+<input type="number" inputmode="decimal" id="f_zins" data-feld="zins" value="3" step="0.01">
+<span class="unit" aria-hidden="true">% p. a.</span>
+</div>
+</div>
+<div class="tipbox" id="tip_zins">3 % entspricht einer risikoarmen Anlage</div>
+</div></fieldset>
+      <div class="knopfzeile">
+        <button type="button" class="knopf" id="zuruecksetzen">Auf Voreinstellungen zurücksetzen</button>
+        <button type="button" class="knopf" id="drucken">Drucken oder als PDF sichern</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="zone" id="ergebnis" aria-labelledby="ergebnis-titel">
+  <p class="eyebrow"><span class="step">2</span>Ergebnis</p>
+  <h2 id="ergebnis-titel">Was dabei herauskommt</h2>
+  <div class="result" aria-live="polite">
+    <p class="toplabel">Über 20 Jahre gegenüber einer neuen Gasheizung</p>
+    <p class="bignum" id="urteil">&nbsp;</p>
+    <p class="subline" id="urteilsub">&nbsp;</p>
+    <div class="cards" id="karten"></div>
+    <div class="notes" id="bemerkungen"></div>
+  </div>
+
+  <div class="tablewrap">
+    <table id="kennzahlen">
+      <caption>Kennzahlen im Überblick</caption>
+      <thead><tr><th scope="col">Kennzahl</th>
+      <th scope="col" class="num">gegenüber Gasheizung</th>
+      <th scope="col" class="num">gegenüber Ölheizung</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <h3>Investition und Förderung</h3>
+  <div class="panel" id="invest"></div>
+
+  <h3>Energie und Emissionen im ersten Jahr</h3>
+  <div class="panel" id="energie"></div>
+</section>
+
+<section class="zone" id="verlauf" aria-labelledby="verlauf-titel">
+  <p class="eyebrow"><span class="step">3</span>Verlauf</p>
+  <h2 id="verlauf-titel">Wie es über die Jahre aussieht</h2>
+  <figure class="chart">
+    <div id="chart1"></div>
+    <figcaption>Jährliche Gesamtkosten. Die fossilen Kurven steigen stärker, weil
+    Brennstoffpreis und CO₂-Preis zusammenwirken.</figcaption>
+  </figure>
+  <figure class="chart">
+    <div id="chart2"></div>
+    <figcaption>Aufsummierter Vorteil der Wärmepumpe. Wo die Kurve die Nulllinie
+    schneidet, ist der Mehrpreis wieder eingespielt.</figcaption>
+  </figure>
+
+  <details class="info"><summary><span class="ttl">Die Zahlen hinter den Kurven</span>
+  <span class="chev" aria-hidden="true">&#9662;</span></summary>
+  <div class="body">
+    <div class="tablewrap">
+      <table id="jahreswerte">
+        <caption>Jahreswerte</caption>
+        <thead><tr><th scope="col">Jahr</th><th scope="col" class="num">CO₂ €/t</th>
+        <th scope="col" class="num">Gasheizung</th><th scope="col" class="num">Ölheizung</th>
+        <th scope="col" class="num">Wärmepumpe</th>
+        <th scope="col" class="num">Ersparnis gegen Gas</th>
+        <th scope="col" class="num">kumuliert</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div></details>
+</section>
+
+<section class="zone" id="szenarien" aria-labelledby="szenarien-titel">
+  <p class="eyebrow"><span class="step">4</span>Wenn es anders kommt</p>
+  <h2 id="szenarien-titel">Szenarien</h2>
+  <p>Jedes Szenario nimmt Ihre Eingaben und verändert nur die genannten Größen –
+  der Name nennt die konkret gerechneten Werte. So sieht man, wovon das Ergebnis
+  wirklich abhängt.</p>
+  <div class="tablewrap">
+    <table id="szenarien">
+      <caption>Szenarien – Kennzahlen über 20 Jahre</caption>
+      <thead><tr><th scope="col">Szenario</th>
+      <th scope="col" class="num">Barwert gegen Gas</th>
+      <th scope="col" class="num">Amortisation</th>
+      <th scope="col" class="num">Barwert gegen Öl</th>
+      <th scope="col" class="num">Summe gegen Gas</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <h3>Sensitivität einzelner Größen</h3>
+  <div id="sensitivitaet"></div>
+
+</section>
+
+<section class="zone" id="erklaerung" aria-labelledby="erklaerung-titel">
+  <p class="eyebrow"><span class="step">5</span>Zum Nachlesen</p>
+  <h2 id="erklaerung-titel">Bedienung, Erläuterungen und Grenzen</h2>
+  <details class="info"><summary><span class="ttl">So bedienen Sie den Rechner</span>
+  <span class="chev" aria-hidden="true">&#9662;</span></summary>
+  <div class="body">
+    <p>Die Voreinstellungen beschreiben ein teilsaniertes Einfamilienhaus mit
+    150 m² im Raum Worms, Preisstand August 2026. Sie müssen nur ändern, was bei
+    Ihnen anders ist – jede Änderung rechnet sofort alle Ergebnisse, Diagramme,
+    Szenarien und Sensitivitäten neu.</p>
+    <ul class="tick">
+    <li>Der <b>?-Knopf</b> neben einem Feldnamen blendet die Erläuterung zu genau
+    diesem Feld ein und wieder aus. Beim Drucken werden alle Erläuterungen
+    mitgedruckt.</li>
+    <li>Felder mit dem Platzhalter <b>„automatisch“</b> dürfen leer bleiben –
+    dann rechnet der Rechner den Wert selbst aus. Ein eigener Eintrag hat immer
+    Vorrang.</li>
+    <li><b>„Auf Voreinstellungen zurücksetzen“</b> stellt alle Felder auf den
+    geprüften Ausgangszustand zurück.</li>
+    <li><b>„Drucken oder als PDF sichern“</b> öffnet den Druckdialog; dabei werden
+    alle aufklappbaren Abschnitte geöffnet.</li>
+    <li>Die Datei läuft ohne Internetverbindung und speichert nichts – nach dem
+    Schließen des Browserfensters sind die Eingaben weg. Für eine dauerhafte
+    Aufzeichnung drucken Sie das Ergebnis.</li>
+    </ul>
+  </div></details>
+  <details class="info"><summary><span class="ttl">Was hier verglichen wird</span><span class="chev" aria-hidden="true">&#9662;</span></summary><div class="body">
+<p>Gegenübergestellt werden die <b>Vollkosten</b> einer Luft-Wasser-Wärmepumpe und
+einer neuen Gas- beziehungsweise Öl-Brennwertheizung über 20 und über 30 Jahre:
+Investition nach Abzug der Förderung, Brennstoff oder Strom, CO₂-Kosten, Wartung,
+Grundpreise und eine jährliche Rücklage für den späteren Ersatz.</p>
+<p>Der <b>Barwert</b> rechnet alle künftigen Beträge auf heute zurück. Ist er positiv,
+ist die Wärmepumpe über die Laufzeit günstiger. Die <b>Amortisation</b> sagt, wann
+der Mehrpreis wieder eingespielt ist. Die <b>Wärmegestehungskosten</b> zeigen, was
+eine Kilowattstunde Wärme über alles gerechnet kostet – die anschaulichste Zahl,
+wenn man zwei Heizungen nebeneinanderlegt.</p></div></details>
+<details class="info"><summary><span class="ttl">Die Förderung nach dem GModG 2026</span><span class="chev" aria-hidden="true">&#9662;</span></summary><div class="body">
+<p>Zum 21.07.2026 hat sich einiges geändert, und zwar überwiegend zuungunsten der
+Antragsteller:</p>
+<ul class="tick">
+<li>Der <b>Effizienzbonus</b> von 5 % für natürliche Kältemittel und der
+Emissionsminderungszuschlag sind <b>ersatzlos entfallen</b>. Wer noch damit rechnet,
+rechnet sich zu reich.</li>
+<li>Der Höchstbetrag förderfähiger Kosten der ersten Wohneinheit liegt bei
+<b>28.000 €</b> und sinkt ab dem 01.02.2027 halbjährlich um 750 €.</li>
+<li>Der <b>Klimageschwindigkeitsbonus</b> liegt bei 16 % statt 20 % und sinkt ab
+Februar 2027 um 4 Prozentpunkte je Halbjahr; ab dem 2. Halbjahr 2028 gibt es ihn
+nicht mehr. Ihn gibt es nur, wenn eine <b>funktionstüchtige</b> Altheizung ersetzt
+wird – für eine defekte entfällt er, auch wenn sie älter als 20 Jahre ist.</li>
+<li>Nach den Eckpunkten der Bundesregierung vom 08.07.2026 soll die
+<b>Grundförderung</b> für Wärmepumpen ab 2027 von 30 % auf 15 % sinken; Geräte mit
+mindestens 15 % Wertschöpfung in der EU sollen 15 % <b>Wertschöpfungsbonus</b>
+erhalten und damit wieder auf 30 % kommen. <b>Die gesetzliche Regelung steht
+aus</b>; der Rechner rechnet deshalb für alle Antragszeitpunkte mit 30 %
+Grundförderung.</li>
+</ul>
+<p>Wichtig ist der <b>Höchstbetrag</b>: Er wirkt auf die förderfähigen Kosten, nicht
+auf die Rechnungssumme. Bei einem Angebot über 36.000 € bleiben schon 8.000 €
+unbezuschusst – der Fördersatz gilt nur für die ersten 28.000 €.</p></div></details>
+<details class="info"><summary><span class="ttl">Woher die Kosten kommen</span><span class="chev" aria-hidden="true">&#9662;</span></summary><div class="body">
+<p>Es gibt drei Wege, und sie kontrollieren sich gegenseitig:</p>
+<p><b>BNS-Preistabelle</b> – die eigene Preiserhebung bei vier Herstellern,
+Preisstand 2026, mit Stützpunkten bei 120, 150 und 180 m² je Gebäudestandard.
+Zwischenwerte werden linear interpoliert. Diese Basis bildet ab, dass ein großer
+Teil der Kosten gar nicht von der Heizlast abhängt. Sie ist die Voreinstellung
+und beschreibt gehobene Mittelklasse-Angebote.</p>
+<p><b>Marktmittel (Kostenkurve)</b> – die kalibrierte Kostenkurve aus dem
+BNS-Förderrechner (Stand August 2026): <b>28500 € + 750 €/kW</b> für die
+Wärmepumpe, extern belegt über Gerätepreise und einen Geräteanteil von 35 bis
+50 %, gültig für 3 bis 20 kW. Für Gas (13.224 € + 108 €/kW) und Öl
+(16.949 € + 113 €/kW) ist sie aus der Preistabelle abgeleitet.</p>
+<p>Beide Wege sind unabhängig voneinander entstanden und liegen im belegten
+Bereich höchstens rund 8 % auseinander – die Preistabelle etwas darüber, weil
+sie gehobene Ausstattung beschreibt, das Marktmittel etwas darunter. Das ist
+kein Fehler einer der beiden Quellen, sondern die normale Marktspanne.
+<b>Unterhalb von 3 kW Heizlast</b> (Passivhaus) ist die Kurve nicht belegt;
+dort verwendet der Rechner automatisch die Preistabelle, auch wenn
+„Marktmittel“ gewählt ist.</p>
+<p><b>Eigenes Angebot</b> – wer eines hat, sollte es eintragen: Es schlägt
+jede Tabelle und jede Kurve.</p></div></details>
+<details class="info"><summary><span class="ttl">CO₂-Preis und Energiepreise</span><span class="chev" aria-hidden="true">&#9662;</span></summary><div class="body">
+<p>Der eingegebene Gas- und Ölpreis ist der Preis der Rechnung, also einschließlich
+CO₂-Abgabe. Für die Fortschreibung wird der CO₂-Anteil <b>herausgerechnet</b> und
+über eine eigene Kurve fortgeschrieben – sonst zählte er doppelt.</p>
+<p>Bis 2027 gilt der gesetzlich festgelegte Preis: 2026 im Korridor 55 bis 65 €/t,
+und weil die EU-Umweltminister den Start des europäischen Emissionshandels ETS 2
+am 05.11.2025 <b>auf 2028 verschoben</b> haben, läuft der nationale Handel 2027 im
+selben Korridor weiter. Ab 2028 bildet sich der Preis am Markt.</p>
+<p>Die hinterlegte Kurve liegt bewusst im <b>unteren Drittel der Studienlage</b>
+(2030: 90 €/t · 2035: 150 €/t · 2055: 440 €/t). Für 2030 nennen Prognosen
+100 bis 160 €/t (untere Gruppe) bis 200 bis 300 €/t (MCC, REMIND-EU) – aber die
+EU dämpft die Preisentwicklung aktiv: Beschlussentwurf zur Preisstabilisierung vom
+27.11.2025, Vorschlag zur Aussetzung des Löschmechanismus vom April 2026, und
+mehrere Mitgliedstaaten fordern weitere Verschiebung. Vor diesem Hintergrund wäre
+die Mitte der theoretischen Prognosen zu optimistisch für die Wärmepumpe gerechnet.
+<b>Das bleibt eine Annahme, keine Rechtsnorm.</b> Das Szenario „CO₂-Preis doppelt“
+deckt die obere Studienhälfte ab, „CO₂-Preis halb“ ein politisches Einfrieren.</p>
+<p>Die <b>Energiepreis-Vorgaben</b> tragen der Lage vom August 2026 Rechnung: Der
+Iran-Konflikt um die Straße von Hormus hat die Großhandelspreise im Juli um 18 bis
+20 Prozent steigen lassen, und auch die 2027er-Terminkontrakte liegen 11 bis
+12 Prozent höher – die Störung wirkt also mittelfristig. Die Vorgaben liegen
+deshalb über dem Vorkrisenniveau, aber bewusst unterhalb der aktuellen Spitzen:
+Gas 11,5 ct/kWh (Bestandstarife bis 13 ct), Heizöl 1,35 €/l als <b>mittlerer
+Einkaufspreis</b> – nicht der aktuelle Marktpreis von rund 1,50 bis 1,60 €/l
+(Ende August 2026). Heizöl wird ein- bis zweimal im Jahr getankt; über 20 oder
+30 Jahre zählt der erwartbare Mittelwert, nicht die Tageslage. Wer die Spitze
+durchrechnen will: Das Szenario „Heizöl 1,89 €/l“ und die Sensitivitätsreihe
+bis 2,00 €/l zeigen die Wirkung. Beim Strom
+gilt der erreichbare Neukunden-Festpreis von 30 ct, nicht der Bestands-Durchschnitt
+von 37 ct – dieselbe Regel auf beiden Seiten des Vergleichs.</p></div></details>
+<details class="info"><summary><span class="ttl">§ 14a EnWG und der eigene Zählpunkt</span><span class="chev" aria-hidden="true">&#9662;</span></summary><div class="body">
+<p>Wer eine steuerbare Verbrauchseinrichtung anmeldet – und dazu zählt die
+Wärmepumpe –, bekommt ein reduziertes Netzentgelt. Drei Wege stehen offen:</p>
+<ul class="tick">
+<li><b>Modul 1</b>: eine pauschale Reduzierung, deren Höhe vom Netzgebiet abhängt
+(bundesweit 91 bis 180 € im Jahr; im EWR-Netz 130,66 € netto, also 155,49 € brutto).</li>
+<li><b>Modul 2</b>: der Arbeitspreis des Netzentgelts sinkt um 60 %. Das wirkt nur
+auf tatsächlich bezogenen Strom und <b>setzt eine getrennte Messung der Wärmepumpe
+voraus</b> – ohne eigenen Zählpunkt oder Unterzähler geht es nicht.</li>
+<li><b>Modul 1 + 3</b> (seit 01.04.2025): zeitvariable Netzentgelte zusätzlich zur
+Pauschale. In den Niedertarif-Fenstern sinkt der Arbeitspreis um mindestens 60 %;
+wie viel das bringt, hängt davon ab, welcher Anteil des Wärmepumpenstroms in diese
+Fenster wandert – ohne Optimierung rund 30 %, mit Pufferspeicher und
+Energiemanagement bis 50 %. Dafür braucht es ein intelligentes Messsystem; die
+Mehrkosten von rund 65 € im Jahr (iMSys statt moderner Messeinrichtung plus
+Steuerbox, § 30 MsbG) zieht der Rechner ab.</li>
+</ul>
+<p>Der Rechner weist unter dem Ergebnis aus, welche Variante bei Ihren Eingaben die
+günstigste ist.</p>
+<p>Ein <b>eigener Zählpunkt</b> mit Wärmepumpentarif bringt einen um etwa 6 ct/kWh
+günstigeren Arbeitspreis, kostet aber Messstellenbetrieb und Grundpreis. Der Rechner
+zieht diese Zusatzkosten ab; bei kleinem Wärmebedarf kann das Ergebnis negativ
+ausfallen. Die Reduzierung nach § 14a EnWG rechnet er mit eigenem Zählpunkt nur an,
+soweit sie über den Tarifabschlag hinausgeht – der Wärmepumpentarif gibt den
+Netzentgeltvorteil sonst schon weiter.</p></div></details>
+<details class="info"><summary><span class="ttl">Was das Modell nicht kann</span><span class="chev" aria-hidden="true">&#9662;</span></summary><div class="body">
+<p>Die <b>Heizlast</b> ist ein Richtwert aus Wohnfläche und Gebäudestandard. Sie
+ersetzt keine Heizlastberechnung nach DIN EN 12831 – und die braucht es für eine
+richtig ausgelegte Anlage.</p>
+<p>Die <b>Jahresarbeitszahl</b> von 3,4 ist der Mittelwert des
+Fraunhofer-ISE-Feldtests „Wärmepumpen-Qualitätssicherung im Bestand“
+(77 Anlagen, veröffentlicht 11/2025) für Luft/Wasser-Geräte in Bestandsgebäuden;
+die gemessene Spanne reicht von 2,6 bis 5,4. Eine sorgfältig ausgelegte Neuanlage
+mit Flächenheizung darf mehr ansetzen.</p>
+<p>Die <b>Rücklage der Wärmepumpe</b> rechnet bewusst auf die Investition nach
+Förderung: Beim Ersatz in 15 bis 20 Jahren ist mit deutlich niedrigeren
+Gerätepreisen zu rechnen – die Preise fielen schon 2025 um rund 4.000 € je Anlage,
+und wenn die Förderung abschmilzt, entfällt der förderbedingte Mitnahmeeffekt,
+während der Verdrängungswettbewerb die Preise weiter drückt. Wer trotzdem den
+vollen heutigen Preis ansparen will, setzt die Rücklage auf 5 %.</p>
+<p>Der <b>solare Deckungsgrad</b> ist eine Näherung aus Jahressimulationen, keine
+Stundenrechnung. Er unterstellt eine gut ausgerichtete Anlage mit Speicher
+(1 kWh je kWp).</p>
+<p>Nicht enthalten sind Flächenheizung, Dämmung, ein Heizkörpertausch über den
+hydraulischen Abgleich hinaus, Schallschutzmaßnahmen und ein etwaiger
+Schornsteinrückbau. Ebenso wenig die <b>Einspeisevergütung</b> der Photovoltaik –
+die rechnen die BNS-Berater mit Ihnen durch.</p>
+<p>Alle Beträge sind <b>nominal</b> gerechnet, also einschließlich Geldentwertung.
+Der interne Zinsfuß ist entsprechend ein nominaler Wert; real liegt er um die
+Inflationsrate niedriger.</p></div></details>
+</section>
+
+  <details class="info">
+    <summary><span class="ttl">Die fünf Rechner des Netzwerks</span>
+      <span class="chev" aria-hidden="true">▾</span></summary>
+    <div class="body">
+      <ul class="tick">
+        <li><strong>BNS-Wirtschaftlichkeitsrechner Wärmepumpe</strong> (dieser Rechner) – ich muss die Heizung tauschen: Wärmepumpe oder neue Gas- beziehungsweise Ölheizung?</li>
+        <li><a href="https://bns-worms.github.io/rechner/foerderrechner.html" target="_blank" rel="noopener" title="Rechner öffnen (neues Fenster)"><strong>BNS-Förderrechner Wärmepumpe und Photovoltaik</strong></a> – meine Heizung läuft noch: soll ich sie ersetzen? Zuschuss, Kredit, Zeitpunkt.</li>
+        <li><a href="https://bns-worms.github.io/rechner/pv-auswahlhilfe.html" target="_blank" rel="noopener" title="Rechner öffnen (neues Fenster)"><strong>BNS-PV-Auswahlhilfe</strong></a> – welche Anlagengröße passt zu meinem Verbrauch? Autarkie, Eigenverbrauch und Preis im Vergleich.</li>
+        <li><a href="https://bns-worms.github.io/rechner/pv-preisrechner.html" target="_blank" rel="noopener" title="Rechner öffnen (neues Fenster)"><strong>BNS-PV-Preisrechner</strong></a> – ist ein Angebot für eine Solaranlage preislich in Ordnung?</li>
+        <li><a href="https://bns-worms.github.io/rechner/tarifvergleich.html" target="_blank" rel="noopener" title="Rechner öffnen (neues Fenster)"><strong>BNS-Tarif-Vergleichsrechner</strong></a> – lohnt sich ein Tarif mit stündlich wechselndem Preis, und wo liegt meine Grenze?</li>
+      </ul>
+      <p>Alle fünf finden Sie beim BürgerNetzwerkSolar Worms:
+        <a href="https://bns.worms.de" target="_blank" rel="noopener"
+           title="Webseite des Bürgernetzwerks öffnen">bns.worms.de</a></p>
+    </div>
+  </details>
+
+</main>
+
+<footer class="wrap">
+  <p><b>BürgerNetzwerkSolar Worms</b> · Stand 23. August 2026</p>
+  <p>Diese Berechnung ist eine unverbindliche Orientierungshilfe des BürgerNetzwerkSolar Worms; das Netzwerk arbeitet neutral und herstellerunabhängig, gibt keine Kaufempfehlungen und ergreift nicht Partei für Anbieter oder Produkte. Sie ersetzt weder eine Heizlastberechnung nach DIN EN 12831 noch ein Fachangebot, eine Energieberatung oder eine Steuer- und Rechtsberatung. Fördersätze, Energiepreise und CO₂-Preise können sich kurzfristig ändern; die Angaben zur Förderung geben den Stand vom 21. August 2026 wieder und sind kein Förderbescheid. Eine Haftung für Vollständigkeit, Richtigkeit und Aktualität sowie für Entscheidungen, die auf diesen Werten beruhen, ist ausgeschlossen.</p>
+</footer>
+
+<script>
+/* =====================================================================
+   BNS-Wirtschaftlichkeitsrechner Wärmepumpe
+   Wärmepumpe gegenüber Gas-Brennwert und Öl-Brennwert
+
+   Diese Datei ist die EINZIGE Quelle der Rechenlogik. Der Bauschritt
+   (bau.py) kopiert sie wortgleich in die HTML-Anwendung; die Formeln
+   der Tabellenkalkulation werden aus denselben Konstanten erzeugt und
+   von pruefe.py gegen dieses Modell nachgerechnet.
+
+   Rechtsstand 21. August 2026. Alle Beträge in Euro (brutto),
+   alle Zinssätze und Steigerungsraten als Prozent pro Jahr.
+   ===================================================================== */
+
+const STAND = "23. August 2026";
+
+/* ---------------------------------------------------------------------
+   1. Gebäudestandards
+
+   Spezifischer Wärmebedarf, Vollbenutzungsstunden und spezifische
+   Heizlast sind untereinander verträglich gewählt:
+   Wärmebedarf ÷ Vollbenutzungsstunden = Heizlast.
+      13 ÷ 1000 = 13 W/m²   ·   80 ÷ 1600 = 50 W/m²
+     144 ÷ 1800 = 80 W/m²   ·  220 ÷ 2200 = 100 W/m²
+
+   Der solare Deckungsgrad ist nur der Vorschlagswert; die genauere
+   Ermittlung nach Wohnfläche steht in DECKUNG_OHNE_BEV / _MIT_BEV.
+--------------------------------------------------------------------- */
+const STANDARDS = {
+  "Passivhaus":  { kuerzel: "PH", spez: 13,  vbh: 1000, heizlast: 13,  deckung: 50 },
+  "Saniert":     { kuerzel: "SA", spez: 80,  vbh: 1600, heizlast: 50,  deckung: 30 },
+  "Teilsaniert": { kuerzel: "TS", spez: 144, vbh: 1800, heizlast: 80,  deckung: 20 },
+  "Unsaniert":   { kuerzel: "UN", spez: 220, vbh: 2200, heizlast: 100, deckung: 10 }
+};
+const STANDARD_LISTE = ["Passivhaus", "Saniert", "Teilsaniert", "Unsaniert"];
+
+/* ---------------------------------------------------------------------
+   2. Investitionskosten
+
+   Drei Wege, die sich gegenseitig kontrollieren:
+
+   a) KOSTENBLATT – die BNS-Preistabelle. Für jeden der vier
+      Hersteller sind die Einzelposten (Gerät, Montage, hydraulischer
+      Abgleich, Demontage, Abgas, Kernbohrung, Elektro, Inbetriebnahme,
+      Anmeldung) je Gebäudestandard und Wohnfläche hinterlegt, mit
+      Stützpunkten bei 120 / 150 / 180 m² und linearer Interpolation.
+      Diese Basis bildet ab, dass ein erheblicher Teil der Kosten
+      NICHT von der Heizlast abhängt – bei kleinen Anlagen der
+      entscheidende Punkt.
+
+   b) FORMEL – die kalibrierte Kostenkurve, die auch der
+      BNS-Förderrechner verwendet: 28.500 € Grundbetrag + 750 €/kW
+      Heizlast, gültig für 4 bis 20 kW.
+
+      Sie ist die Umrechnung des Kostenblatts auf die reine Heizlast,
+      gewichtet nach der Leistungsverteilung realer Angebote
+      (28.609 € + 663 €/kW), gerundet auf halbem Weg zur Empirie der
+      Verbraucherzentrale Rheinland-Pfalz (28.000 € + 830 €/kW, zwei
+      Stichproben à 160 reale Angebote 2024/25 und 2025/26 – der
+      Angebotsmarkt von Worms). Sie liegt damit innerhalb von 3 % zu
+      BEIDEN unabhängigen Referenzen.
+
+      Das Niveau ist zusätzlich über die Gerätepreise belegt (Split
+      6.300 € bei 6 kW bis 10.800 € bei 12 kW; Monoblock deutscher
+      Fertigung 9.500 € bei 7 kW bis 14.800 € bei 12 kW) bei einem
+      Geräteanteil von 35–50 % an den Gesamtkosten.
+
+      Die Steigung von 750 €/kW folgt dem realen Marktpreis, nicht der
+      HERSTELLERLISTE: Diese weist 1.205 €/kW aus (Vaillant aroTHERM
+      plus, unverbindliche Preisempfehlung), doch der Handelsrabatt
+      beträgt über alle Leistungsklassen gleich 44–45 %; real bleiben
+      330–670 €/kW (fünf Baureihen von Buderus, Vaillant und Wolf).
+      Eine Kurve mit der Listensteigung rechnet kleine Anlagen um bis
+      zu 21 % zu billig – und lässt eine Wärmepumpe nach Förderung von
+      Tag eins an günstiger erscheinen als eine neue Gasheizung.
+
+      Für Gas und Öl gibt es keine veröffentlichte Kurve; die hier
+      verwendeten Werte sind aus dem BNS-Kostenblatt abgeleitet
+      (Regression über alle 12 Stützpunkte, Abweichung höchstens 4,5 %).
+
+      WICHTIG: Unterhalb von 4 kW gibt es kein Seriengerät – dort ist
+      jede lineare Kurve Extrapolation. Der Rechner fällt in diesem
+      Fall auf das Kostenblatt zurück, weil es die Wohnfläche auflöst.
+
+   c) MANUELL – ein eigenes Angebot. Überschreibt alles.
+--------------------------------------------------------------------- */
+const KOSTENFORMEL = {
+  wp:  { grund: 28500, proKw:  750 },  /* kW-Projektion des Kostenblatts,     */
+                                       /* gegen 320 reale Angebote geprüft    */
+  gas: { grund: 13224, proKw:  108 },  /* Regression BNS-Kostenblatt          */
+  oel: { grund: 16949, proKw:  113 }   /* Regression BNS-Kostenblatt          */
+};
+/* Unterhalb dieser Heizlast gibt es kein Seriengerät mehr – jede
+   lineare Kurve wäre dort Extrapolation. */
+const FORMEL_MIN_KW = 4;
+
+const HERSTELLER = ["BUDERUS", "BOSCH", "VAILLANT", "VIESSMANN", "Durchschnitt"];
+
+/* Kostenblatt: Gesamtpreise je Hersteller, Heizungsart und Stützpunkt.
+   Reihenfolge der zwölf Werte:
+   PH 120/150/180 · SA 120/150/180 · TS 120/150/180 · UN 120/150/180
+   Preisstand 2026 (Lohnindex 1,040 · Bauindex 1,032 · WP-Technik 0,970
+   · traditionelle Technik 1,040 auf die Basispreise 2025). */
+const KOSTENBLATT = {
+  "BUDERUS": {
+    gas: [12790, 13393, 14224, 13029, 13601, 14484, 13393, 13964, 14899, 13809, 14380, 15367],
+    oel: [16458, 17133, 18016, 16541, 17237, 18172, 16977, 17679, 18691, 17341, 18068, 19263],
+    wp:  [29659, 31580, 34273, 31235, 33922, 36863, 33094, 35684, 38924, 34505, 37446, 41089]
+  },
+  "BOSCH": {
+    gas: [12946, 13497, 14276, 13237, 13809, 14640, 13705, 14276, 15159, 14017, 14588, 15575],
+    oel: [16666, 17341, 18224, 16749, 17445, 18380, 17237, 17939, 19003, 17653, 18380, 19627],
+    wp:  [29952, 31873, 34664, 31430, 34117, 37253, 33387, 35928, 39217, 34896, 37739, 41382]
+  },
+  "VAILLANT": {
+    gas: [12530, 13081, 13860, 12821, 13393, 14224, 13081, 13653, 14536, 13393, 13965, 14900],
+    oel: [16250, 16925, 17808, 16333, 17029, 17964, 16666, 17367, 18380, 17030, 17757, 19003],
+    wp:  [28738, 30976, 33571, 30631, 33318, 36356, 32386, 34927, 38216, 33901, 36640, 40185]
+  },
+  "VIESSMANN": {
+    gas: [13777, 14431, 15314, 14172, 14847, 15782, 14484, 15211, 16302, 14796, 15523, 16718],
+    oel: [17757, 18432, 19419, 17840, 18536, 19575, 18329, 19004, 20147, 18849, 19524, 20875],
+    wp:  [31339, 33778, 36667, 33622, 36511, 39745, 35775, 38413, 41995, 37577, 40420, 44551]
+  }
+};
+/* Durchschnitt aller vier Hersteller – aus den Einzelwerten berechnet,
+   damit er nicht davon abweichen kann. */
+KOSTENBLATT["Durchschnitt"] = { gas: [], oel: [], wp: [] };
+for (const art of ["gas", "oel", "wp"]) {
+  for (let i = 0; i < 12; i++) {
+    let s = 0;
+    for (const h of ["BUDERUS", "BOSCH", "VAILLANT", "VIESSMANN"]) s += KOSTENBLATT[h][art][i];
+    KOSTENBLATT["Durchschnitt"][art].push(Math.round(s / 4));
+  }
+}
+
+/* Lineare Interpolation zwischen den Stützpunkten 120 / 150 / 180 m².
+   Außerhalb wird fortgeschrieben (extrapoliert). */
+function kostenblattWert(hersteller, art, standard, flaeche) {
+  const reihe = (KOSTENBLATT[hersteller] || KOSTENBLATT["Durchschnitt"])[art];
+  const block = STANDARD_LISTE.indexOf(standard) * 3;
+  const a = reihe[block], b = reihe[block + 1], c = reihe[block + 2];
+  return flaeche <= 150 ? a + (b - a) / 30 * (flaeche - 120)
+                        : b + (c - b) / 30 * (flaeche - 150);
+}
+
+function kostenFormel(art, heizlastKw) {
+  const k = KOSTENFORMEL[art];
+  return Math.round(k.grund + k.proKw * heizlastKw);
+}
+
+/* ---------------------------------------------------------------------
+   3. Solarer Deckungsgrad des Wärmepumpenstroms
+
+   Anteil des Wärmepumpenstroms, der aus der eigenen Photovoltaik
+   gedeckt wird – inklusive Speicher mit 1 kWh je kWp. Der Haushalts-
+   strom wächst linear mit der Wohnfläche (100 m² = 2.500 kWh bis
+   200 m² = 4.500 kWh), die Anlagengröße mit 7,5 kWp bei 100 m² bis
+   15 kWp bei 200 m². Mit Elektroauto kommen 2.000 kWh/a hinzu, die
+   dieselbe Erzeugung teilen – der Deckungsgrad der Wärmepumpe sinkt
+   entsprechend.
+
+   Näherung aus Jahressimulationen, keine Stundenrechnung.
+--------------------------------------------------------------------- */
+const DECKUNG_FLAECHEN = [100, 120, 140, 160, 180, 200];
+const DECKUNG_OHNE_BEV = {   /* PH, SA, TS, UN – je Wohnflächenstufe in % */
+  "Passivhaus":  [76, 81, 85, 88, 91, 93],
+  "Saniert":     [37, 40, 42, 44, 47, 49],
+  "Teilsaniert": [25, 28, 31, 34, 37, 39],
+  "Unsaniert":   [18, 20, 22, 25, 27, 29]
+};
+const DECKUNG_MIT_BEV = {
+  "Passivhaus":  [61, 66, 71, 76, 80, 84],
+  "Saniert":     [28, 31, 34, 38, 41, 44],
+  "Teilsaniert": [18, 21, 24, 28, 31, 34],
+  "Unsaniert":   [12, 14, 17, 20, 22, 25]
+};
+
+function deckungsgrad(standard, flaeche, mitBev) {
+  const reihe = (mitBev ? DECKUNG_MIT_BEV : DECKUNG_OHNE_BEV)[standard];
+  const f = Math.min(200, Math.max(100, flaeche));
+  const i = Math.min(4, Math.floor((f - 100) / 20));
+  const t = (f - DECKUNG_FLAECHEN[i]) / 20;
+  return reihe[i] + (reihe[i + 1] - reihe[i]) * t;
+}
+
+/* ---------------------------------------------------------------------
+   4. CO₂-Preis
+
+   Bis einschließlich des eingestellten Festpreisjahres gilt der
+   gesetzlich festgelegte Preis (2026: 55 €/t im Korridor 55–65,
+   2027: 65 €/t). Danach Marktpreis im EU-Emissionshandel ETS 2.
+   Der weitere Verlauf ist eine degressive Kurve: am Anfang kräftige
+   Steigerung, später abflachend. Stützstellen nach Prognosen des
+   Potsdam-Instituts für Klimafolgenforschung, der EU-Kommission,
+   von Enerdata und des Umweltbundesamts – Annahme, keine Rechtsnorm.
+
+   Zwischen den Stützstellen wird linear interpoliert.
+--------------------------------------------------------------------- */
+/* Stützstellen des Marktpreises. Gewählt ist das UNTERE DRITTEL der
+   Studienlage, nicht deren Mitte – aus drei Gründen:
+   · Die EU-Umweltminister haben den ETS-2-Start am 05.11.2025 auf 2028
+     verschoben; das BEHG läuft 2027 im Korridor 55–65 €/t weiter.
+   · Die EU-Kommission dämpft aktiv: Beschlussentwurf zur Preis-
+     stabilisierung (27.11.2025) und Vorschlag vom April 2026, den
+     Löschmechanismus auszusetzen, um Preisspitzen zu kappen.
+   · Mehrere Mitgliedstaaten fordern weitere Verschiebung bis 2030.
+   Zum Vergleich die Prognosen für 2030: untere Gruppe 100–160 €/t,
+   MCC und REMIND-EU 200–300 €/t. Das Szenario „CO₂-Preis doppelt“
+   deckt die obere Studienhälfte ab, „CO₂-Preis halb“ ein politisches
+   Einfrieren. Annahme, keine Rechtsnorm. */
+const CO2_STUETZ_MARKT = [
+  [2030,  90], [2035, 150], [2038, 200], [2040, 230], [2043, 280],
+  [2045, 320], [2048, 360], [2050, 390], [2055, 440], [2060, 460]
+];
+
+/* Bis 2026 und bis zum Ende des gesetzlichen Festpreises gilt der
+   jeweils eingegebene Wert; danach wird zwischen dem letzten
+   Festpreisjahr und den Marktstützstellen linear interpoliert.
+   Mit den Voreinstellungen (2026 = 55 €/t, 2027 = 65 €/t) ergibt das
+   für 2028 rund 73 €/t und für 2029 rund 82 €/t – verträglich mit
+   dem verschobenen ETS-2-Start 2028 und den erwarteten Startpreisen
+   von 50 bis 90 €/t. */
+function co2Preis(jahr, e) {
+  const f = e.co2Faktor;
+  if (jahr <= 2026) return e.co2Preis * f;
+  if (jahr <= e.co2FestpreisBis) return e.co2Preis2027 * f;
+  const s = [[e.co2FestpreisBis, e.co2Preis2027]].concat(CO2_STUETZ_MARKT);
+  for (let i = 0; i < s.length - 1; i++) {
+    if (jahr <= s[i + 1][0]) {
+      const t = (jahr - s[i][0]) / (s[i + 1][0] - s[i][0]);
+      return (s[i][1] + (s[i + 1][1] - s[i][1]) * t) * f;
+    }
+  }
+  return s[s.length - 1][1] * f;
+}
+
+/* ---------------------------------------------------------------------
+   5. Bundesförderung für effiziente Gebäude – Heizungsförderung
+
+   Stand nach dem Gebäudeenergie-Modernisierungsgesetz (GModG),
+   Beschluss vom 10.07.2026, Konditionen ab 21.07.2026:
+
+   · Höchstbetrag förderfähiger Kosten der ersten Wohneinheit 28.000 €,
+     ab 01.02.2027 halbjährlich um 750 € sinkend.
+   · Klimageschwindigkeitsbonus 16 %, ab 01.02.2027 halbjährlich um
+     4 Prozentpunkte sinkend, ab dem 2. Halbjahr 2028 entfallen.
+   · Effizienzbonus (5 % für natürliche Kältemittel) und
+     Emissionsminderungszuschlag sind zum 21.07.2026 ERSATZLOS
+     ENTFALLEN. Wer damit noch rechnet, rechnet zu günstig.
+   · Wertschöpfungsbonus: Nach den Eckpunkten der Bundesregierung vom
+     08.07.2026 soll die Grundförderung für Wärmepumpen ab 2027 von 30 %
+     auf 15 % sinken; Geräte mit mindestens 15 % Wertschöpfung in der EU
+     sollen 15 % Wertschöpfungsbonus erhalten und damit wieder auf 30 %
+     kommen. Die gesetzliche Regelung steht aus. Die Tabelle führt die
+     angekündigte Aufteilung (grund + wsb); gerechnet wird mit der Summe,
+     also in jedem Halbjahr mit 30 % Grundförderung.
+   · Einkommensbonus nur für selbstnutzende Eigentümer, gestaffelt
+     nach zu versteuerndem Haushaltseinkommen.
+   · Höchstsatz 70 %, bei einem zu versteuernden Einkommen bis
+     30.000 € 80 %.
+--------------------------------------------------------------------- */
+const PERIODEN = [
+  { id: 0, label: "2. Halbjahr 2026 (ab 21.07.)", cap: 28000, klima: 16, grund: 30, wsb: 0 },
+  { id: 1, label: "1. Halbjahr 2027",             cap: 27250, klima: 12, grund: 15, wsb: 15 },
+  { id: 2, label: "2. Halbjahr 2027",             cap: 26500, klima:  8, grund: 15, wsb: 15 },
+  { id: 3, label: "1. Halbjahr 2028",             cap: 25750, klima:  4, grund: 15, wsb: 15 },
+  { id: 4, label: "2. Halbjahr 2028",             cap: 25000, klima:  0, grund: 15, wsb: 15 },
+  { id: 5, label: "1. Halbjahr 2029",             cap: 24250, klima:  0, grund: 15, wsb: 15 },
+  { id: 6, label: "2. Halbjahr 2029",             cap: 23500, klima:  0, grund: 15, wsb: 15 },
+  { id: 7, label: "1. Halbjahr 2030",             cap: 22750, klima:  0, grund: 15, wsb: 15 },
+  { id: 8, label: "2. Halbjahr 2030",             cap: 22000, klima:  0, grund: 15, wsb: 15 },
+  /* Ab 2031 bleiben die Foerderbedingungen unveraendert - der Deckel von
+     22.000 EUR sinkt nicht weiter. Die eigene Periode gibt es trotzdem,
+     damit dieser Rechner dasselbe Jahresraster zeigt wie der
+     WP-PV-Foerderrechner. Dort trennt 2031 die Uebergangszahlung des
+     EEG vom reinen Marktregime; hier aendert sich nichts. */
+  { id: 9, label: "ab 2031",                      cap: 22000, klima:  0, grund: 15, wsb: 15 }
+];
+
+/* Einkommensstufen des Einkommensbonus (zu versteuerndes Einkommen) */
+const EINKOMMEN_STUFEN = [
+  { bis: 30000, bonus: 40, name: "bis 30.000 €" },
+  { bis: 40000, bonus: 30, name: "über 30.000 bis 40.000 €" },
+  { bis: 50000, bonus: 10, name: "über 40.000 bis 50.000 €" },
+  { bis: Infinity, bonus: 0, name: "über 50.000 €" }
+];
+/* Familienzuschlag: Lebt mindestens ein MINDERJÄHRIGES Kind mit
+   Hauptwohnsitz in der geförderten Wohneinheit, für das eine
+   Kindergeldberechtigung vorliegt, sinkt das maßgebliche Einkommen
+   pauschal und EINMALIG um 10.000 € – nicht je Kind. Volljährige
+   Kinder zählen nicht, auch wenn für sie Kindergeld fließt
+   (KfW-Produktseite 458, Stand 08/2026). */
+const KINDERFREIBETRAG = 10000;
+
+/* Klimageschwindigkeitsbonus nur, wenn eine FUNKTIONSTÜCHTIGE Heizung
+   ersetzt wird: Öl, Kohle, Gasetage und Nachtspeicher ohne Altersgrenze,
+   Gas-Zentral- und Biomasseheizung ab 20 Jahren. Eine defekte Heizung
+   berechtigt nicht, auch wenn sie älter als 20 Jahre ist.
+   Die Gasetagenheizung steht als eigene Auswahl da: Zusammen mit Öl, Kohle
+   und Nachtspeicher in einer Zeile wäre der Text im geschlossenen
+   Auswahlfeld abgeschnitten (gemessen 17.09.2026). */
+const ALTHEIZUNGEN = {
+  "Öl, Kohle oder Nachtspeicher":   { klima: true },
+  "Gasetagenheizung":               { klima: true },
+  "Gas oder Biomasse, ab 20 Jahre": { klima: true },
+  "Gas oder Biomasse, jünger":      { klima: false },
+  "defekt oder nicht fossil":       { klima: false }
+};
+
+function berechneFoerderung(e) {
+  const p = PERIODEN[e.periode];
+  const an = e.foerderungNutzen !== false;
+  const zveEff = Math.max(0, e.zve - (e.kinder ? KINDERFREIBETRAG : 0));
+
+  let inc = 0, stufe = "keine (Vermietung)";
+  if (an && e.selbstnutzung) {
+    for (const s of EINKOMMEN_STUFEN) {
+      if (zveEff <= s.bis) { inc = s.bonus; stufe = s.name; break; }
+    }
+  }
+  if (!an) stufe = "Förderung nicht in Anspruch genommen";
+  const klimaMoeglich = ALTHEIZUNGEN[e.altheizung].klima;
+  const klima = (an && klimaMoeglich && e.selbstnutzung) ? p.klima : 0;
+  /* Wertschöpfungsbonus: Regelung steht aus, gerechnet wird mit der
+     vollen Grundförderung von 30 % (siehe PERIODEN). */
+  const wsb  = an ? p.wsb : 0;
+  const maxSatz = (e.selbstnutzung && zveEff <= 30000) ? 80 : 70;
+
+  const roh = an ? p.grund + inc + klima + wsb : 0;
+  const satz = Math.min(roh, maxSatz);
+  const foerderfaehig = an ? Math.min(e.investWP, p.cap) : 0;
+  const zuschuss = Math.round(foerderfaehig * satz / 100);
+
+  return {
+    periode: p, zveEff, inc, stufe, klima, klimaMoeglich,
+    grund: p.grund + p.wsb, maxSatz, roh, satz, foerderfaehig, zuschuss,
+    ueberDeckel: Math.max(0, e.investWP - p.cap),
+    gekappt: Math.max(0, roh - satz),
+    investNetto: e.investWP - zuschuss
+  };
+}
+
+/* ---------------------------------------------------------------------
+   6. Brennstoffe und Emissionsfaktoren
+
+   Heizöl: 2,66 kg CO₂ je Liter – chemisch (0,845 kg/l, 86 % Kohlenstoff)
+   wie amtlich (EBeV 2030, 74 t CO₂/TJ) derselbe Wert.
+
+   Erdgas: Der amtliche Faktor 0,2016 kg CO₂/kWh bezieht sich auf den
+   HEIZWERT. Gasrechnungen rechnen aber BRENNWERT-Kilowattstunden ab,
+   und auf diese wendet das Modell den Faktor an. Je Rechnungs-kWh sind
+   es deshalb 0,2016 × 0,902 = 0,182 kg. Wer hier 0,202 ansetzt,
+   überzeichnet die CO₂-Kosten der Gasheizung um elf Prozent.
+--------------------------------------------------------------------- */
+const F_OEL_LITER = 0.00266;    /* t CO₂ je Liter Heizöl               */
+const F_GAS_KWH   = 0.000182;   /* t CO₂ je abgerechneter kWh (Hs)     */
+
+/* Netzentgelte nach § 14a EnWG. Quelle: EWR Netz GmbH, „Netzentgelte
+   Strom ab 01.01.2026, Preisblatt 3", NG_S_144_12|25, Seiten 3 bis 5.
+   Alle Werte NETTO — das Preisblatt sagt ausdrücklich „zuzüglich
+   Konzessionsabgabe, den aktuell gültigen gesetzlichen Umlagen sowie der
+   Umsatzsteuer (zzt. 19 %)". Im Modell wird durchgängig auf brutto
+   umgerechnet, damit die drei Module vergleichbar bleiben. */
+const NETZENTGELT_SLP = 0.0846;  /* €/kWh Standardlastprofil    */
+const MODUL2_REDUKTION = 60;     /* % Reduzierung des Arbeitspreises */
+/* Modul 3, Tarifstufen — gelten NUR im 1. und 4. Quartal:
+     Hochlast     16,91 ct   17:15 bis 19:15 Uhr
+     Standardlast  8,46 ct   07:00-17:15 und 19:15-24:00 Uhr
+     Niedriglast   3,38 ct   00:00 bis 07:00 Uhr
+   Der Aufschlag im Hochlastfenster ist damit genau so groß wie der
+   Standardpreis selbst. */
+/* Anteil des Waermepumpenstroms, der in das 1. und 4. Quartal faellt.
+
+   Modul 3 gilt im Netzgebiet Worms AUSSCHLIESSLICH im 1. und 4. Quartal; im
+   2. und 3. gilt durchgehend die Standardstufe. Die Anteilsfelder duerfen
+   deshalb nicht auf den Netzbezug des ganzen Jahres wirken.
+
+   ★ 182 von 365 Tagen waere der naheliegende, aber falsche Gegenschritt:
+   Eine Waermepumpe verbraucht in diesen beiden Quartalen weit mehr als die
+   Haelfte ihres Jahresstroms. Massgeblich ist die Verteilung der
+   HEIZGRADTAGE ueber das Jahr, nicht die der Kalendertage.
+
+   QUELLE: Deutscher Wetterdienst, Climate Data Center, monatliche Gradtage
+   nach VDI 3807 Blatt 1 (Raumtemperatur 20 °C, Heizgrenze 15 °C),
+   opendata.dwd.de/climate_environment/CDC/derived_germany/techn/monthly/
+   heating_degreedays/hdd_3807/. Genommen ist das Zehnjahresmittel
+   2015-2024 der Station 05906 MANNHEIM (20 km entfernt, lueckenlose
+   Reihe): 84,53 %.
+
+   Gegenproben: Station 05692 WORMS fuehrt fuer Februar und Maerz kein
+   Zehnjahresmittel; ihr Istjahr 2025 ergibt 86,27 %. Mannheim 2025
+   85,92 %, Alzey 83,9 %, Bad Duerkheim 86,1 %. Die Groesse ist gegen
+   Station und Wetterjahr unempfindlich. Genommen ist der niedrigste
+   vollstaendige Wert, weil ein kleinerer Faktor Modul 3 schlechter rechnet
+   und nicht besser.
+
+   ★ Auch damit bleibt die Rechnung zurueckhaltend: Der NETZBEZUG ist
+   staerker im Winter konzentriert als der Verbrauch, weil die eigene
+   Anlage im Winter weniger deckt. Das Modell fuehrt EINEN Deckungsgrad
+   fuer das ganze Jahr und kann das nicht abbilden. */
+const Q14_HEIZUNG = 0.845;
+
+/* Warmwasser laeuft das ganze Jahr gleichmaessig durch — sein Anteil an
+   Q1+Q4 ist deshalb schlicht der Anteil dieser Tage am Jahr:
+   1. Quartal 31+28+31 = 90 Tage, 4. Quartal 31+30+31 = 92 Tage,
+   zusammen 182 von 365. */
+const Q14_TAGE = 182 / 365;
+
+/* Spezifische Waermekapazitaet von Wasser, in Wattstunden je Liter und
+   Kelvin: 4,187 kJ/(kg·K) geteilt durch 3.600 kJ je kWh sind
+   1,163 Wh/(l·K). */
+const WW_WAERME = 1.163;
+
+const MODUL3_HOCH = 0.1691;
+const MODUL3_AUFSCHLAG = MODUL3_HOCH - NETZENTGELT_SLP;   /* 8,45 ct */
+/* Altregelung: Wer VOR dem 01.01.2024 eine Vereinbarung über eine
+   Netzentgeltreduzierung für ein steuerbares Gerät mit SEPARATEM ZÄHLPUNKT
+   geschlossen hat, zahlt weiterhin diesen Arbeitspreis — für
+   Elektro-Speicherheizung, Wärmepumpe und Elektromobilität gleichermaßen
+   (Preisblatt 3, Seite 3). Er liegt unter dem Modul-2-Preis von 3,38 ct.
+   Die Regelung läuft nach der Festlegung BK6-22-300 der Bundesnetzagentur
+   bis zum 31.12.2028; ein freiwilliger Wechsel in das neue System ist
+   jederzeit möglich, ab 01.01.2029 ist er Pflicht. */
+const ALTREGELUNG_AP = 0.0297;
+/* Jahresentgelt der Steuerbox nach § 30 MsbG. Faellt bei JEDEM Modul der
+   Neuregelung an, weil jedes eine netzorientierte Steuerung voraussetzt —
+   nicht nur bei Modul 3. Die Altregelung von vor 2024 traegt sie nicht:
+   Sie arbeitet mit dem vorhandenen Rundsteuerempfaenger. */
+const STEUERBOX = 50;
+
+/* ---------------------------------------------------------------------
+   7. Voreinstellungen
+
+   Energiepreise Stand 23.08.2026 (Hormus-Lage, Revision):
+   Erdgas 0,115 €/kWh und Haushaltsstrom 0,30 €/kWh sind die nach
+   einem Tarifwechsel ERREICHBAREN Festpreise (BNS-Dauerregel:
+   nie mit dem Bestands-Durchschnitt rechnen, auf beiden Seiten des
+   Vergleichs gleich verfahren). Heizöl 1,35 €/l ist das Marktmittel
+   nach dem Preisschub vom Juli 2026.
+
+   Die Steigerungsraten sind bewusst getrennt: 3,0 % für Gas und Öl
+   OHNE den CO₂-Anteil (der wird über die CO₂-Kurve eigens gerechnet
+   und darf nicht doppelt zählen), 2,0 % für Strom, weil der wachsende
+   Anteil erneuerbarer Erzeugung dort dämpfend wirkt.
+--------------------------------------------------------------------- */
+const VORGABE = {
+  /* A Gebäude */
+  standard: "Teilsaniert", flaeche: 150,
+  waermebedarfManuell: 0, spezManuell: 0,
+  /* Gemessener Jahresverbrauch der Waermepumpe. Wer ihn vom Zaehler
+     ablesen kann, hat die haertere Groesse als jede Kennzahl je
+     Quadratmeter — die reicht im Bestand von 13 bis 220 kWh/(m²·a).
+     ★ Strom × Arbeitszahl ergibt den GESAMTEN Waermebedarf, denn die
+     Waermepumpe macht Heizung UND Warmwasser. Das Warmwasser wird auf
+     diesem Weg deshalb HERAUSgerechnet, nicht addiert. */
+  stromWPManuell: 0,              /* kWh/a gemessen; 0 = Automatik          */
+
+  /* Warmwasser — physikalisch gerechnet, nicht als Prozentsatz.
+
+     ★ Der spezifische Waermebedarf oben ist REINER HEIZBEDARF; das
+     Passivhaus mit 13 kWh/(m²·a) ist genau so definiert. Warmwasser kommt
+     also HINZU. Als Prozentsatz des Gesamtbedarfs gefuehrt waere es im
+     Passivhaus die Hauptsache und im unsanierten Altbau eine Randgroesse
+     — der Anteil schwankt mit der Daemmung um den Faktor 17, die
+     Wassermenge nicht.
+
+     Die Waermemenge folgt aus Menge und Temperaturhub:
+       Q = Personen × Liter/Tag × 365 × 1,163 Wh/(l·K) × Spreizung
+     Bei 35 Litern und 30 Kelvin sind das 446 kWh je Person und Jahr.
+
+     Nicht enthalten: Speicher- und Zirkulationsverluste. Wer eine
+     Zirkulationsleitung hat, traegt die Liter entsprechend hoeher ein. */
+  personen: 3,                    /* Personen im Haushalt                     */
+  wwLiter: 35,                    /* Liter Warmwasser je Person und Tag       */
+  wwSpreizung: 30,                /* Kelvin zwischen Kalt- und Warmwasser     */
+
+  /* B Investition */
+  kostenbasis: "Kostenblatt",     /* "Kostenblatt" | "Formel" | "Manuell" */
+  hersteller: "Durchschnitt",
+  investWPManuell: 0, investGasManuell: 0, investOelManuell: 0,
+  /* Einmaliger Umbau des Zaehlerplatzes. Er steckt NICHT im Preisblatt des
+     Netzbetreibers — das regelt nur den Zaehlerbetrieb. Der Zaehlerplatz
+     ist Kundenanlage: Schrank, Verdrahtung und Platz fuer Steuerbox und
+     gegebenenfalls zweiten Zaehler nach den Technischen
+     Anschlussbedingungen, ausgefuehrt von einem im Installateurverzeichnis
+     eingetragenen Betrieb.
+     Preise (Angebote, Stand 04.09.2026):
+       kleine externe Box                    1.000 bis 1.500 €
+       Zusatzbox mit Mobilfunk-Antenne       1.200 bis 1.700 €
+       kompletter neuer Zaehlerschrank       2.500 € Festpreis
+     Der Betrag geht in investWP ein und ist damit als Umfeldmassnahme
+     foerderfaehig — soweit der Foerderdeckel noch Luft hat. Voreingestellt
+     ist 0: Ob der Umbau noetig ist, haengt am vorhandenen Schrank. */
+  zaehlerplatzUmbau: 0,           /* € einmalig                               */
+
+  /* C Förderung */
+  foerderungNutzen: true, periode: 0, selbstnutzung: true, zve: 45000,
+  kinder: false, altheizung: "Öl, Kohle oder Nachtspeicher",
+
+  /* D Energiepreise – Stand August 2026.
+     Der Iran-Konflikt um die Straße von Hormus hat die Großhandelspreise
+     im Juli 2026 um 18 bis 20 Prozent nach oben getrieben; auch die
+     2027er-Terminkontrakte liegen 11 bis 12 Prozent höher – die Störung
+     ist also nicht nur eine Tagesspitze. Die Vorgaben liegen deshalb
+     über dem Vorkrisenniveau, aber bewusst unterhalb der aktuellen
+     Spitzen:
+     Gas 11,5 ct als nach Tarifwechsel erreichbarer Festpreis
+     (Neukunden August 2026: 9,3–9,9 ct, plus eingepreiste Terminkurve;
+     Bestandstarife bis 13 ct).
+     Heizöl 1,35 €/l als MITTLERER Einkaufspreis – nicht der aktuelle
+     Marktpreis von rund 1,50–1,60 €/l (Ende 08/2026). Öl wird 1–2 Mal
+     jährlich getankt; über die Betrachtungsdauer zählt der erwartbare
+     Jahresmittelwert, nicht die Tageslage. Die Spitze deckt das
+     Szenario „Heizöl 1,89 €/l" und die Sensitivität bis 2,00 €/l ab.
+     Strom 30 ct = erreichbarer Neukunden-Festpreis – nicht der
+     Bestands-Durchschnitt von 37 ct (Regel: immer mit dem erreichbaren
+     Festpreis rechnen, auf beiden Seiten des Vergleichs). Der
+     BNS-Förderrechner rechnet mit derselben Vorgabe. */
+  gaspreis: 0.115, gasGrundpreis: 200, oelpreis: 1.35, strompreis: 0.30,
+  steigerungFossil: 3.0, steigerungStrom: 2.0,
+
+  /* E Effizienz.
+     Jahresarbeitszahl 3,4 = Mittelwert des Fraunhofer-ISE-Feldtests
+     „Wärmepumpen-Qualitätssicherung im Bestand“ (77 Anlagen, veröffent-
+     licht 11/2025) für Luft/Wasser in Bestandsgebäuden; Spanne 2,6–5,4.
+     Eine sorgfältig ausgelegte Neuanlage mit Flächenheizung darf mehr
+     ansetzen – dafür ist das Eingabefeld da. */
+  jaz: 3.4, brennwertGas: 11.5, wirkungsgradGas: 96,
+  brennwertOel: 10.7, wirkungsgradOel: 92,
+
+  /* F CO₂ und Wartung */
+  co2Preis: 55, co2Preis2027: 65, co2FestpreisBis: 2027, co2Faktor: 1.0,
+  wartungWP: 200, wartungGas: 230, wartungOel: 350,
+
+  /* Die Rücklage der Wärmepumpe rechnet bewusst auf die Investition
+     NACH Förderung: Beim Ersatz in 15 bis 20 Jahren ist mit deutlich
+     niedrigeren Gerätepreisen zu rechnen – die Preise fielen schon
+     2025 um rund 4.000 € je Anlage, und mit dem Abschmelzen der
+     Förderung entfällt der förderbedingte Mitnahmeeffekt, während der
+     Verdrängungswettbewerb die Preise weiter drückt. Die heutige
+     Netto-Investition ist dafür der bessere Anker als der Bruttopreis
+     (Entscheid vom 23.08.2026). */
+  ruecklageWP: 2.5, ruecklageFossil: 1.5,
+
+  /* G Strombezug */
+  /* Separater Zählpunkt für die Wärmepumpe (Kaskadenzählung).
+     Belegt am EWR-Preisblatt (Haushalt ab 01.04.2026, Heizung ab
+     01.01.2026), nachgerechnet in der BNS-Batteriestudie Kap. 5.8:
+     · struktureller Vorteil = Netzentgelt 2,970 statt 8,460 ct plus
+       Konzessionsabgabe 0,110 statt 1,397 ct = 6,777 ct netto
+       = 8,06 ct/kWh brutto — das ist die Obergrenze,
+     · in der Grundversorgung kommen davon nur 3,32 ct/kWh an, weil der
+       Heizungstarif den teureren Energieanteil hat (18,59 statt
+       14,597 ct netto).
+     Voreingestellt sind 6 ct (BNS-Setzung 14.09.2026, einheitlich mit dem
+     BNS-Tool und den Unterlagen): Ein Wärmestromtarif gibt den Netzentgelt-
+     vorteil dann zum größeren Teil weiter.
+     Der Zusatzbetrag ist der zweite Grundpreis des Heizungstarifs
+     (200,49 €/a brutto; der Messstellenbetrieb von 38,37 €/a netto ist
+     darin bereits enthalten). */
+  wpZaehlpunkt: false,            /* separater Zählpunkt mit Wärmepumpentarif */
+  /* ⚠ DIESE BEIDEN FELDER GEHOEREN ZUSAMMEN, IHRE VORGABEN ABER NICHT.
+     Das eine traegt den Vorteil des eigenen Zaehlpunkts, das andere seine
+     Kosten — sie stammen jedoch aus verschiedenen Welten:
+       zusatzZaehler 200 €     aus der GRUNDVERSORGUNG (EWR Basisstrom
+                               Heizung, Grundpreis 200,49 € brutto)
+       wpTarifAbschlag 6 ct    unterstellt einen WETTBEWERBSTARIF. In der
+                               Grundversorgung selbst sind es nur 3,32 ct
+                               (31,73 statt 35,05 ct brutto).
+     Bei 4.700 kWh Netzbezug kippt daran das Vorzeichen: mit 6,00 ct ein
+     Vorteil von 82 €/a, mit 3,32 ct ein Verlust von 44 €/a.
+     ★ Wer eine Zahl aus diesem Rechner weitergibt, muss BEIDE Felder auf
+     denselben Tarif stellen. Ein Wettbewerbstarif hat auch einen anderen
+     Grundpreis als die Grundversorgung.
+     Zur Einordnung, aber bewusst NICHT eingesetzt: Uebertraegt man den
+     Energieanteil eines wettbewerblichen Grundversorger-Preisblatts
+     (Stadtwerke Muenster, Oekostrom Waermepumpe ab 01.01.2026: 10,25 ct
+     netto gegen 18,59 ct bei EWR) auf die Wormser Netzentgelte, ergaeben
+     sich 7,70 ct und 121 €. Der Energieanteil ist aber nicht fuer Worms
+     erhoben — Stand 04.09.2026 zurueckgestellt. */
+  wpTarifAbschlag: 0.06,          /* €/kWh günstiger als Haushaltstarif (BNS-Setzung 14.09.2026, einheitlich mit dem BNS-Tool und den Unterlagen) */
+  wpStrompreisManuell: 0,
+  zusatzZaehler: 200,             /* €/a zweiter Grundpreis inkl. Messstellenbetrieb */
+  paragraf14a: "Modul 1",         /* "Altregelung" | "Modul 1" | "Modul 2" | "Modul 1 + 3" | "nicht genutzt" */
+  modul1Netto: 130.66,            /* €/a netto pauschale Netzentgeltreduzierung */
+
+  /* Modul 3 (zeitvariable Netzentgelte, seit 01.04.2025 Pflichtangebot
+     der Netzbetreiber) gibt es nur ZUSÄTZLICH zu Modul 1: In den
+     Niedertarif-Fenstern sinkt der Arbeitspreis des Netzentgelts um
+     mindestens 60 Prozent. Vorausgesetzt ist ein intelligentes
+     Messsystem. Die Mehrkosten gegenüber der modernen Messeinrichtung
+     stammen aus § 30 MsbG (EWR-Preisblatt 2026 = exakt die gesetzlichen
+     Obergrenzen, in unserer EEG-Studie geprüft): iMSys 40 statt mME
+     25 €/a = 15 € plus Steuerbox 50 €/a. Wie viel Wärmepumpenstrom in
+     die günstigen Fenster wandert, hängt von Pufferspeicher und
+     Regelung ab – 30 Prozent sind ohne besondere Optimierung
+     erreichbar, mit gutem Energiemanagement auch 50. */
+  modul3Anteil: 30,               /* % des Netzbezugs in Niedertarif-Fenstern */
+  modul3Rabatt: 60,               /* % Reduzierung des Netzentgelt-Arbeitspreises */
+  /* ★ Die Messmehrkosten bestehen aus ZWEI Teilen, die an verschiedenen
+     Sachverhalten haengen — sie duerfen deshalb nicht gemeinsam nur einem
+     Modul angelastet werden:
+       Steuerbox 50 €/a  haengt an der netzorientierten Steuerung und damit
+                         an JEDER Vereinbarung nach der Neuregelung, also
+                         auch an Modul 1 und Modul 2. Sie steht als
+                         Konstante STEUERBOX weiter oben — ein Betrag nach
+                         § 30 MsbG, keine Vorliebe des Nutzers.
+       iMSys 25 €/a      50 statt 25 € moderne Messeinrichtung. § 29
+                         Abs. 1 Nr. 2 Buchst. a MsbG verpflichtet zum
+                         intelligenten Messsystem UND zur
+                         Steuerungseinrichtung „bei Letztverbrauchern, mit
+                         denen eine Vereinbarung nach § 14a des
+                         Energiewirtschaftsgesetzes besteht" — ohne
+                         Verbrauchs- und ohne Leistungsgrenze. Die 7 kW in
+                         Buchstabe b betreffen ERZEUGUNGSANLAGEN.
+                         Der Preis folgt aus § 30 Abs. 1 Nr. 4 (drei mit
+                         „oder" verbundene Alternativen, die
+                         § 14a-Alternative ohne Verbrauchsbedingung:
+                         50 € Anteil des Anschlussnutzers) und § 30 Abs. 5
+                         (hoechste zutreffende Obergrenze).
+                         Es bleibt einstellbar: Wer ein intelligentes
+                         Messsystem ohnehin hat, traegt 0 ein.
+     ★ ZURUECKHALTEND: Nach § 45 laeuft der Rollout ab 01.01.2025 und muss
+     erst Ende 2032 zu 90 Prozent fertig sein. Die ersten Jahre koennen
+     guenstiger sein, solange der alte Zaehler haengt — der Rechner setzt
+     den Aufschlag trotzdem ab dem ersten Jahr an und rechnet § 14a damit
+     eher schlechter als besser.
+     Die Altregelung traegt beides nicht: Sie stammt von vor 2024 und
+     arbeitet mit dem bereits vorhandenen Rundsteuerempfaenger. */
+  messMehrkosten: 25,             /* €/a iMSys statt moderner Messeinrichtung */
+  /* Anteil des Netzbezugs, der ins Hochlastfenster faellt. 17:15 bis 19:15
+     sind 2 von 24 Stunden, also 8 Prozent — eine Waermepumpe laeuft im
+     Winter weitgehend gleichmaessig durch, anders als die Haushaltslast.
+     Wer die Pumpe in diesen zwei Stunden sperrt, traegt hier 0 ein. */
+  modul3Hochlast: 8,              /* % des Netzbezugs im Hochlastfenster     */
+
+  /* H Photovoltaik */
+  pvGenutzt: true, bev: true, deckungManuell: 0, lcoe: 0.10,
+
+  /* I Finanzparameter */
+  zins: 3.0
+};
+
+/* ---------------------------------------------------------------------
+   8. Kern der Rechnung
+--------------------------------------------------------------------- */
+const STARTJAHR = 2026;
+const JAHRE = 30;
+
+function rechne(e) {
+  const st = STANDARDS[e.standard];
+
+  /* --- Gebäude ---------------------------------------------------- */
+  const spez = e.spezManuell > 0 ? e.spezManuell : st.spez;
+  /* WARMWASSER — aus Menge und Temperaturhub, nicht als Prozentsatz. */
+  let qWW = e.personen * e.wwLiter * 365 * WW_WAERME * e.wwSpreizung / 1000;
+
+  /* ★ ZWEI WEGE ZUM WAERMEBEDARF, die das Warmwasser GEGENLAEUFIG behandeln:
+
+       ueblicher Weg   qHeiz ist gegeben (Kennzahl oder eigener Wert),
+                       qWW kommt HINZU          -> Q = qHeiz + qWW
+       gemessener Weg  Q ist gegeben (Strom × Arbeitszahl), denn die
+                       Waermepumpe macht beides,
+                       qWW wird HERAUSgerechnet -> qHeiz = Q - qWW
+
+     Wer beide Wege gleich behandelt, zaehlt das Warmwasser doppelt oder
+     gar nicht. Rangfolge wie in der Maske: oberstes Feld gewinnt. */
+  let Q, qHeiz;
+  if (e.stromWPManuell > 0 && e.waermebedarfManuell <= 0) {
+    Q = e.stromWPManuell * e.jaz;
+    /* Randfall: Wer weniger Strom eintraegt, als das Warmwasser allein
+       braucht, bekommt kein negatives Heizen — dann ist der gemessene
+       Verbrauch VOLLSTAENDIG Warmwasser. Ohne diese Deckelung waere
+       qHeiz + qWW groesser als Q und der Quartalsfaktor verzerrt. */
+    qWW = Math.min(qWW, Q);
+    qHeiz = Q - qWW;
+  } else {
+    qHeiz = e.waermebedarfManuell > 0 ? e.waermebedarfManuell
+                                      : spez * e.flaeche;
+    Q = qHeiz + qWW;
+  }
+  const heizlast = e.flaeche * st.heizlast / 1000;
+  const vbh = st.vbh;
+
+  /* --- Investition ------------------------------------------------ */
+  const kbWP  = kostenblattWert(e.hersteller, "wp",  e.standard, e.flaeche);
+  const kbGas = kostenblattWert(e.hersteller, "gas", e.standard, e.flaeche);
+  const kbOel = kostenblattWert(e.hersteller, "oel", e.standard, e.flaeche);
+  const fmWP  = kostenFormel("wp",  heizlast);
+  const fmGas = kostenFormel("gas", heizlast);
+  const fmOel = kostenFormel("oel", heizlast);
+
+  let investWP, investGas, investOel;
+  /* Unterhalb von FORMEL_MIN_KW extrapoliert die Kostenkurve außerhalb
+     ihres belegten Bereichs (im Passivhaus bis 36 % zu niedrig). Dort
+     fällt der Rechner automatisch auf die Preistabelle zurück, statt
+     mit einem unbelegten Preis zu rechnen. */
+  const formelZulaessig = heizlast >= FORMEL_MIN_KW;
+  if (e.kostenbasis === "Formel" && formelZulaessig) {
+    investWP = fmWP; investGas = fmGas; investOel = fmOel;
+  } else {
+    investWP = kbWP; investGas = kbGas; investOel = kbOel;
+  }
+  const formelErsetzt = e.kostenbasis === "Formel" && !formelZulaessig;
+
+  if (e.investWPManuell  > 0) investWP  = e.investWPManuell;
+  /* Der Zaehlerplatz kommt AUCH auf einen eigenen Wert obendrauf: Ein
+     Waermepumpenangebot enthaelt ihn nicht, er ist Sache des Elektrikers. */
+  investWP += e.zaehlerplatzUmbau;
+  if (e.investGasManuell > 0) investGas = e.investGasManuell;
+  if (e.investOelManuell > 0) investOel = e.investOelManuell;
+  investWP = Math.round(investWP); investGas = Math.round(investGas); investOel = Math.round(investOel);
+
+  /* --- Förderung -------------------------------------------------- */
+  const f = berechneFoerderung({ ...e, investWP });
+  const investWPNetto = investWP - f.zuschuss;
+
+  /* --- Energiemengen ---------------------------------------------- */
+  const endGas = Q / (e.wirkungsgradGas / 100);          /* kWh Erdgas       */
+  const endOelKwh = Q / (e.wirkungsgradOel / 100);       /* kWh Heizöl       */
+  const endOelLiter = endOelKwh / e.brennwertOel;        /* Liter Heizöl     */
+  const stromWP = Q / e.jaz;                             /* kWh Strom        */
+  const gasM3 = endGas / e.brennwertGas;                 /* m³ Erdgas        */
+
+  /* --- Preise ohne CO₂-Anteil -------------------------------------
+     Der eingegebene Gas- beziehungsweise Ölpreis ist der Preis der
+     Rechnung, also einschließlich der CO₂-Abgabe. Für die Fortschreibung
+     wird der CO₂-Anteil herausgerechnet und über die CO₂-Kurve eigens
+     berechnet, sonst zählt er doppelt. */
+  const fOelKwh = F_OEL_LITER / e.brennwertOel;          /* t CO₂ je kWh Öl  */
+  const pGasNetto = e.gaspreis - e.co2Preis * F_GAS_KWH;
+  const pOelNetto = e.oelpreis / e.brennwertOel - e.co2Preis * fOelKwh;
+
+  /* --- Strompreis der Wärmepumpe ---------------------------------- */
+  let pWP = e.wpStrompreisManuell > 0 ? e.wpStrompreisManuell
+          : (e.wpZaehlpunkt ? e.strompreis - e.wpTarifAbschlag : e.strompreis);
+  const zusatzZaehler = e.wpZaehlpunkt ? e.zusatzZaehler : 0;
+
+  /* --- Deckungsgrad ----------------------------------------------- */
+  const deckung = !e.pvGenutzt ? 0
+    : (e.deckungManuell > 0 ? e.deckungManuell : deckungsgrad(e.standard, e.flaeche, e.bev));
+  const s = deckung / 100;
+
+  /* --- § 14a EnWG -------------------------------------------------
+     Modul 1: pauschale Reduzierung des Netzentgelts, netto je Jahr.
+     Modul 2: der Arbeitspreis des Netzentgelts sinkt um 60 %; das
+     wirkt auf die tatsächlich bezogene Strommenge, also nur auf den
+     nicht solar gedeckten Teil. */
+  const netzBezugWP = stromWP * (1 - s);
+  /* Steuerbox UND Messsystem-Aufschlag haengen an der Vereinbarung nach
+     § 14a, nicht am gewaehlten Modul — sie treffen Modul 1, 2 und 3
+     gleichermassen. Herleitung im Kommentar bei messMehrkosten. */
+  const mess = STEUERBOX + e.messMehrkosten;
+  const modul1 = e.modul1Netto * 1.19 - mess;
+  const modul2 = netzBezugWP * NETZENTGELT_SLP * MODUL2_REDUKTION / 100 * 1.19
+               - mess;
+  /* Modul 3 kommt zu Modul 1 hinzu; abgezogen werden die Messmehrkosten.
+     ZWEI Seiten, nicht eine: Was ins Niedriglastfenster wandert, wird
+     billiger; was im Hochlastfenster liegen bleibt, wird teurer. Ohne den
+     zweiten Term koennte Modul 3 nie negativ ausgehen — real kann es das. */
+  /* ★ Der Quartalsfaktor ist BAUTEILWEISE zu bilden: Heizwaerme folgt den
+     Heizgradtagen (84,5 % in Q1+Q4), Warmwasser laeuft gleichmaessig durch
+     (182 von 365 Tagen = 49,9 %). Ein gemeinsamer Pauschalfaktor waere
+     genau der Fehler, den die getrennte Warmwasserrechnung vermeidet.
+     Beide Seiten von Modul 3 tragen ihn — die Gewinnseite wie die
+     Verlustseite. Wer nur eine der beiden damit versieht, verschiebt den
+     Vergleich. */
+  const q14 = Q > 0 ? (qHeiz * Q14_HEIZUNG + qWW * Q14_TAGE) / Q : Q14_HEIZUNG;
+  const modul3Gewinn = netzBezugWP * q14 * NETZENTGELT_SLP
+    * (e.modul3Anteil / 100) * (e.modul3Rabatt / 100) * 1.19;
+  const modul3Verlust = netzBezugWP * q14 * MODUL3_AUFSCHLAG
+    * (e.modul3Hochlast / 100) * 1.19;
+  /* modul1 traegt die Messkosten bereits — Modul 3 erbt sie darueber und
+     darf sie nicht ein zweites Mal abziehen. */
+  const modul3 = modul1 + modul3Gewinn - modul3Verlust;
+  /* Altregelung vor 2024 — nur mit separatem Zählpunkt.
+
+     ★ NICHT DOPPELT ZÄHLEN: Der Wärmepumpentarif am eigenen Zählpunkt gibt
+     den Netzentgeltvorteil bereits weiter — genau das ist der Abschlag
+     wpTarifAbschlag (voreingestellt 6 ct/kWh; die Obergrenze des reinen
+     Netzentgeltvorteils sind 8,06 ct/kWh brutto, siehe den Kommentar bei
+     wpTarifAbschlag). Wer beides ansetzt, schreibt dieselbe Ersparnis
+     zweimal gut. Das gilt für die Altregelung UND für die Module 1 bis 3:
+     Nach dem EWR-Netz-Preisblatt 2026 sind Modul 1 und Modul 2 Alternativen,
+     und ein Wärmestromtarif am eigenen Zählpunkt beruht auf Modul 2 bzw. der
+     Altregelung. Mit eigenem Zählpunkt wird deshalb von jeder Variante nur
+     der Teil angerechnet, der über den bereits gewährten Tarifabschlag
+     hinausgeht — bei den voreingestellten 6 ct und 4.700 kWh Netzbezug
+     bleiben von der Altregelung rund 25 €/a, von Modul 1 nichts (14.09.2026). */
+  const altVoll = netzBezugWP * (NETZENTGELT_SLP - ALTREGELUNG_AP) * 1.19;
+  const schonImTarif = e.wpZaehlpunkt
+    ? netzBezugWP * e.wpTarifAbschlag : 0;
+  const altSchonImTarif = schonImTarif;
+  const altregelung = e.wpZaehlpunkt
+    ? Math.max(0, altVoll - schonImTarif) : 0;
+  const modul1Eff = e.wpZaehlpunkt ? Math.max(0, modul1 - schonImTarif) : modul1;
+  const modul2Eff = e.wpZaehlpunkt ? Math.max(0, modul2 - schonImTarif) : modul2;
+  const modul3Eff = e.wpZaehlpunkt ? Math.max(0, modul3 - schonImTarif) : modul3;
+  let ersparnis14a = 0;
+  if (e.paragraf14a === "Altregelung") ersparnis14a = altregelung;
+  else if (e.paragraf14a === "Modul 1") ersparnis14a = modul1Eff;
+  else if (e.paragraf14a === "Modul 2") ersparnis14a = modul2Eff;
+  else if (e.paragraf14a === "Modul 1 + 3") ersparnis14a = modul3Eff;
+
+  /* --- Jahresreihe ------------------------------------------------ */
+  const reihe = [];
+  for (let n = 1; n <= JAHRE; n++) {
+    const jahr = STARTJAHR + n - 1;
+    const fFossil = Math.pow(1 + e.steigerungFossil / 100, n - 1);
+    const fStrom  = Math.pow(1 + e.steigerungStrom  / 100, n - 1);
+    const co2 = co2Preis(jahr, e);
+
+    const brennGas = endGas * pGasNetto * fFossil;
+    const brennOel = endOelKwh * pOelNetto * fFossil;
+    const co2Gas = endGas * F_GAS_KWH * co2;
+    const co2Oel = endOelKwh * fOelKwh * co2;
+
+    const stromKosten = stromWP * ((1 - s) * pWP * fStrom + s * e.lcoe);
+
+    const kostenGas = brennGas + co2Gas + e.gasGrundpreis + e.wartungGas
+                    + e.ruecklageFossil / 100 * investGas;
+    const kostenOel = brennOel + co2Oel + e.wartungOel
+                    + e.ruecklageFossil / 100 * investOel;
+    const kostenWP  = stromKosten + zusatzZaehler + e.wartungWP
+                    + e.ruecklageWP / 100 * investWPNetto - ersparnis14a * fStrom;
+
+    reihe.push({
+      jahr, n, co2,
+      pGas: pGasNetto * fFossil, pOel: pOelNetto * fFossil * e.brennwertOel,
+      pStrom: pWP * fStrom,
+      kostenGas, kostenOel, kostenWP,
+      sparGas: kostenGas - kostenWP, sparOel: kostenOel - kostenWP
+    });
+  }
+
+  /* --- Zahlungsreihen --------------------------------------------- */
+  const cf0Gas = -(investWPNetto - investGas);
+  const cf0Oel = -(investWPNetto - investOel);
+
+  const kennzahlen = (jahre) => {
+    const gas = reihe.slice(0, jahre).map(r => r.sparGas);
+    const oel = reihe.slice(0, jahre).map(r => r.sparOel);
+    return {
+      jahre,
+      gas: kennzahl(cf0Gas, gas, e.zins),
+      oel: kennzahl(cf0Oel, oel, e.zins),
+      /* Wärmegestehungskosten: Barwert aller Kosten je Barwert der Wärme */
+      wgkGas: wgk(investGas, reihe.slice(0, jahre).map(r => r.kostenGas), Q, e.zins),
+      wgkOel: wgk(investOel, reihe.slice(0, jahre).map(r => r.kostenOel), Q, e.zins),
+      wgkWP:  wgk(investWPNetto, reihe.slice(0, jahre).map(r => r.kostenWP), Q, e.zins),
+      co2Gas: endGas * F_GAS_KWH * jahre,
+      co2Oel: endOelKwh * fOelKwh * jahre
+    };
+  };
+
+  return {
+    /* Gebäude */
+    Q, qHeiz, qWW, q14, spez, heizlast, vbh, deckung,
+    bedarfAusStrom: e.stromWPManuell > 0 && e.waermebedarfManuell <= 0,
+    /* Mengen */
+    endGas, gasM3, endOelKwh, endOelLiter, stromWP,
+    /* Investition */
+    investWP, investGas, investOel, investWPNetto,
+    kbWP, kbGas, kbOel, fmWP, fmGas, fmOel,
+    formelAusserhalb: heizlast < FORMEL_MIN_KW, formelErsetzt,
+    /* Förderung */
+    foerderung: f,
+    /* Preise */
+    pGasNetto, pOelNetto, pWP, deckungAnteil: s,
+    modul1: modul1Eff, modul2: modul2Eff, modul3: modul3Eff, modul3Gewinn, modul3Verlust, altregelung,
+    ersparnis14a, zusatzZaehler,
+    /* Reihen */
+    reihe, cf0Gas, cf0Oel,
+    k20: kennzahlen(20), k30: kennzahlen(30)
+  };
+}
+
+/* Barwert, interner Zinsfuß, Amortisation und Summe einer Reihe */
+function kennzahl(cf0, reihe, zinsProzent) {
+  const i = zinsProzent / 100;
+  let npv = cf0;
+  for (let n = 0; n < reihe.length; n++) npv += reihe[n] / Math.pow(1 + i, n + 1);
+
+  const summe = cf0 + reihe.reduce((a, b) => a + b, 0);
+
+  /* Amortisation: erster Vorzeichenwechsel der kumulierten Reihe,
+     innerhalb des Jahres linear interpoliert. */
+  let amort = null, kum = cf0;
+  if (kum >= 0) amort = 0;
+  else {
+    for (let n = 0; n < reihe.length; n++) {
+      const vor = kum; kum += reihe[n];
+      if (kum >= 0) { amort = n + (reihe[n] === 0 ? 0 : -vor / reihe[n]); break; }
+    }
+  }
+
+  return { npv, irr: irr(cf0, reihe), summe, amort };
+}
+
+/* Interner Zinsfuß über Intervallhalbierung – robuster als Newton
+   und ohne Startwertprobleme. Gibt null zurück, wenn kein Vorzeichen-
+   wechsel vorliegt (dann ist die Wärmepumpe schon ab der Investition
+   günstiger, oder sie wird es nie). */
+function irr(cf0, reihe) {
+  const bar = (r) => {
+    let v = cf0;
+    for (let n = 0; n < reihe.length; n++) v += reihe[n] / Math.pow(1 + r, n + 1);
+    return v;
+  };
+  if (cf0 >= 0) return null;
+  let lo = -0.9, hi = 5;
+  if (bar(lo) * bar(hi) > 0) return null;
+  for (let k = 0; k < 200; k++) {
+    const m = (lo + hi) / 2;
+    if (bar(lo) * bar(m) <= 0) hi = m; else lo = m;
+  }
+  return (lo + hi) / 2;
+}
+
+/* Wärmegestehungskosten in €/kWh: Barwert von Investition und
+   Betriebskosten, geteilt durch den Barwert der gelieferten Wärme. */
+function wgk(invest, kosten, waermeProJahr, zinsProzent) {
+  const i = zinsProzent / 100;
+  let bk = invest, bw = 0;
+  for (let n = 0; n < kosten.length; n++) {
+    bk += kosten[n] / Math.pow(1 + i, n + 1);
+    bw += waermeProJahr / Math.pow(1 + i, n + 1);
+  }
+  return bw > 0 ? bk / bw : 0;
+}
+
+/* ---------------------------------------------------------------------
+   9. Szenarien und Sensitivitäten
+--------------------------------------------------------------------- */
+const SZENARIEN = [
+  { id: "basis",      aend: [] },
+  { id: "gasHoch",    aend: [{ feld: "gaspreis",   faktor: 1.5 }] },
+  { id: "gasTief",    aend: [{ feld: "gaspreis",   faktor: 0.7 }] },
+  { id: "oelHoch",    aend: [{ feld: "oelpreis",   faktor: 1.4 }] },
+  { id: "oelTief",    aend: [{ feld: "oelpreis",   faktor: 0.75 }] },
+  { id: "stromHoch",  aend: [{ feld: "strompreis", faktor: 1.4 }] },
+  { id: "stromTief",  aend: [{ feld: "strompreis", faktor: 0.75 }] },
+  { id: "co2Hoch",    aend: [{ feld: "co2Faktor",  faktor: 2 }] },
+  { id: "co2Tief",    aend: [{ feld: "co2Faktor",  faktor: 0.5 }] },
+  { id: "jazHoch",    aend: [{ feld: "jaz",        wert: 4.5 }] },
+  { id: "jazTief",    aend: [{ feld: "jaz",        wert: 2.8 }] },
+  { id: "ohneFoerd",  aend: [{ feld: "foerderungNutzen", wert: false }] },
+  { id: "antragSpaet", aend: [{ feld: "periode",   wert: 3 }] },
+  { id: "unguenstig", aend: [{ feld: "gaspreis",   faktor: 0.7 },
+                             { feld: "oelpreis",   faktor: 0.85 },
+                             { feld: "strompreis", faktor: 1.4 },
+                             { feld: "jaz",        wert: 2.8 },
+                             { feld: "co2Faktor",  faktor: 0.5 }] },
+  { id: "guenstig",   aend: [{ feld: "gaspreis",   faktor: 1.6 },
+                             { feld: "oelpreis",   faktor: 1.3 },
+                             { feld: "strompreis", faktor: 0.75 },
+                             { feld: "jaz",        wert: 4.5 },
+                             { feld: "co2Faktor",  faktor: 2 }] }
+];
+
+function szenarioWerte(basis, sz) {
+  const e = { ...basis };
+  for (const a of sz.aend) {
+    e[a.feld] = a.faktor !== undefined ? basis[a.feld] * a.faktor : a.wert;
+  }
+  return e;
+}
+
+function szenario(basis, sz) {
+  return rechne(szenarioWerte(basis, sz));
+}
+
+/* ---------------------------------------------------------------------
+   Anzeigename eines Szenarios: keine Prozent-Chiffren, sondern die
+   konkreten Zahlen der Variante neben denen der aktuellen Auslegung.
+   "Gaspreis 17,3 statt 11,5 ct/kWh" sagt jedem etwas –
+   "Gaspreis hoch (+50 %)" sagte niemandem etwas.
+--------------------------------------------------------------------- */
+function szenarioName(sz, basis) {
+  const v = szenarioWerte(basis, sz);
+  const kurz = {
+    gaspreis:   (a, b) => "Gas " + nf1.format(a * 100) + " statt " +
+                          nf1.format(b * 100) + " ct/kWh",
+    oelpreis:   (a, b) => "Heizöl " + nf2.format(a) + " statt " +
+                          nf2.format(b) + " €/l",
+    strompreis: (a, b) => "Strom " + nf1.format(a * 100) + " statt " +
+                          nf1.format(b * 100) + " ct/kWh",
+    jaz:        (a, b) => "Jahresarbeitszahl " + nf1.format(a) + " statt " +
+                          nf1.format(b),
+    co2Faktor:  () => "CO₂ 2035: " + nf0.format(co2Preis(2035, v)) +
+                      " statt " + nf0.format(co2Preis(2035, basis)) + " €/t",
+  };
+  switch (sz.id) {
+    case "basis":
+      return "Basis – aktuelle Eingaben";
+    case "ohneFoerd": {
+      const f0 = rechne(basis).foerderung;
+      return "Ohne Förderung – Zuschuss 0 statt " + eur(f0.zuschuss);
+    }
+    case "antragSpaet": {
+      const f0 = rechne(basis).foerderung;
+      const f1 = rechne(v).foerderung;
+      return "Antrag " + f1.periode.label + " – Fördersatz " +
+             nf0.format(f1.satz) + " statt " + nf0.format(f0.satz) + " %";
+    }
+    case "unguenstig":
+    case "guenstig": {
+      /* Im Kombi-Namen nur die Variantenwerte – die Ausgangswerte stehen
+         in der Basiszeile darüber. */
+      const einzeln = {
+        gaspreis:   () => "Gas " + nf1.format(v.gaspreis * 100) + " ct",
+        oelpreis:   () => "Heizöl " + nf2.format(v.oelpreis) + " €/l",
+        strompreis: () => "Strom " + nf1.format(v.strompreis * 100) + " ct",
+        jaz:        () => "JAZ " + nf1.format(v.jaz),
+        co2Faktor:  () => "CO₂ 2035: " + nf0.format(co2Preis(2035, v)) + " €/t",
+      };
+      return (sz.id === "unguenstig" ? "Ungünstig für die Wärmepumpe: "
+                                     : "Günstig für die Wärmepumpe: ")
+             + sz.aend.map(a => einzeln[a.feld]()).join(" · ");
+    }
+    default: {
+      const a = sz.aend[0];
+      return kurz[a.feld](v[a.feld], basis[a.feld]);
+    }
+  }
+}
+
+/* Die Reihen enthalten jeweils den Vorgabewert (fett markiert in der
+   Anzeige), damit die eigene Auslegung in der Tabelle wiederzufinden ist. */
+const SENSITIVITAETEN = [
+  { feld: "jaz",        name: "Jahresarbeitszahl",       einheit: "",      werte: [2.5, 2.8, 3.1, 3.4, 3.8, 4.2, 4.6, 5.0] },
+  { feld: "gaspreis",   name: "Gaspreis",                einheit: "€/kWh", werte: [0.08, 0.095, 0.115, 0.13, 0.145, 0.16, 0.18, 0.20] },
+  { feld: "oelpreis",   name: "Ölpreis",                 einheit: "€/l",   werte: [0.90, 1.05, 1.20, 1.35, 1.50, 1.65, 1.80, 2.00] },
+  { feld: "strompreis", name: "Haushaltsstrompreis",     einheit: "€/kWh", werte: [0.24, 0.27, 0.30, 0.33, 0.36, 0.39, 0.43, 0.47] },
+  { feld: "co2Faktor",  name: "CO₂-Preis (Faktor)",      einheit: "×",     werte: [0.25, 0.5, 0.75, 1.0, 1.5, 2.0, 2.5, 3.0] },
+  { feld: "zins",       name: "Kalkulationszins",        einheit: "%",     werte: [0, 1, 2, 3, 4, 5, 6, 8] }
+];
+
+/* ---------------------------------------------------------------------
+   10. Anzeigehilfen
+--------------------------------------------------------------------- */
+const nf0 = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 });
+const nf1 = new Intl.NumberFormat("de-DE", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const nf2 = new Intl.NumberFormat("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const nf3 = new Intl.NumberFormat("de-DE", { minimumFractionDigits: 3, maximumFractionDigits: 3 });
+
+function eur(n)  { return nf0.format(Math.round(n)) + " €"; }
+function prz(n)  { return nf1.format(n) + " %"; }
+function jahre(a) {
+  if (a === null || a === undefined) return "über 30 Jahre";
+  if (a <= 0) return "sofort";
+  const j = Math.floor(a + 1e-9);
+  const m = Math.round((a - j) * 12);
+  const jj = m === 12 ? j + 1 : j, mm = m === 12 ? 0 : m;
+  return jj + " Jahre, " + mm + " Monate";
+}
+
+/* =====================================================================
+   Bedienung: Eingaben einlesen, rechnen, Ergebnis darstellen.
+   Die Rechenlogik steht vollständig oben und stammt wortgleich aus
+   _arbeit/modell.js – hier wird nur angezeigt.
+   ===================================================================== */
+const $ = (s, w) => (w || document).querySelector(s);
+const $$ = (s, w) => Array.from((w || document).querySelectorAll(s));
+
+function lies() {
+  const e = Object.assign({}, VORGABE);
+  $$("[data-feld]").forEach(el => {
+    const k = el.dataset.feld;
+    if (el.dataset.art === "jn") { e[k] = el.value === "ja"; return; }
+    if (el.tagName === "SELECT") {
+      if (k === "periode") e[k] = PERIODEN.findIndex(p => p.label === el.value);
+      else e[k] = el.value;
+      return;
+    }
+    const v = parseFloat(String(el.value).replace(",", "."));
+    e[k] = isNaN(v) ? 0 : v;
+  });
+  return e;
+}
+
+function jahreText(a) {
+  if (a === null || a === undefined) return "nicht in der Laufzeit";
+  if (a <= 0) return "sofort";
+  const m = Math.round(a * 12), j = Math.floor(m / 12), r = m % 12;
+  return j + (j === 1 ? " Jahr" : " Jahre") + ", " + r + (r === 1 ? " Monat" : " Monate");
+}
+
+function zinsText(i) {
+  return i === null ? "ab der Investition günstiger" : nf1.format(i * 100) + " %";
+}
+
+function zeile(k, v, klasse) {
+  return '<div class="row ' + (klasse || "") + '"><span class="k">' + k +
+         '</span><span class="v">' + v + "</span></div>";
+}
+
+/* --------------------------------------------------------------------
+   Liniendiagramm als SVG. Bewusst schlicht: Achsen, Gitter, Linien.
+   Eine Textalternative steht als Tabelle darunter.
+-------------------------------------------------------------------- */
+function textbreite(text, groesse) {
+  const c = textbreite.leinwand ||
+            (textbreite.leinwand = document.createElement("canvas"));
+  const ctx = c.getContext("2d");
+  ctx.font = groesse + "px " + getComputedStyle($("#chart1")).fontFamily;
+  return ctx.measureText(text).width;
+}
+
+function diagramm(reihen, jahre, titel, beschreibung) {
+  /* Auf schmalen Schirmen würde die 720er-Zeichenfläche so stark
+     verkleinert, dass die Achsenbeschriftung unlesbar wird. Deshalb
+     wird dort eine schmalere Fläche mit größerer Schrift und weniger
+     Jahresmarken gezeichnet; ein Größenwechsel zeichnet neu. */
+  const schmal = window.innerWidth < 480;
+  const B = schmal ? 400 : 720, H = schmal ? 270 : 300,
+        O = 14, U = schmal ? 38 : 34,
+        schrift = schmal ? 15 : 11, marke = schmal ? 10 : 5;
+  const alle = reihen.flatMap(r => r.werte);
+  let min = Math.min(0, ...alle), max = Math.max(...alle);
+  const spanne = max - min || 1;
+  const schritt = Math.pow(10, Math.floor(Math.log10(spanne / 4)));
+  const stufe = [1, 2, 2.5, 5, 10].map(f => f * schritt).find(f => spanne / f <= 5) || schritt;
+  min = Math.floor(min / stufe) * stufe;
+  max = Math.ceil(max / stufe) * stufe;
+
+  /* ★ Die Ränder links und rechts richten sich nach der Beschriftung.
+     Links stehen die Beträge rechtsbündig vor der Achse, rechts ragt die
+     letzte Jahreszahl zur Hälfte über das letzte Jahr hinaus. Beides wird
+     mit der Schrift der Seite gemessen: Auf schmalen Schirmen ist etwa
+     „125.000" in der größeren Schrift breiter als ein fester Rand, und was
+     über den Bildrand hinausragt, schneidet der Browser still ab. */
+  const RAND = 4, LUFT = 8;
+  const betraege = [];
+  for (let w = min; w <= max + 1e-9; w += stufe) betraege.push(w);
+  const L = Math.max(schmal ? 52 : 62, Math.ceil(Math.max(...betraege.map(w =>
+              textbreite(nf0.format(Math.round(w)), schrift)))) + LUFT + RAND);
+  const R = Math.max(14, Math.ceil(textbreite(String(jahre[jahre.length - 1]),
+              schrift) / 2) + RAND);
+  const x = i => L + i * (B - L - R) / (jahre.length - 1);
+  const y = w => O + (max - w) * (H - O - U) / (max - min);
+
+  let s = '<svg class="graf" viewBox="0 0 ' + B + " " + H + '" role="img" ' +
+          'aria-label="' + beschreibung + '">';
+  s += "<title>" + titel + "</title>";
+  betraege.forEach(w => {
+    s += '<line x1="' + L + '" y1="' + y(w).toFixed(1) + '" x2="' + (B - R) +
+         '" y2="' + y(w).toFixed(1) + '" stroke="#D7E3DC" stroke-width="1"/>';
+    s += '<text x="' + (L - LUFT) + '" y="' + (y(w) + 4).toFixed(1) +
+         '" text-anchor="end" font-size="' + schrift + '" fill="#4E635C">' +
+         nf0.format(Math.round(w)) + "</text>";
+  });
+  jahre.forEach((j, i) => {
+    if (i % marke !== 0 && i !== jahre.length - 1) return;
+    if (schmal && i !== 0 && i !== jahre.length - 1 && jahre.length - 1 - i < 4) return;
+    s += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 12) +
+         '" text-anchor="middle" font-size="' + schrift + '" fill="#4E635C">' + j + "</text>";
+  });
+  reihen.forEach(r => {
+    const d = r.werte.map((w, i) => (i ? "L" : "M") + x(i).toFixed(1) + " " +
+                                    y(w).toFixed(1)).join(" ");
+    s += '<path d="' + d + '" fill="none" stroke="' + r.farbe +
+         '" stroke-width="2.5" stroke-linejoin="round"' +
+         (r.strich ? ' stroke-dasharray="' + r.strich + '"' : "") + "/>";
+  });
+  s += '<line x1="' + L + '" y1="' + y(0).toFixed(1) + '" x2="' + (B - R) +
+       '" y2="' + y(0).toFixed(1) + '" stroke="#182722" stroke-width="1.2"/>';
+  return s + "</svg>";
+}
+
+/* Die Legende zeigt Farbe UND Strichmuster - sonst ist sie im
+   Schwarzweissdruck und bei Farbsehschwaeche wertlos. */
+function legende(reihen) {
+  return '<div class="legende">' + reihen.map(r =>
+    '<span><svg width="26" height="10" aria-hidden="true" ' +
+    'style="vertical-align:-1px;margin-right:.35rem"><line x1="1" y1="5" x2="25" ' +
+    'y2="5" stroke="' + r.farbe + '" stroke-width="3"' +
+    (r.strich ? ' stroke-dasharray="' + r.strich + '"' : "") + "/></svg>" +
+    r.name + "</span>").join("") + "</div>";
+}
+
+/* -------------------------------------------------------------------- */
+function zeichne() {
+  const e = lies();
+  const r = rechne(e);
+  const f = r.foerderung;
+
+  /* --- Kopfergebnis --------------------------------------------------- */
+  const g20 = r.k20.gas, o20 = r.k20.oel;
+  const besser = g20.npv > 0;
+  $("#urteil").className = "bignum" + (besser ? "" : " minus");
+  $("#urteil").textContent = besser ? "Die Wärmepumpe ist günstiger"
+                                    : "Die Gasheizung ist günstiger";
+  $("#urteilsub").textContent =
+    "Über 20 Jahre, verglichen mit einer neuen Gas-Brennwertheizung. " +
+    "Barwert " + eur(g20.npv) + " · Amortisation " + jahreText(g20.amort) + ".";
+
+  $("#karten").innerHTML = [
+    karte("Barwert gegen Gas", eur(g20.npv), "über 20 Jahre, abgezinst mit " +
+          nf1.format(e.zins) + " %", g20.npv < 0),
+    karte("Barwert gegen Öl", eur(o20.npv), "über 20 Jahre, abgezinst mit " +
+          nf1.format(e.zins) + " %", o20.npv < 0),
+    karte("Amortisation gegen Gas", jahreText(g20.amort),
+          "bis der Mehrpreis eingespielt ist", g20.amort === null),
+    karte("Wärmegestehungskosten", nf3.format(r.k20.wgkWP) + " €/kWh",
+          "Wärmepumpe · Gas " + nf3.format(r.k20.wgkGas) + " · Öl " +
+          nf3.format(r.k20.wgkOel), false),
+  ].join("");
+
+  /* --- Kennzahlentabelle ---------------------------------------------- */
+  const zeilen = [
+    ["Ergebnis", k => k.npv > 0 ? '<span class="pos">Wärmepumpe günstiger</span>'
+                                : '<span class="neg">fossil günstiger</span>'],
+    ["Amortisation", k => jahreText(k.amort)],
+    ["Barwert (Kapitalwert)", k => eur(k.npv)],
+    ["Interner Zinsfuß", k => zinsText(k.irr)],
+    ["Summe über die Laufzeit", k => eur(k.summe)],
+  ];
+  let t = "";
+  [[20, r.k20], [30, r.k30]].forEach(([n, k]) => {
+    t += '<tr class="hl"><th scope="rowgroup" colspan="3">Über ' + n +
+         " Jahre</th></tr>";
+    zeilen.forEach(([name, fn]) => {
+      t += "<tr><th scope=\"row\">" + name + '</th><td class="num">' +
+           fn(k.gas) + '</td><td class="num">' + fn(k.oel) + "</td></tr>";
+    });
+    t += '<tr><th scope="row">Wärmegestehungskosten Wärmepumpe</th>' +
+         '<td class="num" colspan="2">' + nf3.format(k.wgkWP) + " €/kWh</td></tr>";
+    t += '<tr><th scope="row">Wärmegestehungskosten fossil</th>' +
+         '<td class="num">' + nf3.format(k.wgkGas) + ' €/kWh</td><td class="num">' +
+         nf3.format(k.wgkOel) + " €/kWh</td></tr>";
+  });
+  $("#kennzahlen tbody").innerHTML = t;
+
+  /* --- Investition und Förderung -------------------------------------- */
+  const bem = [];
+  if (f.ueberDeckel > 0) {
+    bem.push('<div class="note"><span class="tag">Höchstbetrag erreicht.</span> ' +
+      eur(f.ueberDeckel) + " der Investition liegen über den förderfähigen " +
+      eur(f.periode.cap) + " und werden nicht bezuschusst.</div>");
+  }
+  if (f.gekappt > 0) {
+    bem.push('<div class="note"><span class="tag">Höchstsatz erreicht.</span> ' +
+      "Rechnerisch ergäben die Boni " + nf0.format(f.roh) + " %; gedeckelt sind " +
+      nf0.format(f.maxSatz) + " %.</div>");
+  }
+  if (r.formelErsetzt) {
+    bem.push('<div class="note"><span class="tag">Preistabelle verwendet.</span> ' +
+      "Bei " + nf1.format(r.heizlast) + " kW Heizlast ist die Marktmittel-Kurve " +
+      "nicht belegt. Der Rechner verwendet automatisch die Preistabelle des " +
+      "BNS (" + eur(r.investWP) + ").</div>");
+  }
+  if (e.wpZaehlpunkt) {
+    const vorteil = r.stromWP * (1 - r.deckungAnteil) * e.wpTarifAbschlag - e.zusatzZaehler;
+    bem.push('<div class="note ' + (vorteil > 0 ? "good" : "stop") +
+      '"><span class="tag">Eigener Zählpunkt.</span> Der günstigere Arbeitspreis ' +
+      "bringt " + eur(r.stromWP * (1 - r.deckungAnteil) * e.wpTarifAbschlag) +
+      " im Jahr, die Zusatzkosten nehmen " + eur(e.zusatzZaehler) + " davon weg – " +
+      (vorteil > 0 ? "unterm Strich " + eur(vorteil) + " Vorteil."
+                   : "unterm Strich " + eur(-vorteil) + " Nachteil.") + "</div>");
+  }
+  if (e.paragraf14a !== "nicht genutzt") {
+    const varianten14a = [["Modul 1", r.modul1], ["Modul 2", r.modul2],
+                          ["Modul 1 + 3", r.modul3]];
+    if (e.wpZaehlpunkt) varianten14a.push(["Altregelung", r.altregelung]);
+    varianten14a.sort((a, b) => b[1] - a[1]);
+    if (varianten14a[0][0] !== e.paragraf14a) {
+      bem.push('<div class="note"><span class="tag">' + varianten14a[0][0] +
+        " wäre günstiger.</span> Modul 1 bringt " + eur(r.modul1) +
+        " im Jahr, Modul 2 " + eur(r.modul2) + ", Modul 1 + 3 " + eur(r.modul3) +
+        (e.wpZaehlpunkt ? ", die Altregelung " + eur(r.altregelung) : "") +
+        ".</div>");
+    }
+    if (e.paragraf14a === "Altregelung") {
+      bem.push('<div class="note"><span class="tag">Die Altregelung endet ' +
+        "am 31.12.2028.</span> Sie zahlt 2,97 statt 8,46 ct Netzentgelt je " +
+        "Kilowattstunde und ist damit je kWh günstiger als Modul 2 " +
+        "(3,38 ct). Ab 01.01.2029 gilt das neue System; ein freiwilliger " +
+        "Wechsel ist jederzeit möglich, aber nicht umkehrbar. Vor einem " +
+        "Wechsel bedenken: Modul 3 gilt für die ganze Marktlokation, also " +
+        "auch für den Haushaltsstrom — im Hochlastfenster 17:15 bis 19:15 " +
+        "Uhr kostet dort jede Kilowattstunde 10 Cent brutto mehr." +
+        "</div>");
+    }
+    if (!e.wpZaehlpunkt && e.paragraf14a === "Altregelung") {
+      bem.push('<div class="note stop"><span class="tag">Die Altregelung ' +
+        "setzt einen separaten Zählpunkt voraus.</span> Ohne eigenen " +
+        "Zählpunkt für die Wärmepumpe greift sie nicht — dann bleiben nur " +
+        "die neuen Module.</div>");
+    }
+    if (e.paragraf14a === "Modul 2" && !e.wpZaehlpunkt) {
+      bem.push('<div class="note stop"><span class="tag">Modul 2 braucht eine ' +
+        "getrennte Messung.</span> Die 60-Prozent-Reduzierung gilt nur für den " +
+        "separat gemessenen Verbrauch der Wärmepumpe – ohne eigenen Zählpunkt " +
+        "oder Unterzähler ist dieser Weg nicht umsetzbar.</div>");
+    }
+  }
+  $("#bemerkungen").innerHTML = bem.join("");
+
+  $("#invest").innerHTML =
+    zeile("Wärmepumpe (Rechnungsbetrag)", eur(r.investWP)) +
+    zeile("davon förderfähig", eur(f.foerderfaehig)) +
+    zeile("Fördersatz", nf0.format(f.satz) + " %") +
+    zeile("&nbsp;&nbsp;Grundförderung", nf0.format(f.grund) + " %") +
+    (f.inc ? zeile("&nbsp;&nbsp;Einkommensbonus", nf0.format(f.inc) + " %") : "") +
+    (f.klima ? zeile("&nbsp;&nbsp;Klimageschwindigkeitsbonus", nf0.format(f.klima) + " %") : "") +
+    zeile("Zuschuss", "− " + eur(f.zuschuss)) +
+    zeile("Wärmepumpe nach Förderung", eur(r.investWPNetto), "total") +
+    (r.heizlast >= 3 && e.investWPManuell <= 0 && !r.formelErsetzt
+      ? zeile(e.kostenbasis === "Formel"
+                ? "Zum Vergleich: BNS-Preistabelle"
+                : "Zum Vergleich: Marktmittel (Kostenkurve)",
+              eur(e.kostenbasis === "Formel" ? r.kbWP : r.fmWP))
+      : "") +
+    zeile("Gasheizung zum Vergleich", eur(r.investGas)) +
+    zeile("Ölheizung zum Vergleich", eur(r.investOel)) +
+    zeile("Mehrpreis gegenüber Gas", eur(r.investWPNetto - r.investGas)) +
+    zeile("Mehrpreis gegenüber Öl", eur(r.investWPNetto - r.investOel));
+
+  $("#energie").innerHTML =
+    zeile("Nutzwärmebedarf", nf0.format(r.Q) + " kWh/a") +
+    zeile("Heizlast (Richtwert)", nf1.format(r.heizlast) + " kW") +
+    zeile("Erdgas", nf0.format(r.endGas) + " kWh/a · " + nf0.format(r.gasM3) + " m³") +
+    zeile("Heizöl", nf0.format(r.endOelLiter) + " l/a") +
+    zeile("Strom der Wärmepumpe", nf0.format(r.stromWP) + " kWh/a") +
+    zeile("davon vom eigenen Dach", nf0.format(r.stromWP * r.deckungAnteil) +
+          " kWh/a (" + nf1.format(r.deckung) + " %)") +
+    zeile("CO₂ der Gasheizung", nf1.format(r.endGas * F_GAS_KWH) + " t/a") +
+    zeile("CO₂ der Ölheizung", nf1.format(r.endOelLiter * F_OEL_LITER) + " t/a") +
+    zeile("vermiedenes CO₂ über 20 Jahre", nf0.format(r.endGas * F_GAS_KWH * 20) +
+          " t gegenüber Gas", "total");
+
+  /* --- Diagramme ------------------------------------------------------ */
+  const jahresliste = r.reihe.map(z => z.jahr);
+  const d1 = [
+    { name: "Gasheizung", farbe: "#B4402D", strich: "",
+      werte: r.reihe.map(z => z.kostenGas) },
+    { name: "Ölheizung", farbe: "#E9A13B", strich: "8 4",
+      werte: r.reihe.map(z => z.kostenOel) },
+    { name: "Wärmepumpe", farbe: "#114B41", strich: "",
+      werte: r.reihe.map(z => z.kostenWP) },
+  ];
+  $("#chart1").innerHTML = diagramm(d1, jahresliste, "Jahreskosten im Vergleich",
+    "Liniendiagramm der jährlichen Gesamtkosten von " + jahresliste[0] + " bis " +
+    jahresliste[jahresliste.length - 1] +
+    ". Die Zahlen stehen in der Tabelle darunter.") + legende(d1);
+
+  let kumG = r.cf0Gas, kumO = r.cf0Oel;
+  const kg = [], ko = [];
+  r.reihe.forEach(z => { kumG += z.sparGas; kumO += z.sparOel; kg.push(kumG); ko.push(kumO); });
+  const d2 = [
+    { name: "gegenüber Gas", farbe: "#114B41", strich: "", werte: kg },
+    { name: "gegenüber Öl", farbe: "#2E6FD8", strich: "8 4", werte: ko },
+  ];
+  $("#chart2").innerHTML = diagramm(d2, jahresliste, "Kumulierter Vorteil der Wärmepumpe",
+    "Liniendiagramm des aufsummierten Vorteils. Der Schnittpunkt mit der Nulllinie " +
+    "ist der Zeitpunkt der Amortisation.") + legende(d2);
+
+  /* --- Jahreswerte ---------------------------------------------------- */
+  $("#jahreswerte tbody").innerHTML = r.reihe.map((z, i) =>
+    "<tr><th scope=\"row\">" + z.jahr + '</th><td class="num">' +
+    nf0.format(z.co2) + '</td><td class="num">' + eur(z.kostenGas) +
+    '</td><td class="num">' + eur(z.kostenOel) + '</td><td class="num">' +
+    eur(z.kostenWP) + '</td><td class="num ' + (z.sparGas < 0 ? "neg" : "pos") + '">' +
+    eur(z.sparGas) + '</td><td class="num">' + eur(kg[i]) + "</td></tr>").join("");
+
+  /* --- Szenarien ------------------------------------------------------ */
+  $("#szenarien tbody").innerHTML = SZENARIEN.map(sz => {
+    const x = szenario(e, sz);
+    const a = x.k20.gas.amort;
+    return "<tr" + (sz.id === "basis" ? ' class="hl"' : "") +
+      '><th scope="row">' + szenarioName(sz, e) + '</th><td class="num ' +
+      (x.k20.gas.npv < 0 ? "neg" : "") + '">' + eur(x.k20.gas.npv) +
+      '</td><td class="num">' + (a === null ? "–" : nf1.format(a) + " J.") +
+      '</td><td class="num ' + (x.k20.oel.npv < 0 ? "neg" : "") + '">' +
+      eur(x.k20.oel.npv) + '</td><td class="num">' + eur(x.k20.gas.summe) +
+      "</td></tr>";
+  }).join("");
+
+  /* --- Sensitivität --------------------------------------------------- */
+  $("#sensitivitaet").innerHTML = SENSITIVITAETEN.map(s => {
+    const rows = s.werte.map(w => {
+      const x = rechne(Object.assign({}, e, { [s.feld]: w }));
+      const a = x.k20.gas.amort;
+      const jetzt = Math.abs(e[s.feld] - w) < 1e-9;
+      return "<tr" + (jetzt ? ' class="hl"' : "") + '><th scope="row">' +
+        (typeof w === "number" ? nf2.format(w) : w) + " " + s.einheit +
+        '</th><td class="num ' + (x.k20.gas.npv < 0 ? "neg" : "") + '">' +
+        eur(x.k20.gas.npv) + '</td><td class="num">' +
+        (a === null ? "–" : nf1.format(a) + " J.") + '</td><td class="num ' +
+        (x.k20.oel.npv < 0 ? "neg" : "") + '">' + eur(x.k20.oel.npv) + "</td></tr>";
+    }).join("");
+    return '<div class="tablewrap"><table><caption>' + s.name +
+      (s.einheit ? " in " + s.einheit : "") + " – Kennzahlen über 20 Jahre</caption>" +
+      '<thead><tr><th scope="col">Wert</th><th scope="col" class="num">Barwert gegen Gas' +
+      '</th><th scope="col" class="num">Amortisation</th>' +
+      '<th scope="col" class="num">Barwert gegen Öl</th></tr></thead><tbody>' +
+      rows + "</tbody></table></div>";
+  }).join("");
+
+}
+
+function karte(kopf, gross, erlaeuterung, minus) {
+  return '<div class="card accent"><div class="cap">' + kopf + '</div><div class="big' +
+    (minus ? " minus" : "") + '">' + gross + '</div><div class="exp">' +
+    erlaeuterung + "</div></div>";
+}
+
+$$("[data-feld]").forEach(el => {
+  el.addEventListener("input", zeichne);
+  el.addEventListener("change", zeichne);
+});
+let neuzeichnung = null;
+window.addEventListener("resize", () => {
+  clearTimeout(neuzeichnung);
+  neuzeichnung = setTimeout(zeichne, 250);
+});
+/* Zwei Wege zur selben Erklaerung: darueberstreichen zeigt sie kurz
+   (Klasse schwebt), anklicken haelt sie fest (Klasse open). Der
+   Tastaturfokus verhaelt sich wie der Mauszeiger — sonst kaeme man mit der
+   Tabulatortaste nur ueber den Klick an den Text. */
+$$(".qmark").forEach(b => {
+  const t = document.getElementById(b.getAttribute("aria-controls"));
+  if (!t) return;
+  const zeigen = () => t.classList.add("schwebt");
+  const weg = () => t.classList.remove("schwebt");
+  b.addEventListener("mouseenter", zeigen);
+  b.addEventListener("mouseleave", weg);
+  b.addEventListener("focus", zeigen);
+  b.addEventListener("blur", weg);
+  b.addEventListener("click", () => {
+    const offen = t.classList.toggle("open");
+    b.setAttribute("aria-expanded", offen ? "true" : "false");
+  });
+});
+function werkseinstellung() {
+  $$("[data-feld]").forEach(el => {
+    const k = el.dataset.feld;
+    if (el.dataset.art === "jn") { el.value = VORGABE[k] ? "ja" : "nein"; return; }
+    if (el.tagName === "SELECT") {
+      if (k === "periode") el.value = PERIODEN[VORGABE.periode].label;
+      else el.value = VORGABE[k];
+      return;
+    }
+    el.value = el.placeholder === "automatisch" ? "" : VORGABE[k];
+  });
+}
+/* Der Knopf in der Kopfzeile loest denselben Vorgang aus. Er wird
+   ferngesteuert statt die Routine zu kopieren — so koennen die beiden
+   Knoepfe nicht auseinanderlaufen. */
+/* Drucken: window.print() oeffnet den Druckdialog des Geraets mit dem dort
+   eingestellten Standarddrucker; ohne Dialog drucken koennen Browser nicht.
+   Der Knopf im Kopf loest denselben Vorgang aus wie der im Formular. */
+$("#druckenOben").addEventListener("click", function(){ $("#drucken").click(); });
+/* ---------------------------------------------------------------------
+   Drucken: Was zugeklappt ist, kommt nicht aufs Papier.
+
+   ★ Chromium klappt beim Drucken JEDEN Aufklapp-Block auf — und zwar schon,
+   bevor „beforeprint" ausgeloest wird (gemessen 18.09.2026). Im Druckmoment
+   ist deshalb nicht mehr feststellbar, was der Anwender zugeklappt hatte.
+   Der Zustand wird darum LAUFEND als Klasse mitgefuehrt und im Druckmodus
+   nicht mehr angefasst. Der Erlaeuterungsteil wird vor dem Drucken bewusst
+   aufgeklappt und danach wieder geschlossen.
+   --------------------------------------------------------------------- */
+function zustandMerken(el){{ el.classList.toggle("zugeklappt", !el.open); }}
+/* Nur das Anklicken durch den Anwender aendert die Markierung. Auf das
+   Ereignis „toggle" ist kein Verlass: Chromium loest es beim Drucken selbst
+   aus und wuerde die Markierung damit loeschen. */
+document.addEventListener("click", function(ev){{
+  var s = ev.target && ev.target.closest ? ev.target.closest("summary") : null;
+  if (!s || !s.parentElement) return;
+  var d = s.parentElement;
+  setTimeout(function(){{ zustandMerken(d); }}, 0);
+}}, true);
+document.querySelectorAll("details").forEach(zustandMerken);
+function druckVorbereiten(){{
+  document.querySelectorAll("#erklaerung details").forEach(function(d){{
+    if (!d.open) {{ d.setAttribute("data-zu", "1"); d.open = true; }}
+    d.classList.remove("zugeklappt");
+  }});
+}}
+function druckAufraeumen(){{
+  document.querySelectorAll("details[data-zu]").forEach(function(d){{
+    d.open = false; d.removeAttribute("data-zu"); d.classList.add("zugeklappt");
+  }});
+}}
+window.addEventListener("beforeprint", druckVorbereiten);
+window.addEventListener("afterprint", druckAufraeumen);
+$("#zuruecksetzenOben").addEventListener("click",
+  () => $("#zuruecksetzen").click());
+$("#zuruecksetzen").addEventListener("click", () => {
+  werkseinstellung();
+  try { sessionStorage.removeItem(SPEICHER); } catch (e) {}
+  zeichne();
+});
+$("#drucken").addEventListener("click", () => {
+  $$("details.info").forEach(d => d.open = true);
+  window.print();
+});
+/* Auch beim Druck über Strg+P oder das Browsermenü müssen die
+   Aufklapp-Abschnitte offen sein – die CSS-Druckregel allein kann ein
+   geschlossenes details-Element nicht sichtbar machen. Nach dem Druck
+   werden nur die Abschnitte wieder geschlossen, die vorher zu waren. */
+let vorDruckOffen = null;
+window.addEventListener("beforeprint", () => {
+  vorDruckOffen = $$("details.info").map(d => d.open);
+  $$("details.info").forEach(d => d.open = true);
+});
+window.addEventListener("afterprint", () => {
+  if (vorDruckOffen) $$("details.info").forEach((d, i) => d.open = vorDruckOffen[i]);
+  vorDruckOffen = null;
+});
+/* --- Sitzung: halten oder verwerfen? -----------------------------------
+   Zwei Anforderungen, die zusammengehen muessen:
+     · Beim Neustart darf NICHTS vom Vorgaenger stehen bleiben.
+     · Beim Umschalten auf ein anderes Dokument und zurueck sollen die Werte
+       erhalten bleiben.
+   Unterschieden wird nach der Art des Seitenaufrufs. Der Sitzungsspeicher
+   endet mit dem Browserfenster — ein Neustart hat also zwangslaeufig einen
+   leeren Speicher. Ist er nicht verfuegbar (manche Browser sperren ihn fuer
+   file://-Seiten), bleibt es beim Zurueck-Knopf und der Werkseinstellung. */
+const SPEICHER = "bns-waermepumpe-sitzung";
+
+function zustandSichern() {
+  try {
+    const o = {};
+    document.querySelectorAll("input,select,textarea").forEach(el => {
+      const k = el.id || el.name + "|" + el.value;
+      o[k] = (el.type === "checkbox" || el.type === "radio") ? el.checked : el.value;
+    });
+    sessionStorage.setItem(SPEICHER, JSON.stringify(o));
+  } catch (e) { /* kein Speicher verfuegbar */ }
+}
+
+function zustandLaden() {
+  try {
+    const o = JSON.parse(sessionStorage.getItem(SPEICHER) || "null");
+    if (!o) return false;
+    document.querySelectorAll("input,select,textarea").forEach(el => {
+      const k = el.id || el.name + "|" + el.value;
+      if (!(k in o)) return;
+      if (el.type === "checkbox" || el.type === "radio") el.checked = o[k];
+      else el.value = o[k];
+    });
+    return true;
+  } catch (e) { return false; }
+}
+
+function aufrufart() {
+  try {
+    const n = performance.getEntriesByType("navigation")[0];
+    return n ? n.type : "navigate";
+  } catch (e) { return "navigate"; }
+}
+
+const art = aufrufart();
+let ausSpeicher = false;
+if (art === "reload") {
+  /* Neu geladen: der Beratungsfall „naechster Ratsuchender". */
+  try { sessionStorage.removeItem(SPEICHER); } catch (e) {}
+} else {
+  ausSpeicher = zustandLaden();
+}
+
+/* ★ Der Browser stellt Formularwerte NACH dem Skriptlauf wieder her. Eine
+   Werkseinstellung beim Start wuerde davon ueberschrieben — gemessen am
+   03.09.2026. Die Entscheidung faellt deshalb im pageshow-Handler, der nach
+   der Wiederherstellung laeuft und damit gegen sie gewinnt. */
+function zustandHerstellen() {
+  if (art === "back_forward") return;   /* Zurueck-Knopf: Browser hat recht */
+  if (ausSpeicher) { zustandLaden(); return; }
+  werkseinstellung();
+}
+zustandHerstellen();
+window.addEventListener("pageshow", ev => {
+  /* persisted=true heisst: aus dem Seitenzwischenspeicher zurueck (Zurueck-
+     Knopf). Dann sind es die Werte DESSELBEN Anwenders — nicht anfassen. */
+  if (!ev.persisted) zustandHerstellen();
+  zeichne();
+});
+
+document.querySelectorAll("input,select,textarea").forEach(el => {
+  el.addEventListener("change", zustandSichern);
+  el.addEventListener("input", zustandSichern);
+});
+zeichne();
+zustandSichern();
+
+</script>
+</body>
+</html>
