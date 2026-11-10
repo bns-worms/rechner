@@ -395,7 +395,7 @@ ul.tick li::before{content:"\25B8";position:absolute;left:.35rem;
 <div class="feld">
 <div class="labelrow"><label for="f_wwLiter">Warmwasser je Person und Tag</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_wwLiter" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Warmwasser je Person und Tag">?</button></div>
 <div class="unitwrap">
-<input type="number" inputmode="decimal" id="f_wwLiter" data-feld="wwLiter" value="40" step="0.01">
+<input type="number" inputmode="decimal" id="f_wwLiter" data-feld="wwLiter" value="35" step="0.01">
 <span class="unit" aria-hidden="true">l</span>
 </div>
 </div>
@@ -403,11 +403,11 @@ ul.tick li::before{content:"\25B8";position:absolute;left:.35rem;
 <div class="feld">
 <div class="labelrow"><label for="f_wwSpreizung">Temperaturspreizung Warmwasser</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_wwSpreizung" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Temperaturspreizung Warmwasser">?</button></div>
 <div class="unitwrap">
-<input type="number" inputmode="decimal" id="f_wwSpreizung" data-feld="wwSpreizung" value="40" step="0.01">
+<input type="number" inputmode="decimal" id="f_wwSpreizung" data-feld="wwSpreizung" value="30" step="0.01">
 <span class="unit" aria-hidden="true">K</span>
 </div>
 </div>
-<div class="tipbox" id="tip_wwSpreizung">Zwischen Kalt- und Warmwasser; 40 Kelvin sind etwa 10 auf 50 °C</div>
+<div class="tipbox" id="tip_wwSpreizung">Zwischen Kalt- und Warmwasser; 30 Kelvin sind etwa 10 auf 40 °C</div>
 </div></fieldset>
 <fieldset>
 <legend>B&nbsp;&nbsp;Investitionskosten</legend>
@@ -1562,13 +1562,13 @@ const VORGABE = {
 
      Die Waermemenge folgt aus Menge und Temperaturhub:
        Q = Personen × Liter/Tag × 365 × 1,163 Wh/(l·K) × Spreizung
-     Bei 40 Litern und 40 Kelvin sind das 679 kWh je Person und Jahr.
+     Bei 35 Litern und 30 Kelvin sind das 446 kWh je Person und Jahr.
 
      Nicht enthalten: Speicher- und Zirkulationsverluste. Wer eine
      Zirkulationsleitung hat, traegt die Liter entsprechend hoeher ein. */
   personen: 3,                    /* Personen im Haushalt                     */
-  wwLiter: 40,                    /* Liter Warmwasser je Person und Tag       */
-  wwSpreizung: 40,                /* Kelvin zwischen Kalt- und Warmwasser     */
+  wwLiter: 35,                    /* Liter Warmwasser je Person und Tag       */
+  wwSpreizung: 30,                /* Kelvin zwischen Kalt- und Warmwasser     */
 
   /* B Investition */
   kostenbasis: "Kostenblatt",     /* "Kostenblatt" | "Formel" | "Manuell" */
