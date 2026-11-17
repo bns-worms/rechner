@@ -561,7 +561,7 @@ body.ohne-wp .nur-wp-info{display:block}
    das Logo nicht überdeckt. */
 header.site .wrap{position:relative}
 /* Zwei Knoepfe nebeneinander: Drucken und Zuruecksetzen. */
-.knopfzeile-oben{position:absolute;right:0;bottom:0;display:flex;gap:.5rem;
+.knopfzeile-oben{position:static;display:flex;gap:.5rem;margin:.9rem 0 1.1rem;
   flex-wrap:wrap;justify-content:flex-end}
 .knopf-oben{font:inherit;font-size:.74rem;
   font-weight:700;letter-spacing:.06em;text-transform:uppercase;
@@ -1209,7 +1209,7 @@ header.site .wrap{position:relative}
                Übergangszahlung je Kalenderhalbjahr mit dem Satz, der für fünf
                seiner sechs Monate gilt (Drucksache 21/7867 §§ 48, 49, 53:
                6,20 ct, ab 01.08.2027 halbjährlich −1 %, minus 1 ct; wie das
-               Excel-Tool, BNS_StromVerbrauch_Preise!AD13)
+               BNS-Rechenmodell, BNS_StromVerbrauch_Preise!AD13)
    pvMonate    Dauer der Übergangszahlung in Monaten
    pvGrenzeKw  Leistungsgrenze (kW), bis zu der die Übergangszahlung gilt
    dvBonus     Direktvermarktungsbonus in ct/kWh (nur Anlagen < 25 kW)
@@ -1482,7 +1482,7 @@ const DEFAULTS = {
      0 eintragen, wenn nicht angemeldet wird. Die Entlastung wächst mit dem
      Strompreis NICHT mit: Netzentgelte folgen einer eigenen Entwicklung. */
   entlastung14a: 155,        // €/a brutto
-  marktwert: 4.00,           // ct/kWh Marktwert Solar (Excel-Tool: Szenario Basis); Vermarktungskosten getrennt (EINSPEISUNG)
+  marktwert: 4.00,           // ct/kWh Marktwert Solar (BNS-Rechenmodell: Szenario Basis); Vermarktungskosten getrennt (EINSPEISUNG)
   degradation: 0.5,          // % Modulalterung p. a.
   betrachtung: 20,           // Jahre
 
@@ -1930,7 +1930,7 @@ function berechneEnergie(e) {
 
 /* ---------------------------------------------------------------------
    Einspeiseerlös im Jahr j (1-basiert), in Euro, nach EEG-Regime.
-   Nachgebildet nach dem BNS-Excel-Tool Stand 172 (Blatt BNS_Ergebnisse:
+   Nachgebildet nach dem BNS-Rechenmodell Stand 172 (Blatt BNS_Ergebnisse:
    Rechenblock Spalten AI bis AR, Kontostand P37 bis P66):
    - Negative Börsenpreise: 500 Stunden × PV-Faktor 0,40 = 200 von 950
      Volllaststunden. Ab dem 2. Betriebsjahr gibt es in diesen Stunden

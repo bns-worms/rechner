@@ -219,8 +219,10 @@ ul.tick li::before{content:"\25B8";position:absolute;left:.35rem;
 @media (prefers-reduced-motion:reduce){*{transition:none!important;
   scroll-behavior:auto!important}}
 /* Zwei Knoepfe nebeneinander in der Kopfzeile: Drucken und Zuruecksetzen.
-   Der Druckknopf oeffnet den Druckdialog des Geraets (Ralf, 17.09.2026). */
-.knopfzeile-oben{position:absolute;right:0;bottom:0;display:flex;gap:.5rem;
+   Der Druckknopf oeffnet den Druckdialog des Geraets (Ralf, 17.09.2026).
+   Die Zeile steht im Textfluss unter der Einleitung, rechtsbuendig, damit
+   sie Ueberschrift und Einleitung nie ueberdeckt (Ralf, 09.11.2026). */
+.knopfzeile-oben{position:static;display:flex;gap:.5rem;margin:.9rem 0 1.1rem;
   flex-wrap:wrap;justify-content:flex-end}
 .knopfzeile-oben .knopf-oben{position:static}
 @media (max-width:640px){
@@ -318,7 +320,7 @@ ul.tick li::before{content:"\25B8";position:absolute;left:.35rem;
     <div class="headrow">
       <div class="headtxt">
         <span class="badge">Stand 23. August 2026 · Förderung nach dem GModG 2026</span>
-        <h1>BNS-Wirtschaftlichkeitsrechner Wärmepumpe</h1>
+        <h1>BNS-Wirtschaftlichkeits&shy;rechner Wärme&shy;pumpe</h1>
         <p class="lede">Wärmepumpe gegenüber Gas-Brennwert und Öl-Brennwert. Alle Kosten über 20 und 30 Jahre –
         Investition, Förderung, Brennstoff, Strom, CO₂, Wartung und Rücklagen.</p>
       </div>
@@ -395,7 +397,7 @@ ul.tick li::before{content:"\25B8";position:absolute;left:.35rem;
 <div class="feld">
 <div class="labelrow"><label for="f_wwLiter">Warmwasser je Person und Tag</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_wwLiter" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Warmwasser je Person und Tag">?</button></div>
 <div class="unitwrap">
-<input type="number" inputmode="decimal" id="f_wwLiter" data-feld="wwLiter" value="40" step="0.01">
+<input type="number" inputmode="decimal" id="f_wwLiter" data-feld="wwLiter" value="35" step="0.01">
 <span class="unit" aria-hidden="true">l</span>
 </div>
 </div>
@@ -403,11 +405,11 @@ ul.tick li::before{content:"\25B8";position:absolute;left:.35rem;
 <div class="feld">
 <div class="labelrow"><label for="f_wwSpreizung">Temperaturspreizung Warmwasser</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_wwSpreizung" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Temperaturspreizung Warmwasser">?</button></div>
 <div class="unitwrap">
-<input type="number" inputmode="decimal" id="f_wwSpreizung" data-feld="wwSpreizung" value="40" step="0.01">
+<input type="number" inputmode="decimal" id="f_wwSpreizung" data-feld="wwSpreizung" value="30" step="0.01">
 <span class="unit" aria-hidden="true">K</span>
 </div>
 </div>
-<div class="tipbox" id="tip_wwSpreizung">Zwischen Kalt- und Warmwasser; 40 Kelvin sind etwa 10 auf 50 °C</div>
+<div class="tipbox" id="tip_wwSpreizung">Zwischen Kalt- und Warmwasser; 30 Kelvin sind etwa 10 auf 40 °C</div>
 </div></fieldset>
 <fieldset>
 <legend>B&nbsp;&nbsp;Investitionskosten</legend>
@@ -1562,13 +1564,13 @@ const VORGABE = {
 
      Die Waermemenge folgt aus Menge und Temperaturhub:
        Q = Personen × Liter/Tag × 365 × 1,163 Wh/(l·K) × Spreizung
-     Bei 40 Litern und 40 Kelvin sind das 679 kWh je Person und Jahr.
+     Bei 35 Litern und 30 Kelvin sind das 446 kWh je Person und Jahr.
 
      Nicht enthalten: Speicher- und Zirkulationsverluste. Wer eine
      Zirkulationsleitung hat, traegt die Liter entsprechend hoeher ein. */
   personen: 3,                    /* Personen im Haushalt                     */
-  wwLiter: 40,                    /* Liter Warmwasser je Person und Tag       */
-  wwSpreizung: 40,                /* Kelvin zwischen Kalt- und Warmwasser     */
+  wwLiter: 35,                    /* Liter Warmwasser je Person und Tag       */
+  wwSpreizung: 30,                /* Kelvin zwischen Kalt- und Warmwasser     */
 
   /* B Investition */
   kostenbasis: "Kostenblatt",     /* "Kostenblatt" | "Formel" | "Manuell" */
@@ -1649,7 +1651,7 @@ const VORGABE = {
        Heizungstarif den teureren Energieanteil hat (18,59 statt
        14,597 ct netto).
      Voreingestellt sind 6 ct (BNS-Setzung 14.09.2026, einheitlich mit dem
-     BNS-Tool und den Unterlagen): Ein Wärmestromtarif gibt den Netzentgelt-
+     BNS-Rechenmodell und den Unterlagen): Ein Wärmestromtarif gibt den Netzentgelt-
      vorteil dann zum größeren Teil weiter.
      Der Zusatzbetrag ist der zweite Grundpreis des Heizungstarifs
      (200,49 €/a brutto; der Messstellenbetrieb von 38,37 €/a netto ist
@@ -1674,7 +1676,7 @@ const VORGABE = {
      netto gegen 18,59 ct bei EWR) auf die Wormser Netzentgelte, ergaeben
      sich 7,70 ct und 121 €. Der Energieanteil ist aber nicht fuer Worms
      erhoben — Stand 04.09.2026 zurueckgestellt. */
-  wpTarifAbschlag: 0.06,          /* €/kWh günstiger als Haushaltstarif (BNS-Setzung 14.09.2026, einheitlich mit dem BNS-Tool und den Unterlagen) */
+  wpTarifAbschlag: 0.06,          /* €/kWh günstiger als Haushaltstarif (BNS-Setzung 14.09.2026, einheitlich mit dem BNS-Rechenmodell und den Unterlagen) */
   wpStrompreisManuell: 0,
   zusatzZaehler: 200,             /* €/a zweiter Grundpreis inkl. Messstellenbetrieb */
   paragraf14a: "Modul 1",         /* "Altregelung" | "Modul 1" | "Modul 2" | "Modul 1 + 3" | "nicht genutzt" */
