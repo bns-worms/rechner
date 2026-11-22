@@ -577,6 +577,7 @@ header.site .wrap{position:relative}
 
 </style>
 <style>/* Button „Zurück zur Rechnerübersicht“ (06.11.2026) */.knopf-oben.knopf-zurueck{position:static;display:inline-block;margin:0 0 1.1rem;text-decoration:none;color:#fff}@media print{.knopf-zurueck{display:none!important}}</style>
+<style>/* Verweis Impressum/Datenschutz */@media print{.bns-rechtliches{display:none!important}}</style>
 </head>
 <body class="modus-wppv">
 <a class="skip" href="#zone-input">Direkt zu den Eingabefeldern springen</a>
@@ -689,7 +690,7 @@ header.site .wrap{position:relative}
         <div class="feld feld-ml">
           <label for="periode">Antrag bei der KfW <button type="button" class="qmark" aria-expanded="false" aria-controls="tip-zeit" data-tip="tip-zeit"><span aria-hidden="true">?</span><span class="visually-hidden">Erläuterung zum Antragszeitpunkt</span></button></label>
           <select id="periode"></select>
-          <p class="hint">Immer <b>vor</b> der Auftragserteilung</p>
+          <p class="hint"><b>Vor</b> Baubeginn – Vertrag mit Vorbehalt der Zusage</p>
         </div>
         <div class="feld-paar">
           <fieldset class="feld feld-s">
@@ -713,7 +714,7 @@ header.site .wrap{position:relative}
       <div class="tipbox" id="tip-kinder">Mindestens ein minderjähriges Kind (unter 18) mit Hauptwohnsitz in der Wohnung, <b>für das eine Kindergeldberechtigung vorliegt</b>, senkt das angesetzte Einkommen <b>einmalig um 10.000&nbsp;€</b> &ndash; unabhängig von der Zahl der Kinder. Volljährige Kinder zählen nicht, auch wenn für sie Kindergeld fließt (etwa in Ausbildung bis 25). Das kann eine höhere Bonusstufe bedeuten und wird hier automatisch berücksichtigt.</div>
       <div class="tipbox" id="tip-selbst">Einkommensbonus, Klimageschwindigkeitsbonus und der 80-%-Deckel gelten nur für Eigentümer mit <b>Hauptwohnsitz im Objekt</b>. Bei Vermietung bleibt die Grundförderung; auch der zinsverbilligte Ergänzungskredit&nbsp;358 setzt Selbstnutzung voraus.</div>
       <div class="tipbox" id="tip-zve">Zu versteuerndes Einkommen laut Steuerbescheid – deutlich niedriger als das Brutto, alle Haushaltsmitglieder zusammen. Für den <b>Zuschuss</b> zählt das vorletzte Jahr vor dem Antrag (Antrag 2026 &rarr; Einkommen 2024), für die <b>Zinsverbilligung</b> im Kredit&nbsp;358 der Durchschnitt des zweiten und dritten Jahres vor Antragstellung.</div>
-      <div class="tipbox" id="tip-zeit">Der Förderdeckel sinkt halbjährlich um 750&nbsp;€, der Klimabonus ab Februar&nbsp;2027 um 4&nbsp;Prozentpunkte. Der gewählte Zeitpunkt bestimmt zugleich das EEG-Regime der Photovoltaik.</div>
+      <div class="tipbox" id="tip-zeit">Der Förderdeckel sinkt halbjährlich um 750&nbsp;€, der Klimabonus ab Februar&nbsp;2027 um 4&nbsp;Prozentpunkte. Maßgeblich ist der Tag, an dem der Antrag bei der KfW eingeht; er bestimmt zugleich das EEG-Regime der Photovoltaik. Was vor dem Antrag vorliegen muss, steht im Kompendium unter „So läuft der Antrag“.</div>
     </fieldset>
 
     <fieldset>
@@ -941,6 +942,22 @@ header.site .wrap{position:relative}
   </details>
 
   <details class="info">
+    <summary><span class="ttl">So läuft der Antrag – Reihenfolge und Fristen</span><span class="chev" aria-hidden="true">▾</span></summary>
+    <div class="body">
+      <ol class="num">
+        <li><b>Bestätigung zum Antrag.</b> Ein Fachunternehmen oder ein Energieeffizienz-Experte erstellt sie. Sie beschreibt die geplante Heizung mit den förderfähigen Kosten und bestätigt, dass die technischen Mindestanforderungen eingehalten werden.</li>
+        <li><b>Vertrag mit dem Fachunternehmen.</b> Der Liefer- oder Leistungsvertrag wird <em>vor</em> dem Antrag geschlossen – mit einer aufschiebenden oder auflösenden Bedingung: Er gilt nur, wenn die KfW den Zuschuss zusagt. Er nennt das voraussichtliche Datum der Umsetzung.</li>
+        <li><b>Zuschussantrag&nbsp;458</b> im Kundenportal der KfW, <em>vor</em> Beginn der Bauarbeiten. Bestätigung und Vertrag werden dabei hochgeladen. Für Klimageschwindigkeitsbonus und Förderdeckel zählt der Tag, an dem der Antrag eingeht.</li>
+        <li><b>PV-Kredit&nbsp;270</b> über die Bank, ebenfalls vor Beginn des Vorhabens.</li>
+        <li><b>Ergänzungskredit&nbsp;358/359</b> über die Bank, nach der Zuschusszusage: innerhalb von zwölf Monaten und bevor der Zuschuss ausgezahlt ist.</li>
+        <li><b>Umsetzung</b> innerhalb von 36&nbsp;Monaten nach der Zusage. Danach bestätigt das Fachunternehmen oder der Experte die Durchführung; die Nachweise mit allen Rechnungen gehen innerhalb von sechs Monaten nach der letzten Rechnung an die KfW.</li>
+      </ol>
+      <p><b>Was die Förderung ausschließt:</b> ein Vertrag ohne diese Bedingung oder Bauarbeiten vor dem Antrag – beides gilt als Vorhabenbeginn. Planung und Beratung dürfen vorher stattfinden. Wer nach dem Antrag, aber vor der Zusage mit dem Bau beginnt, tut das auf eigenes Risiko.</p>
+      <p style="font-size:.92rem;color:var(--muted)">Quellen: Förderrichtlinie BEG EM vom 17.08.2026 (BAnz AT 27.08.2026 B1), Nummern 9.2.1, 9.3 und 9.4.1; KfW-Merkblätter 458 und 358/359, Stand 09/2026; KfW-Merkblatt 270, Stand 05/2025; abgerufen 22.11.2026.</p>
+    </div>
+  </details>
+
+  <details class="info">
     <summary><span class="ttl">Was ist förderfähig – und warum die Photovoltaik nicht?</span><span class="chev" aria-hidden="true">▾</span></summary>
     <div class="body">
       <p>Die Heizungsförderung ist eine <b>Wärme</b>förderung. Gefördert wird der Erzeuger, der die Wohnung warm macht, samt allem, was zu seinem Betrieb nötig ist. Strom­erzeugung gehört nicht dazu – sie hat mit dem EEG ein eigenes Fördersystem, und eine Doppelförderung derselben Kosten ist ausgeschlossen.</p>
@@ -1050,7 +1067,7 @@ header.site .wrap{position:relative}
     <summary><span class="ttl">Der Ergänzungskredit KfW 358 – Bedingungen und Fallstricke</span><span class="chev" aria-hidden="true">▾</span></summary>
     <div class="body">
       <ul class="tick">
-        <li><b>Nur mit Zuschusszusage.</b> Der Ergänzungskredit setzt voraus, dass Ihnen die Heizungsförderung bereits zugesagt wurde. Er wird also <em>nach</em> dem Zuschussantrag beantragt, nicht davor.</li>
+        <li><b>Nur mit Zuschusszusage.</b> Der Ergänzungskredit setzt voraus, dass Ihnen die Heizungsförderung bereits zugesagt wurde. Er wird also <em>nach</em> der Zuschusszusage beantragt – innerhalb von zwölf Monaten und bevor der Zuschuss ausgezahlt ist.</li>
         <li><b>Nicht bei der KfW selbst.</b> Sie beantragen ihn über Ihre Bank oder einen Finanzierungsvermittler. Die Bank prüft Ihre Bonität – ein Rechtsanspruch besteht nicht.</li>
         <li><b>Bis 120.000&nbsp;€ je Wohneinheit</b> an förderfähigen Kosten. Der bereits gewährte Zuschuss darf nicht mitfinanziert werden.</li>
         <li><b>Zinsverbilligung nur bis 90.000&nbsp;€</b> zu versteuerndem Haushaltseinkommen und nur für Selbstnutzer. Maßgeblich ist hier der <em>Durchschnitt</em> der Steuerbescheide des zweiten und dritten Jahres vor Antragstellung. Oberhalb der Grenze gilt Programm&nbsp;359 ohne Zinsverbilligung.</li>
@@ -1148,7 +1165,7 @@ header.site .wrap{position:relative}
 </section>
 
 <section class="zone">
-  <p class="disclaimer"><b>Wichtiger Hinweis:</b> Dieser Rechner wurde nach bestem Wissen auf Basis der verfügbaren Informationen erstellt – Beschlussstand der BEG-Reform vom 10.07.2026 mit Konditionen ab 21.07.2026, Gebäudemodernisierungsgesetz (GModG) sowie EEG-Regierungsentwurf mit Kabinettsbeschluss vom 29.07.2026. <b>Die EEG-Novelle ist noch nicht in Kraft:</b> Bundestag und Bundesrat müssen zustimmen, zentrale Förderregelungen zusätzlich die EU-Kommission. Alle Ergebnisse sind unverbindliche Beispielrechnungen ohne Gewähr für Richtigkeit, Vollständigkeit und Aktualität; die Förderbedingungen können sich jederzeit ändern. Die für Wärmepumpen ab 2027 angekündigte Absenkung der Grundförderung auf 15&nbsp;% mit einem Wertschöpfungsbonus von 15&nbsp;% beruht auf den Eckpunkten vom 08.07.2026; die gesetzliche Regelung steht aus. Der Rechner rechnet deshalb mit 30&nbsp;% Grundförderung – Geräte ohne EU-Wertschöpfung erhielten nach den Eckpunkten ab 2027 nur 15&nbsp;%. Zinssätze der KfW werden regelmäßig angepasst und sind bonitäts- und besicherungsabhängig – ein Anspruch auf einen bestimmten Zinssatz besteht nicht; die Zinsverbilligung im Programm&nbsp;358 gilt nur für die erste Zinsbindungsfrist. Das BürgerNetzwerkSolar arbeitet neutral und herstellerunabhängig, gibt keine Kaufempfehlungen und ergreift nicht Partei für Anbieter oder Produkte; es übernimmt – soweit gesetzlich zulässig – keinerlei Haftung für den Inhalt, die Richtigkeit der getroffenen Aussagen oder die Ergebnisse; die Nutzung erfolgt auf eigene Verantwortung. Es gilt ausschließlich die offizielle Förderzusage der KfW auf Grundlage der jeweils gültigen Förderrichtlinien. Dieser Rechner ersetzt keine Förder-, Energie-, Steuer- oder Rechtsberatung. Bitte beachten Sie: Der Förderantrag muss stets <b>vor</b> der Auftragserteilung gestellt werden; binden Sie einen Energieeffizienz-Experten ein.</p>
+  <p class="disclaimer"><b>Wichtiger Hinweis:</b> Dieser Rechner wurde nach bestem Wissen auf Basis der verfügbaren Informationen erstellt – Beschlussstand der BEG-Reform vom 10.07.2026 mit Konditionen ab 21.07.2026, Gebäudemodernisierungsgesetz (GModG) sowie EEG-Regierungsentwurf mit Kabinettsbeschluss vom 29.07.2026. <b>Die EEG-Novelle ist noch nicht in Kraft:</b> Bundestag und Bundesrat müssen zustimmen, zentrale Förderregelungen zusätzlich die EU-Kommission. Alle Ergebnisse sind unverbindliche Beispielrechnungen ohne Gewähr für Richtigkeit, Vollständigkeit und Aktualität; die Förderbedingungen können sich jederzeit ändern. Die für Wärmepumpen ab 2027 angekündigte Absenkung der Grundförderung auf 15&nbsp;% mit einem Wertschöpfungsbonus von 15&nbsp;% beruht auf den Eckpunkten vom 08.07.2026; die gesetzliche Regelung steht aus. Der Rechner rechnet deshalb mit 30&nbsp;% Grundförderung – Geräte ohne EU-Wertschöpfung erhielten nach den Eckpunkten ab 2027 nur 15&nbsp;%. Zinssätze der KfW werden regelmäßig angepasst und sind bonitäts- und besicherungsabhängig – ein Anspruch auf einen bestimmten Zinssatz besteht nicht; die Zinsverbilligung im Programm&nbsp;358 gilt nur für die erste Zinsbindungsfrist. Das BürgerNetzwerkSolar arbeitet neutral und herstellerunabhängig, gibt keine Kaufempfehlungen und ergreift nicht Partei für Anbieter oder Produkte; es übernimmt – soweit gesetzlich zulässig – keinerlei Haftung für den Inhalt, die Richtigkeit der getroffenen Aussagen oder die Ergebnisse; die Nutzung erfolgt auf eigene Verantwortung. Es gilt ausschließlich die offizielle Förderzusage der KfW auf Grundlage der jeweils gültigen Förderrichtlinien. Dieser Rechner ersetzt keine Förder-, Energie-, Steuer- oder Rechtsberatung. Bitte beachten Sie: Der Zuschussantrag muss <b>vor</b> Baubeginn gestellt werden. Vorher braucht es die Bestätigung zum Antrag eines Fachunternehmens oder Energieeffizienz-Experten und einen Liefer- oder Leistungsvertrag, der nur bei Förderzusage der KfW gilt; ein Vertrag ohne diese Bedingung schließt die Förderung aus.</p>
 </section>
 
 <footer>
@@ -1156,6 +1173,7 @@ header.site .wrap{position:relative}
   <p>KfW&nbsp;458 (Heizungszuschuss) · KfW&nbsp;358/359 (Ergänzungskredit) · KfW&nbsp;270 (Photovoltaik) · GModG&nbsp;2026 · EEG-Novelle&nbsp;2027 · Alle Angaben ohne Gewähr</p>
   <p><b>Die fünf Rechner des Netzwerks:</b> <b>Dieser hier</b> beantwortet, was Förderung und Finanzierung aus einer Investition machen – und was es an Förderung kostet, mit dem Tausch einer noch laufenden Heizung zu warten. Wer ohnehin tauschen muss und wissen will, ob die Wärmepumpe gegenüber einer <b>neuen</b> Gas- oder Ölheizung günstiger ist, nimmt den <a href="https://bns-worms.github.io/rechner/waermepumpe.html" target="_blank" rel="noopener" title="Rechner öffnen (neues Fenster)"><b>BNS-Wirtschaftlichkeitsrechner Wärmepumpe</b></a> (Vollkostenvergleich über 20 und 30 Jahre). Ob ein PV-Angebot preislich in Ordnung ist, prüft der <a href="https://bns-worms.github.io/rechner/pv-preisrechner.html" target="_blank" rel="noopener" title="Rechner öffnen (neues Fenster)"><b>BNS-PV-Preisrechner</b></a>. Ob sich ein Tarif mit stündlich wechselndem Preis lohnt, rechnet der <a href="https://bns-worms.github.io/rechner/tarifvergleich.html" target="_blank" rel="noopener" title="Rechner öffnen (neues Fenster)"><b>BNS-Tarif-Vergleichsrechner</b></a>. Welche Anlagengröße zum eigenen Verbrauch passt, zeigt die <a href="https://bns-worms.github.io/rechner/pv-auswahlhilfe.html" target="_blank" rel="noopener" title="Rechner öffnen (neues Fenster)"><b>BNS-PV-Auswahlhilfe</b></a>. Alle fünf finden Sie beim BürgerNetzwerkSolar Worms: <a href="https://bns.worms.de" target="_blank" rel="noopener" title="Webseite des Bürgernetzwerks öffnen">bns.worms.de</a>.</p>
 
+  <p class="bns-rechtliches"><a href="https://bns-worms.github.io/rechner/impressum.html" target="_blank" rel="noopener" title="Öffnet in neuem Fenster">Impressum, Datenschutz und Haftungsausschluss</a> · Dieser Rechner setzt keine Cookies und speichert keine Eingaben.</p>
 </footer>
 </div>
 
@@ -2381,7 +2399,6 @@ window.addEventListener("beforeprint", druckVorbereiten);
 window.addEventListener("afterprint", druckAufraeumen);
 $("reset").addEventListener("click", function(){
   state = Object.assign({}, DEFAULTS, ausBaukasten(8, MIT_PV ? 10 : 0, MIT_PV ? 10 : 0, {}));
-  try { sessionStorage.removeItem(SPEICHER); } catch (e) {}
   schreibeFelder(); update();
   /* Kein Sprung zur Ergebniszone – die Seite bleibt stehen (wie beim
      Optimum-Knopf), damit man die zurückgesetzten Felder sieht. */
@@ -2806,81 +2823,28 @@ function werkseinstellung() {
   state = Object.assign({}, DEFAULTS, ausBaukasten(8, MIT_PV ? 10 : 0, MIT_PV ? 10 : 0, {}));
   schreibeFelder();
 }
-/* --- Sitzung: halten oder verwerfen? -----------------------------------
-   Zwei Anforderungen, die zusammengehen muessen:
-     · Beim Neustart darf NICHTS vom Vorgaenger stehen bleiben.
-     · Beim Umschalten auf ein anderes Dokument und zurueck sollen die Werte
-       erhalten bleiben.
-   Unterschieden wird nach der Art des Seitenaufrufs. Der Sitzungsspeicher
-   endet mit dem Browserfenster — ein Neustart hat also zwangslaeufig einen
-   leeren Speicher. Ist er nicht verfuegbar (manche Browser sperren ihn fuer
-   file://-Seiten), bleibt es beim Zurueck-Knopf und der Werkseinstellung. */
-const SPEICHER = "bns-foerderrechner-sitzung";
+/* --- Sitzung: nichts speichern -------------------------------------------
+   Der Rechner legt nichts im Browser ab: keine Cookies, kein lokaler und
+   kein Sitzungsspeicher. Jeder Aufruf und jedes Neuladen beginnt mit der
+   Werkseinstellung; so sieht auch der naechste Ratsuchende nichts vom
+   Vorgaenger. Nur wenn der Browser die Seite beim Zurueck-Knopf unveraendert
+   aus dem Seitenzwischenspeicher holt, bleibt alles stehen.
 
-/* ★ Gesichert wird `state`, NICHT die Formularfelder. Dieser Rechner rechnet
-   ausschliesslich aus `state` (update() ruft rechne(state)); ein per Skript
-   gesetztes .value loest kein change-Ereignis aus und wuerde `state` nie
-   erreichen. Die Felder haetten dann die Werte des Anwenders gezeigt und die
-   Ergebnisse die der Voreinstellung — unsichtbar falsch.
-   schreibeFelder() bringt die Felder danach von allein in Deckung. */
-function zustandSichern() {
-  try { sessionStorage.setItem(SPEICHER, JSON.stringify(state)); }
-  catch (e) { /* kein Speicher verfuegbar */ }
-}
-
-function zustandLaden() {
-  try {
-    const o = JSON.parse(sessionStorage.getItem(SPEICHER) || "null");
-    if (!o || typeof o !== "object") return false;
-    /* Nur Schluessel uebernehmen, die es in state ohnehin gibt — ein
-       veralteter Speicherstand kann so nichts Fremdes einschleusen. */
-    Object.keys(state).forEach(k => { if (k in o) state[k] = o[k]; });
-    schreibeFelder();
-    return true;
-  } catch (e) { return false; }
-}
-
-function aufrufart() {
-  try {
-    const n = performance.getEntriesByType("navigation")[0];
-    return n ? n.type : "navigate";
-  } catch (e) { return "navigate"; }
-}
-
-const art = aufrufart();
-let ausSpeicher = false;
-if (art === "reload") {
-  /* Neu geladen: der Beratungsfall „naechster Ratsuchender". */
-  try { sessionStorage.removeItem(SPEICHER); } catch (e) {}
-} else {
-  ausSpeicher = zustandLaden();
-}
-
-/* ★ Der Browser stellt Formularwerte NACH dem Skriptlauf wieder her. Eine
-   Werkseinstellung beim Start wuerde davon ueberschrieben — gemessen am
-   03.09.2026. Die Entscheidung faellt deshalb im pageshow-Handler, der nach
-   der Wiederherstellung laeuft und damit gegen sie gewinnt. */
-function zustandHerstellen() {
-  if (art === "back_forward") return;   /* Zurueck-Knopf: Browser hat recht */
-  if (ausSpeicher) { zustandLaden(); return; }
-  werkseinstellung();
-}
-zustandHerstellen();
+   ★ Dieser Rechner rechnet ausschliesslich aus `state` (update() ruft
+   rechne(state)). Vom Browser wiederhergestellte Feldwerte erreichen `state`
+   nicht; die Felder zeigten dann die Werte des Anwenders und die Ergebnisse
+   die der Voreinstellung. Deshalb gilt bei jedem neuen Aufbau der Seite die
+   Werkseinstellung, auch beim Zurueck-Knopf ohne Seitenzwischenspeicher. Der
+   Browser stellt Formularwerte NACH dem Skriptlauf wieder her; die
+   Entscheidung faellt deshalb im pageshow-Handler, der danach laeuft. */
+werkseinstellung();
 window.addEventListener("pageshow", ev => {
   /* persisted=true heisst: aus dem Seitenzwischenspeicher zurueck (Zurueck-
      Knopf). Dann sind es die Werte DESSELBEN Anwenders — nicht anfassen. */
-  if (!ev.persisted) zustandHerstellen();
+  if (!ev.persisted) werkseinstellung();
   update();
 });
-
-/* ★ Der Sicherungshaken haengt am ENDE von update(), nicht an den
-   Roh-Ereignissen: Die change-Rueckrufe aktualisieren erst `state` und rufen
-   dann update(). Wer am Ereignis sichert, schreibt den Zustand VOR der
-   Aenderung weg und liegt immer einen Schritt zurueck. */
-const _update_ohne_sicherung = update;
-update = function () { _update_ohne_sicherung(); zustandSichern(); };
 update();
-zustandSichern();
 })();
 </script>
 </body>

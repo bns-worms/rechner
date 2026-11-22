@@ -310,6 +310,7 @@ ul.tick li::before{content:"\25B8";position:absolute;left:.35rem;
 }
 </style>
 <style>/* Button „Zurück zur Rechnerübersicht“ (06.11.2026) */.knopf-oben.knopf-zurueck{position:static;display:inline-block;margin:0 0 1.1rem;text-decoration:none;color:#fff}@media print{.knopf-zurueck{display:none!important}}</style>
+<style>/* Verweis Impressum/Datenschutz */@media print{.bns-rechtliches{display:none!important}}</style>
 </head>
 <body>
 <a class="skip" href="#eingaben">Zu den Eingaben springen</a>
@@ -1093,6 +1094,7 @@ Inflationsrate niedriger.</p></div></details>
 <footer class="wrap">
   <p><b>BürgerNetzwerkSolar Worms</b> · Stand 23. August 2026</p>
   <p>Diese Berechnung ist eine unverbindliche Orientierungshilfe des BürgerNetzwerkSolar Worms; das Netzwerk arbeitet neutral und herstellerunabhängig, gibt keine Kaufempfehlungen und ergreift nicht Partei für Anbieter oder Produkte. Sie ersetzt weder eine Heizlastberechnung nach DIN EN 12831 noch ein Fachangebot, eine Energieberatung oder eine Steuer- und Rechtsberatung. Fördersätze, Energiepreise und CO₂-Preise können sich kurzfristig ändern; die Angaben zur Förderung geben den Stand vom 21. August 2026 wieder und sind kein Förderbescheid. Eine Haftung für Vollständigkeit, Richtigkeit und Aktualität sowie für Entscheidungen, die auf diesen Werten beruhen, ist ausgeschlossen.</p>
+  <p class="bns-rechtliches"><a href="https://bns-worms.github.io/rechner/impressum.html" target="_blank" rel="noopener" title="Öffnet in neuem Fenster">Impressum, Datenschutz und Haftungsausschluss</a> · Dieser Rechner setzt keine Cookies und speichert keine Eingaben.</p>
 </footer>
 
 <script>
@@ -2588,7 +2590,6 @@ $("#zuruecksetzenOben").addEventListener("click",
   () => $("#zuruecksetzen").click());
 $("#zuruecksetzen").addEventListener("click", () => {
   werkseinstellung();
-  try { sessionStorage.removeItem(SPEICHER); } catch (e) {}
   zeichne();
 });
 $("#drucken").addEventListener("click", () => {
@@ -2608,42 +2609,12 @@ window.addEventListener("afterprint", () => {
   if (vorDruckOffen) $$("details.info").forEach((d, i) => d.open = vorDruckOffen[i]);
   vorDruckOffen = null;
 });
-/* --- Sitzung: halten oder verwerfen? -----------------------------------
-   Zwei Anforderungen, die zusammengehen muessen:
-     · Beim Neustart darf NICHTS vom Vorgaenger stehen bleiben.
-     · Beim Umschalten auf ein anderes Dokument und zurueck sollen die Werte
-       erhalten bleiben.
-   Unterschieden wird nach der Art des Seitenaufrufs. Der Sitzungsspeicher
-   endet mit dem Browserfenster — ein Neustart hat also zwangslaeufig einen
-   leeren Speicher. Ist er nicht verfuegbar (manche Browser sperren ihn fuer
-   file://-Seiten), bleibt es beim Zurueck-Knopf und der Werkseinstellung. */
-const SPEICHER = "bns-waermepumpe-sitzung";
-
-function zustandSichern() {
-  try {
-    const o = {};
-    document.querySelectorAll("input,select,textarea").forEach(el => {
-      const k = el.id || el.name + "|" + el.value;
-      o[k] = (el.type === "checkbox" || el.type === "radio") ? el.checked : el.value;
-    });
-    sessionStorage.setItem(SPEICHER, JSON.stringify(o));
-  } catch (e) { /* kein Speicher verfuegbar */ }
-}
-
-function zustandLaden() {
-  try {
-    const o = JSON.parse(sessionStorage.getItem(SPEICHER) || "null");
-    if (!o) return false;
-    document.querySelectorAll("input,select,textarea").forEach(el => {
-      const k = el.id || el.name + "|" + el.value;
-      if (!(k in o)) return;
-      if (el.type === "checkbox" || el.type === "radio") el.checked = o[k];
-      else el.value = o[k];
-    });
-    return true;
-  } catch (e) { return false; }
-}
-
+/* --- Sitzung: nichts speichern -------------------------------------------
+   Der Rechner legt nichts im Browser ab: keine Cookies, kein lokaler und
+   kein Sitzungsspeicher. Jeder neue Aufruf und jedes Neuladen beginnt mit
+   der Werkseinstellung; so sieht auch der naechste Ratsuchende nichts vom
+   Vorgaenger. Nur beim Zurueck-Knopf des Browsers bleiben die Werte stehen,
+   die der Browser selbst wiederherstellt. */
 function aufrufart() {
   try {
     const n = performance.getEntriesByType("navigation")[0];
@@ -2652,13 +2623,6 @@ function aufrufart() {
 }
 
 const art = aufrufart();
-let ausSpeicher = false;
-if (art === "reload") {
-  /* Neu geladen: der Beratungsfall „naechster Ratsuchender". */
-  try { sessionStorage.removeItem(SPEICHER); } catch (e) {}
-} else {
-  ausSpeicher = zustandLaden();
-}
 
 /* ★ Der Browser stellt Formularwerte NACH dem Skriptlauf wieder her. Eine
    Werkseinstellung beim Start wuerde davon ueberschrieben — gemessen am
@@ -2666,7 +2630,6 @@ if (art === "reload") {
    der Wiederherstellung laeuft und damit gegen sie gewinnt. */
 function zustandHerstellen() {
   if (art === "back_forward") return;   /* Zurueck-Knopf: Browser hat recht */
-  if (ausSpeicher) { zustandLaden(); return; }
   werkseinstellung();
 }
 zustandHerstellen();
@@ -2677,12 +2640,7 @@ window.addEventListener("pageshow", ev => {
   zeichne();
 });
 
-document.querySelectorAll("input,select,textarea").forEach(el => {
-  el.addEventListener("change", zustandSichern);
-  el.addEventListener("input", zustandSichern);
-});
 zeichne();
-zustandSichern();
 
 </script>
 </body>
