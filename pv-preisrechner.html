@@ -1304,15 +1304,20 @@ document.addEventListener("change", ev => {
    steigen im Gegensatz zu mouseenter/-leave auf und funktionieren deshalb
    auch fuer spaeter erzeugte Knoepfe. Der Tastaturfokus verhaelt sich
    gleich (focusin/focusout steigen ebenfalls auf). */
+/* Ausschalten schliesst SOFORT (Vorgabe Ralf 25.11.2026): Nach dem Klick
+   stehen Mauszeiger und Fokus noch auf dem Knopf und hielten die Erklaerung
+   bisher offen. Das Schweben ruht deshalb (data-ruht), bis der Knopf
+   verlassen wird. */
 ["mouseover", "focusin"].forEach(e => document.addEventListener(e, ev => {
   const q = ev.target.closest(".qmark");
-  if (!q) return;
+  if (!q || q.dataset.ruht) return;
   const box = document.getElementById(q.getAttribute("aria-controls"));
   if (box) box.classList.add("schwebt");
 }));
 ["mouseout", "focusout"].forEach(e => document.addEventListener(e, ev => {
   const q = ev.target.closest(".qmark");
   if (!q) return;
+  delete q.dataset.ruht;
   const box = document.getElementById(q.getAttribute("aria-controls"));
   if (box) box.classList.remove("schwebt");
 }));
@@ -1324,6 +1329,7 @@ document.addEventListener("click", ev => {
     const offen = q.getAttribute("aria-expanded") === "true";
     q.setAttribute("aria-expanded", offen ? "false" : "true");
     box.classList.toggle("open", !offen);
+    if (offen) { q.dataset.ruht = "1"; box.classList.remove("schwebt"); }
     return;
   }
   /* Beide Druckknoepfe — im Formular und im Kopf — oeffnen den Druckdialog

@@ -2515,16 +2515,22 @@ Array.prototype.forEach.call(document.querySelectorAll(".qmark"), function(q){
      ausdruecklich KEINE anderen Kaesten — anders als der Klick unten.
      Sonst wuerde ein festgehaltener Kasten beim blossen Vorbeifahren
      verschwinden. */
-  var zeigen = function(){ eigen.classList.add("schwebt"); legeKastenAn(eigen); };
+  /* Ausschalten schliesst SOFORT (Vorgabe Ralf 25.11.2026): Nach dem Klick
+     stehen Mauszeiger und Fokus noch auf dem Knopf und hielten die Erklaerung
+     bisher offen. Das Schweben ruht deshalb, bis der Knopf verlassen wird. */
+  var gesperrt = false;
+  var zeigen = function(){ if(gesperrt) return; eigen.classList.add("schwebt"); legeKastenAn(eigen); };
   var weg = function(){ eigen.classList.remove("schwebt"); };
+  var frei = function(){ gesperrt = false; weg(); };
   q.addEventListener("mouseenter", zeigen);
-  q.addEventListener("mouseleave", weg);
+  q.addEventListener("mouseleave", frei);
   q.addEventListener("focus", zeigen);
-  q.addEventListener("blur", weg);
+  q.addEventListener("blur", frei);
   q.addEventListener("click", function(){
     var offen = eigen.classList.contains("open");
     schliesseOffene(null);
     if(!offen){ eigen.classList.add("open"); q.setAttribute("aria-expanded", "true"); legeKastenAn(eigen); }
+    else { gesperrt = true; weg(); }
   });
 });
 /* Ein geöffneter Kasten liegt über anderen Feldern: Escape und ein Klick

@@ -2523,15 +2523,21 @@ window.addEventListener("resize", () => {
 $$(".qmark").forEach(b => {
   const t = document.getElementById(b.getAttribute("aria-controls"));
   if (!t) return;
-  const zeigen = () => t.classList.add("schwebt");
+  /* Ausschalten schliesst SOFORT (Vorgabe Ralf 25.11.2026): Nach dem Klick
+     stehen Mauszeiger und Fokus noch auf dem Knopf und hielten die Erklaerung
+     bisher offen. Das Schweben ruht deshalb, bis der Knopf verlassen wird. */
+  let gesperrt = false;
+  const zeigen = () => { if (!gesperrt) t.classList.add("schwebt"); };
   const weg = () => t.classList.remove("schwebt");
+  const frei = () => { gesperrt = false; weg(); };
   b.addEventListener("mouseenter", zeigen);
-  b.addEventListener("mouseleave", weg);
+  b.addEventListener("mouseleave", frei);
   b.addEventListener("focus", zeigen);
-  b.addEventListener("blur", weg);
+  b.addEventListener("blur", frei);
   b.addEventListener("click", () => {
     const offen = t.classList.toggle("open");
     b.setAttribute("aria-expanded", offen ? "true" : "false");
+    if (!offen) { gesperrt = true; weg(); }
   });
 });
 function werkseinstellung() {
