@@ -982,11 +982,11 @@ header.site .wrap{position:relative}
 <div class="labelrow"><label for="f_sockel">Steuern, Abgaben und Netzentgelt</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_sockel" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Steuern, Abgaben und Netzentgelt">?</button></div>
 <div class="unitwrap">
 <input type="number" inputmode="decimal" id="f_sockel" data-feld="sockel"
- value="17.68" step="0.01" min="0" max="40">
+ value="17.90" step="0.01" min="0" max="40">
 <span class="unit" aria-hidden="true">ct</span>
 </div>
 </div>
-<div class="tipbox" id="tip_sockel">Für das Netzgebiet Worms eine feste Größe: Netzentgelt 8,46 + Stromsteuer 2,05 + Paragraf-19-Umlage 1,56 + Konzessionsabgabe 1,40 + Offshore-Umlage 0,94 + KWKG-Umlage 0,45 Cent netto, dazu die Umsatzsteuer. Fällt auf jede zugekaufte Kilowattstunde an.</div>
+<div class="tipbox" id="tip_sockel">Für das Netzgebiet Worms eine feste Größe: Netzentgelt 8,46 + Stromsteuer 2,05 + Paragraf-19-Umlage 1,56 + Konzessionsabgabe 1,59 + Offshore-Umlage 0,94 + KWKG-Umlage 0,45 Cent netto, dazu die Umsatzsteuer. Fällt auf jede zugekaufte Kilowattstunde an.</div>
 <div class="feld">
 <div class="labelrow"><label for="f_normGebuehr">Gebühr des Anbieters im Jahr</label><button type="button" class="qmark" aria-expanded="false" aria-controls="tip_normGebuehr" title="Erläuterung anzeigen" aria-label="Erläuterung zu: Gebühr des Anbieters im Jahr">?</button></div>
 <div class="unitwrap">
@@ -1349,8 +1349,10 @@ header.site .wrap{position:relative}
         29 Prozent beim Laden am Abend – Methodikpapier des
         BNS-Batteriestudienpakets, Kapitel 7.</li>
         <li><strong>Steuern, Abgaben, Umlagen und Netzentgelt</strong> zusammen
-        17,68 Cent je Kilowattstunde: Preisblatt der EWR, gültig ab 1. April 2026.
-        Sie fallen auf jede aus dem öffentlichen Netz bezogene Kilowattstunde an,
+        17,90 Cent je Kilowattstunde: Netzentgelt und Konzessionsabgabe aus dem
+        Preisblatt der EWR Netz ab 1. Januar 2026 (Konzessionsabgabe für Gemeinden
+        bis 100.000 Einwohner), Steuern und Umlagen aus dem Preisblatt der
+        EWR-Grundversorgung ab 1. April 2026. Sie fallen auf jede aus dem öffentlichen Netz bezogene Kilowattstunde an,
         unabhängig vom Börsenpreis.</li>
         <li><strong>Börsenpreis</strong> 10,2 Cent je Kilowattstunde netto im Mittel
         Januar bis Juli 2026: SMARD, das Strommarktdaten-Portal der
@@ -1573,13 +1575,15 @@ const HAUSHALT_MIT_WW  = { 1: 2100, 2: 3200, 3: 4100, 4: 4700, 5: 6000 };
    7. Tarifgroessen — Stand des BNS-Batteriestudienpakets 31.08.2026,
       Boersendaten SMARD 01.09.2026, Preisblaetter der EWR.
 
-   Sockelkosten 17,68 ct je Kilowattstunde brutto (Netzentgelt 8,46 +
-   Stromsteuer 2,05 + Paragraf-19-Umlage 1,56 + Konzessionsabgabe 1,40 +
-   Offshore-Umlage 0,941 + KWKG-Umlage 0,446 = 14,853 ct netto zuzueglich
+   Sockelkosten 17,90 ct je Kilowattstunde brutto (Netzentgelt 8,46 +
+   Stromsteuer 2,05 + Paragraf-19-Umlage 1,559 + Konzessionsabgabe 1,59 +
+   Offshore-Umlage 0,941 + KWKG-Umlage 0,446 = 15,046 ct netto zuzueglich
    Umsatzsteuer). Sie fallen auf jede aus dem oeffentlichen Netz bezogene
-   Kilowattstunde an, unabhaengig vom Boersenpreis.
+   Kilowattstunde an, unabhaengig vom Boersenpreis. Die Konzessionsabgabe
+   steht im Preisblatt 8 der EWR fuer Tarifkunden in Gemeinden bis 100.000
+   Einwohner; Worms liegt darunter.
 
-   Ungesteuerter Endpreis = Boersenmittel 10,2 ct netto x 1,19 + 17,68 ct.
+   Ungesteuerter Endpreis = Boersenmittel 10,2 ct netto x 1,19 + 17,90 ct.
 
    Fixkosten: Beim NORMALEN dynamischen Tarif wie beim Komplettpaket fallen
    intelligentes Messsystem und Steuerbox an — sie haengen am Haushalt, nicht
@@ -1621,12 +1625,12 @@ const TARIF = {
   /* Stuendlich wechselnder Preis: NICHT frei gesetzt, sondern gerechnet.
      Boersenmittel netto x 1,19 Umsatzsteuer + Sockel. Der Sockel ist fuer
      das Netzgebiet Worms eine feste Groesse (Netzentgelt 8,46 + Stromsteuer
-     2,05 + Paragraf-19-Umlage 1,56 + Konzessionsabgabe 1,40 + Offshore-Umlage
-     0,941 + KWKG-Umlage 0,446 = 14,853 ct netto, mit Umsatzsteuer
-     17,68 ct). ★ Die Summanden stehen ungerundet, damit die Rechnung im
-     Text sichtbar aufgeht: Mit den gerundeten Werten kaeme 14,86 heraus. */
+     2,05 + Paragraf-19-Umlage 1,559 + Konzessionsabgabe 1,59 + Offshore-Umlage
+     0,941 + KWKG-Umlage 0,446 = 15,046 ct netto, mit Umsatzsteuer
+     17,90 ct). ★ Die Summanden stehen ungerundet, damit die Rechnung im
+     Text sichtbar aufgeht. */
   boerse:      0.102,
-  sockel:      0.1768,
+  sockel:      0.1790,
   /* Aufschlag des Anbieters auf den Boersenpreis, je Kilowattstunde.
      Erhebung 02.09.2026, zwei von fuenf geprueften Anbietern erheben ihn:
        2,15 ct brutto — immer, als „weitere Beschaffungskosten" im
@@ -2387,7 +2391,7 @@ function tarifeUebernehmen() {
   TARIF.paketAbo = zahl('paketAbo') ?? 180;
   TARIF.paketBox = zahl('paketBox') ?? 70;
   TARIF.boerse = (zahl('boerse') ?? 10.2) / 100;
-  TARIF.sockel = (zahl('sockel') ?? 17.68) / 100;
+  TARIF.sockel = (zahl('sockel') ?? 17.90) / 100;
   TARIF.aufschlag = (zahl('aufschlag') ?? 0) / 100;
   TARIF.vorteilHH = (zahl('vorteil') ?? 6) / 100;
   TARIF.vorteilWP = (zahl('vorteilWp') ?? 5) / 100;

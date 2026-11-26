@@ -1238,7 +1238,17 @@ var SCHWELLE_MAX = 100000;
 function schwelle(e, weg) {
   var a = bilanzWeg(e, weg, 0).ergebnis;
   var steigung = (bilanzWeg(e, weg, 1000).ergebnis - a) / 1000;
-  if (a >= 0) return { menge: 0, steigung: steigung, fest: a };
+  /* Ohne jede feste Mehrkostenlast (Anschaffung, laufende Kosten und
+     Mehr-Bereitschaft zusammen null oder weniger) gibt es keine Schwelle:
+     Dann traegt sich jede Menge, wenn jede Kilowattstunde einbringt, und
+     keine, wenn sie kostet. Eine bidirektionale Wallbox kostet aber immer
+     mehr und braucht in Bereitschaft mehr als eine normale — die Seite
+     meldet deshalb „Unrealistische Kosten/Verlustwerte eingetragen“
+     (Vorgabe Ralf 25.11.2026). Bis dahin stand hier immer „ab 0 kWh“, auch
+     wenn jede Kilowattstunde Verlust brachte. */
+  if (a >= 0) {
+    return { menge: steigung >= 0 ? 0 : Infinity, steigung: steigung, fest: a, unrealistisch: true };
+  }
   if (bilanzWeg(e, weg, SCHWELLE_MAX).ergebnis < 0) {
     return { menge: Infinity, steigung: steigung, fest: a };
   }
@@ -1586,6 +1596,14 @@ function aktualisieren(ev) {
       + 'freien Tag) sind nicht realistisch; im Feldversuch kamen 4,4 Stunden am Tag dazu. '
       + 'In jeder dieser Stunden braucht das wache Auto außerdem selbst '
       + nf0.format(Number(F('pWach').value) || 0) + ' W.</div>';
+  }
+  /* Feste Mehrkosten null oder weniger (Vorgabe Ralf 25.11.2026: Hinweis
+     „Unrealistische Kosten/Verlustwerte eingetragen“). */
+  if (r.schwelleHaupt && r.schwelleHaupt.unrealistisch) {
+    h += '<div class="note stop"><span class="tag">Unrealistische Kosten/Verlustwerte eingetragen:</span> '
+      + 'Mehrkosten der Anschaffung, laufende Kosten und der Mehrverbrauch der Wallbox in Bereitschaft '
+      + 'ergeben zusammen null oder weniger. Eine bidirektionale Wallbox kostet in der Anschaffung aber mehr '
+      + 'und braucht in Bereitschaft mehr Strom als eine normale Wallbox. Bitte die Eingaben prüfen.</div>';
   }
   if (Number(F('nachladepreis').value) >= Number(F('strompreis').value) && Number(F('pvAnteil').value) < 100) {
     h += '<div class="note"><span class="tag">Netzstrom:</span> Wer mit Netzstrom zum selben '

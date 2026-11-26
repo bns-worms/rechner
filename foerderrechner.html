@@ -1173,7 +1173,7 @@ header.site .wrap{position:relative}
           </tbody>
         </table>
       </div>
-      <p>Nach Ablauf der Übergangszahlung erlösen Sie in der Direktvermarktung nur noch den <b>Marktwert Solar</b> abzüglich der Vermarktungskosten. Zusätzlich ist ein <b>Direktvermarktungsbonus von 1,5&nbsp;ct/kWh</b> für Anlagen unter 25&nbsp;kW über höchstens 48&nbsp;Monate vorgesehen. Für ab 2027 errichtete Dachanlagen unter 100&nbsp;kW gilt außerdem eine dauerhafte <b>Einspeisebegrenzung auf 50&nbsp;%</b> der installierten Leistung; sie trifft nur die Einspeisung, nicht Eigenverbrauch und Speicherung.</p>
+      <p>Nach Ablauf der Übergangszahlung erlösen Sie in der Direktvermarktung nur noch den <b>Marktwert Solar</b> abzüglich der Vermarktungskosten. Zusätzlich ist ein <b>Direktvermarktungsbonus von 1,5&nbsp;ct/kWh</b> für Anlagen unter 25&nbsp;kW über höchstens 48&nbsp;Monate vorgesehen. Für ab 2027 errichtete Dachanlagen <b>über 25&nbsp;kW</b> bis unter 100&nbsp;kW gilt außerdem eine dauerhafte <b>Einspeisebegrenzung auf 50&nbsp;%</b> der installierten Leistung; sie trifft nur die Einspeisung, nicht Eigenverbrauch und Speicherung. Anlagen bis 25&nbsp;kW sind nach der Einigung der Koalition (November 2026) davon ausgenommen.</p>
       <p><b>Was daraus folgt:</b> Der Zeitpunkt entscheidet über die Vergütung. Wer <em>2026</em> in Betrieb geht, sichert sich 20&nbsp;Jahre feste Vergütung. Wer <em>2029</em> baut, bekommt die Übergangszahlung nur noch für Anlagen unter 7&nbsp;kW – eine 8- oder 10-kWp-Anlage geht dann leer aus.</p>
       <p>Diese Sätze stehen hier zur <b>Einordnung des Zeitpunkts</b>; gerechnet wird damit nicht. Ertrag, Eigenverbrauch und Rendite der Photovoltaik rechnen die <b>BNS-Berater</b> mit Ihnen durch.</p>
     </div>
@@ -1281,7 +1281,9 @@ header.site .wrap{position:relative}
    dvBonus     Direktvermarktungsbonus in ct/kWh (nur Anlagen < 25 kW)
    dvMonate    Höchstdauer des Direktvermarktungsbonus in Monaten, gezählt ab
                dem Beginn der Direktvermarktung
-   einspeiseKappung  true = 50-%-Einspeisebegrenzung nach EEG-Novelle
+   einspeiseKappung  true = 50-%-Einspeisebegrenzung nach EEG-Novelle;
+               sie greift nur bei Anlagen über KAPPUNG_AB_KW (Einigung der
+               Koalition, November 2026: Anlagen bis 25 kW ausgenommen)
 --------------------------------------------------------------------- */
 const PERIODEN = [
   { id: 0, label: "2. Halbjahr 2026 (ab 21.07.)", kurz: "H2/2026", jahr: 2026,
@@ -1330,6 +1332,11 @@ const PERIODEN = [
     pvModus: "markt", pvSatz: 0, pvMonate: 0, pvGrenzeKw: 0,
     dvBonus: 1.5, dvMonate: 48, einspeiseKappung: true }
 ];
+
+/* Leistungsgrenze der 50-%-Einspeisebegrenzung in kW: Nach der Einigung
+   der Koalition (November 2026) gilt sie nur für Anlagen über 25 kW;
+   Anlagen bis 25 kW speisen ohne Begrenzung ein. */
+const KAPPUNG_AB_KW = 25;
 
 /* ---------------------------------------------------------------------
    2. Anlagenbaukasten mit Richtkosten (schlüsselfertig, brutto)
@@ -1972,9 +1979,10 @@ function berechneEnergie(e) {
   let eigenverbrauch = Math.min(ertrag * quote, verbrauch);
   let einspeisung = Math.max(0, ertrag - eigenverbrauch);
 
-  /* 50-%-Einspeisebegrenzung ab 2027: Erzeugungsspitzen oberhalb der
-     halben Anlagenleistung dürfen nicht mehr eingespeist werden. Ein
-     Speicher fängt einen großen Teil davon ab. */
+  /* 50-%-Einspeisebegrenzung ab 2027 für Anlagen über KAPPUNG_AB_KW:
+     Erzeugungsspitzen oberhalb der halben Anlagenleistung dürfen nicht
+     mehr eingespeist werden. Ein Speicher fängt einen großen Teil davon
+     ab. */
   let abregelung = 0;
   if (e.einspeiseKappung) {
     const verlustquote = 0.07 * Math.max(0, 1 - 0.7 * s);
@@ -2205,7 +2213,7 @@ function rechne(eingabe) {
   const f = berechneFoerderung(e);
   const fin = berechneFinanzierung(e, f);
   const en = berechneEnergie(Object.assign({}, e, {
-    einspeiseKappung: f.periode.einspeiseKappung
+    einspeiseKappung: f.periode.einspeiseKappung && e.pvKwp > KAPPUNG_AB_KW
   }));
   const bil = berechneBilanz(e, f, fin, en);
   return { e, f, fin, en, bil };
